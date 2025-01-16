@@ -1,0 +1,18 @@
+<h1 class="text-2xl font-bold mb-4"><%= @vacancy.title %></h1>
+<p><strong>Company:</strong> <%= @vacancy.company&.name %></p>
+<p><strong>Location:</strong> <%= @vacancy.location %></p>
+<p><strong>Type:</strong> <%= @vacancy.employment_type %></p>
+<p><strong>Salary:</strong> <%= @vacancy.salary %></p>
+
+<div class="mt-4">
+  <p><%= @vacancy.description %></p>
+</div>
+
+<div class="mt-4">
+  <!-- Link to message the creator -->
+  <!-- For example, if you have a messaging route or direct email link -->
+    <%= link_to 'Contact Creator via Email', "#{@vacancy.user.email}", class: "btn btn-primary" %>
+</div>
+
+<%= link_to 'Edit', edit_vacancy_path(@vacancy), class: "btn btn-secondary" %> |
+<%= link_to 'Back to Vacancies', vacancies_path, class: "btn btn-secondary" %>

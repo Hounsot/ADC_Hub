@@ -1,0 +1,28 @@
+      <%# link_to "MyApp", root_path, class: "logo" %>
+      <%# link_to "Home", root_path %>
+      <%# link_to "Vacancies", vacancies_path %>
+<nav class="O_Navbar">
+    <div class="W_NavbarLogoRow">
+        <a class="A_NavbarLogo" href="">
+            <img class="Q_NavbarLogo" src="../images/Q_Logo.svg" alt="">
+        </a>
+        <img class="Q_NavbarBadge" src="../images/Q_BetaSign.png" alt="">
+    </div>
+    <div class="W_NavbarLinks">
+        <%= link_to "Лента", root_path, class: "A_NavbarLink" %>
+        <%= link_to "Вакансии", vacancies_path, class: "A_NavbarLink" %>
+        <a class="A_NavbarLink" href="">Люди</a>
+        <a class="A_NavbarLink" href="">Ресурсы</a>
+    </div>
+    <div class="W_NavbarActions">
+        <div class=""><img src="../images/Q_Notifications.svg" alt=""></div>
+        <div class=""><img src="../images/Q_Search.svg" alt=""></div>
+        <% if user_signed_in? %>
+          <%= link_to "Профиль", user_path(current_user), class: "nav-link" %>
+          <%# link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+        <% else %>
+          <%= link_to "Войти", new_user_session_path, class: "A_NavbarLoginButton" %>
+          <%# link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
+        <% end %>
+    </div>
+</nav>

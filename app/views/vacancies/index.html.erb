@@ -1,0 +1,20 @@
+<div class="SO_VacanciesPage">
+  <div class="M_Banner">
+    <h1 class="A_BannerText">Больше вакансий<br>в удобном формате<br>Подборки в Telegram-канале</h1>
+    <a class="A_BannerLink" href="t.me/adcoffer">Перейти</a>
+  </div>
+  <div style="max-width: 1440px; width: 100%; display: flex; flex-direction: row; flex-wrap: wrap; gap: 24px;">
+    <% @vacancies.each do |vacancy| %>
+      <%= render partial: 'vacancy', locals: { vacancy: vacancy } %>
+    <% end %>
+  </div>
+  <div class="W_CreateButton">
+    <%# link_to 'New Vacancy', new_vacancy_path, class: "A_CreateButton" %>
+    <div class="A_Button U_Icon">
+      <p class="A_VacancyCardBodyText U_Medium">Создать вакансию</p>
+      <div class="W_CreateButtonIcon">
+        <img class="Q_Plus" src="../images/Q_Plus.svg" alt="">
+      </div>
+    </div>
+  </div>
+</div>

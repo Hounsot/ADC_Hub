@@ -1,0 +1,17 @@
+a{
+    text-decoration: none;
+    color: inherit;
+}
+*{
+    box-sizing: border-box; 
+    padding: 0;
+    margin: 0;   
+    font-family: var(--font-family-UI-font, "Suisse Intl", Helvetica, Arial);
+}
+body{
+    background-color: var(--zero-level-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 124px 24px 24px 24px;
+}

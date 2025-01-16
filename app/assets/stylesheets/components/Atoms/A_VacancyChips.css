@@ -1,0 +1,19 @@
+.A_VacancyChips {
+    width: fit-content;
+    padding: 7px 14px;
+    border-radius: 6px;
+    &:is(.U_Salary) {
+      background-color: var(--salary-color);
+      color: var(--font-default-color);
+    }
+    &:is(.U_Full-time) {
+      background-color: var(--full-time-color);
+    }
+    &:is(.U_Part-time) {
+      background-color: var(--part-time-color);
+    }
+    &:is(.U_Intertship) {
+      background-color: var(--internship-color);
+    }
+  }
+  

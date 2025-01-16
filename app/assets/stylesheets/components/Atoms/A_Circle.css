@@ -1,0 +1,6 @@
+.A_Circle{
+    width: 8px;
+    height: 8px;
+    background-color: var(--font-second-color);
+    border-radius: 100px;
+}

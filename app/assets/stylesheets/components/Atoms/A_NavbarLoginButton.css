@@ -1,0 +1,14 @@
+.A_NavbarLoginButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 38px;
+    background-color: var(--primary-button-bg-color);
+    padding: 10px 40px;
+    border-radius: 200px;
+    transition: var(--button-transitions);
+    &:hover{
+        background-color: var(--primary-button-bg-color-hover);
+    }
+}

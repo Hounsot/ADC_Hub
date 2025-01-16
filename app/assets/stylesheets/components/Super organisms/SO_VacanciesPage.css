@@ -1,0 +1,5 @@
+.SO_VacanciesPage{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}

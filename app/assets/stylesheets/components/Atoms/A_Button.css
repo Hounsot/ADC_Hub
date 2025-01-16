@@ -1,0 +1,19 @@
+.A_Button{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    height: 45px;
+    width: fit-content;
+    background-color: var(--primary-button-bg-color);
+    border-radius: 200px;
+    padding: 10px 9px 10px 15px;
+    cursor: pointer;
+    transition: var(--button-transitions);
+    .A_VacancyCardBodyText{
+        color: var(--primary-button-text-color);
+    }
+    &:hover{
+        background-color: var(--primary-button-bg-color-hover);
+    }
+}

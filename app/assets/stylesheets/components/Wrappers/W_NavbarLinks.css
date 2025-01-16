@@ -1,0 +1,7 @@
+.W_NavbarLinks{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+}

@@ -1,0 +1,15 @@
+.W_CreateButton{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 32px;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(100px);
+    justify-content: center;
+    width: fit-content;
+    height: 60px;
+    background: var(--navbar-background-color);
+    border-radius: 200px;
+    padding: 10px;
+}

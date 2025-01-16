@@ -1,0 +1,13 @@
+.M_Banner{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 440px;
+    padding: 28px 22px;
+    background-color: var(--first-level-background);
+    background-image: url('/images/background.png');
+    background-position: center;
+    background-size: cover;
+    border-radius: 12px;
+}

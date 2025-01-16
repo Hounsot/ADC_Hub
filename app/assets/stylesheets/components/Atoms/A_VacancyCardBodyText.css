@@ -1,0 +1,13 @@
+.A_VacancyCardBodyText{
+    font-size: 18px;
+    line-height: 120%;
+    font-weight: 400;
+    color: var(--font-default-color);
+    font-family: var(--font-family-UI-font, "Suisse Intl", Helvetica, Arial);
+    &:is(.U_Medium){
+        font-weight: 500;
+    }
+    &:is(.U_Secondary){
+        color: var(--font-second-color);
+    }
+}

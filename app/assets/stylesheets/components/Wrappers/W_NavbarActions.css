@@ -1,0 +1,8 @@
+.W_NavbarActions{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    width: 100%;
+    align-items: center;
+    justify-content: right;
+}

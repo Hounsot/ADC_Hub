@@ -1,0 +1,9 @@
+.W_CreateButtonIcon{
+    width: 28px;
+    height: 28px;
+    background-color: #262626;
+    border-radius: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

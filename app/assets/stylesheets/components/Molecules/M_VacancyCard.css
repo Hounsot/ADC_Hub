@@ -1,0 +1,16 @@
+.M_VacancyCard{
+    display: flex;
+    flex-direction: column;
+    height: 320px;
+    width: 100%;
+    min-width: 400px;
+    padding: 24px;
+    flex: 1 1 200px;
+    background-color: var(--first-level-background);
+    justify-content: space-between;
+    border-radius: 12px;
+    transition: var(--button-transitions);
+    &:hover{
+        background-color: var(--first-level-background-hover);
+    }
+}

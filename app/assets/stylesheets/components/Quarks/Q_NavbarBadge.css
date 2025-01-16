@@ -1,0 +1,9 @@
+.Q_NavbarBadge{
+    width: 55px;
+    height: 38px;
+    cursor: pointer;
+    transition: var(--button-transitions);
+    &:hover{
+        transform: scale(1.05);
+    }
+}

@@ -1,0 +1,8 @@
+.A_NavbarLink{
+    font-size: 18px;
+    color: var(--navbar-link-color);
+    transition: var(--button-transitions);
+    &:hover{
+        color: var(--navbar-link-color-hover);
+    }
+}
