@@ -1,0 +1,22 @@
+.M_CreateButtonChoice{
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    padding: 18px;
+    background-color: var(--first-level-background);
+    color: var(--font-default-color);
+    font-size: 24px;
+    font-weight: 500;
+    transition: var(--button-transitions);
+    cursor: pointer;
+    &:is(.U_Site){
+        background-image: url(/images/Q_SitePreview.png);
+    }
+    &:is(.U_Telegram){
+        background-image: url(/images/Q_TelegramPreview.png);
+    }
+    background-size: cover;
+    &:hover{
+        background-color: var(--first-level-background-hover);
+    }
+}

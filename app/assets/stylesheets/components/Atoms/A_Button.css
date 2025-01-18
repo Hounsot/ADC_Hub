@@ -10,6 +10,7 @@
     padding: 10px 9px 10px 15px;
     cursor: pointer;
     transition: var(--button-transitions);
+    user-select: none;
     .A_VacancyCardBodyText{
         color: var(--primary-button-text-color);
     }

@@ -1,0 +1,19 @@
+.A_Blur{
+    max-width: 100vw;
+    min-width: 100vw;
+    max-height: 100vh;
+    min-height: 100vh;
+    backdrop-filter: blur(5px);
+    background-color: var(--blur-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    opacity: 0;
+    transition: var(--button-transitions);
+    pointer-events: none;
+    &:is(.U_Active){
+        opacity: 1;
+        pointer-events: all;
+    }
+}

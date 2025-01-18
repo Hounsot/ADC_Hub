@@ -16,6 +16,9 @@
     --navbar-background-color: rgba(38, 38, 38, 0.69);
     --navbar-link-color: #616161;
     --navbar-link-color-hover: #929292;
+    --blur-color: rgba(0, 0, 0, 0.50);;
     /* button transitions */
     --button-transitions: all .2s ease-in-out;
+    /* button height */
+    --button-height: 45px;
 }

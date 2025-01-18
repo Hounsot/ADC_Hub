@@ -10,11 +10,20 @@
   </div>
   <div class="W_CreateButton">
     <%# link_to 'New Vacancy', new_vacancy_path, class: "A_CreateButton" %>
-    <div class="A_Button U_Icon">
+    <div class="W_CreateButtonChoices">
+      <%= link_to new_vacancy_path, class: "M_CreateButtonChoice U_Site" do %>
+        <p>На сайте</p>
+      <% end %>
+      <div class="M_CreateButtonChoice U_Telegram">
+        <p>В телеграм канал</p>
+      </div>      
+    </div>
+    <div class="A_Button U_Icon" id="CreateButton">
       <p class="A_VacancyCardBodyText U_Medium">Создать вакансию</p>
       <div class="W_CreateButtonIcon">
         <img class="Q_Plus" src="../images/Q_Plus.svg" alt="">
       </div>
     </div>
   </div>
+  <div class="A_Blur"></div>
 </div>

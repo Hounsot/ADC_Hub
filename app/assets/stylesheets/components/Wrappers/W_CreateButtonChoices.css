@@ -1,0 +1,9 @@
+.W_CreateButtonChoices{
+    min-width: 510px;
+    width: 510px;
+    height: 270px;
+    min-height: 270px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
