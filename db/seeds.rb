@@ -116,6 +116,7 @@ puts "Creating Users..."
 
 # We assume Devise or similar is used, requiring an email and password.
 # We'll just create 5 example users.
+
 USERNAMES.each_with_index do |username, i|
   User.create!(
     email: EMAILS[i],
@@ -141,7 +142,17 @@ end
 companies = Company.all
 puts "Created #{companies.count} Companies."
 
-# 5. Create Vacancies for each company:
+puts "Assigning each user to a random company..."
+
+# 6. Assign each user with random company:
+
+users.each do |user|
+  user.update!(company: companies.sample)
+end
+
+puts "Done assigning companies to users!"
+
+# 6. Create Vacancies for each company:
 #
 #    - We pick random positions, locations, salaries, descriptions.
 #    - We assign each vacancy to a random user as its creator.

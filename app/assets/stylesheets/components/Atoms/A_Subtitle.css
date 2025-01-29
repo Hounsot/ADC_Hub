@@ -1,0 +1,7 @@
+.A_Subtitle{
+    font-size: 20px;
+    color: var(--font-second-color);
+    &:is(.U_White){
+        color: var(--font-default-color);
+    }
+}

@@ -1,0 +1,29 @@
+.A_RadioButton{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 15px 20px;
+    position: relative;
+    font-size: 18px;
+    color: var(--font-default-color);
+    background-color: var(--first-level-background);
+    border-radius: 12px;
+    height: 50px;
+    max-height: 50px;
+    .U_RealButton{
+        cursor: pointer;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+    &:is(.U_Active){
+        .W_RadioButtonCheck{
+            .U_RadioButtonCircle{
+                display: block;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.M_VacancyStep{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    &:is(.hidden){
+        display: none;
+    }
+    .A_Button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        padding: 0;
+        border-radius: 12px;
+        font-size: 18px;
+    }
+}

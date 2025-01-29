@@ -1,2 +1,116 @@
-<h1>Vacancies#new</h1>
-<p>Find me in app/views/vacancies/new.html.erb</p>
+<%= form_with model: @vacancy, url: vacancies_path, local: true, class: 'SO_FormView', data: { controller: "vacancy-wizard" } do |form| %>
+    <div class="O_VacancySteps">
+  <div class="W_FormSteps">
+    <!-- Each button/link calls goToStep() with a data-step index. -->
+    <button class="A_FormSteps" type="button" data-action="click->vacancy-wizard#goToStep" data-vacancy-wizard-target="navButton" data-step="1">Самое важное</button>
+    <button class="A_FormSteps" type="button" data-action="click->vacancy-wizard#goToStep" data-vacancy-wizard-target="navButton" data-step="2">Тип вакансии</button>
+    <button class="A_FormSteps" type="button" data-action="click->vacancy-wizard#goToStep" data-vacancy-wizard-target="navButton" data-step="3">Формат работы</button>
+    <!-- etc. -->
+  </div>
+
+      <!-- Step 1 -->
+      <div class="M_VacancyStep" data-vacancy-wizard-target="step" data-step-index="1">
+        <div class="W_VacancyFields">
+          <h2 class="A_Subtitle">Самое важное</h2>
+          <div class="form-group">
+            <%= form.text_field :title, placeholder: "Позиция", class: 'A_TextField', data: { action: "input->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="form-group">
+            <%= form.text_field :location, placeholder: "Локация", class: 'A_TextField', data: { action: "input->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="form-group">
+            <%= form.text_field :salary, placeholder: "Зарплата", class: 'A_TextField', data: { action: "input->vacancy-wizard#updatePreview" } %>
+          </div>
+        </div>
+        <button class="A_Button" type="button" data-action="click->vacancy-wizard#goToNextStep">Продолжить</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="M_VacancyStep hidden" data-vacancy-wizard-target="step" data-step-index="2">
+        <div class="W_VacancyFields">
+          <h2 class="A_Subtitle">Какой тип вакансии?</h2>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Фулл-тайм</p>
+            <%= form.radio_button :employment_type, "Фулл-тайм", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Парт-тайм</p>
+            <%= form.radio_button :employment_type, "Парт-тайм", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Стажировка</p>
+            <%= form.radio_button :employment_type, "Стажировка", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+        </div>
+        <button class="A_Button" type="button" data-action="click->vacancy-wizard#goToNextStep">Продолжить</button>
+      </div>
+      <!-- Step 3 -->
+      <div class="M_VacancyStep hidden" data-vacancy-wizard-target="step" data-step-index="3">
+        <div class="W_VacancyFields">
+          <h2 class="A_Subtitle">Какой формат работы?</h2>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Офис</p>
+            <%= form.radio_button :workplace_type, "офис", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Удаленно</p>
+            <%= form.radio_button :workplace_type, "удаленно", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+          <div class="A_RadioButton">
+            <div class="W_RadioButtonCheck">
+              <div class="U_RadioButtonCircle"></div>
+            </div>
+            <p>Гибрид</p>
+            <%= form.radio_button :workplace_type, "гибрид", class: 'U_RealButton', data: { action: "change->vacancy-wizard#updatePreview" } %>
+          </div>
+        </div>
+        <button class="A_Button" type="button" data-action="click->vacancy-wizard#goToNextStep">Продолжить</button>
+      </div>
+
+      <!-- Step 4: Confirmation -->
+      <div class="M_VacancyStep hidden" data-vacancy-wizard-target="step" data-step-index="4">
+        <div class="W_TextWithIcon">
+          <h2 class="A_Subtitle U_White">Looks great!</h2>
+          <img src="../images/Q_SuccessIcon.svg" alt="">
+        </div>
+          <p class="A_Text">Review all details on the right and click "Create Vacancy" when ready.</p>
+
+        <%= form.submit "Отправить на рассмотрение", class: "A_Button" %>
+      </div>
+    </div>
+    <div class="O_VacancyPreview">
+      <div class="M_VacancyCard" data-vacancy-wizard-target="previewCard">
+        <div class="W_VacancyCardStack">
+          <p class="A_VacancyTitle" data-vacancy-wizard-target="previewTitle"></h3>
+          <p data-vacancy-wizard-target="previewDescription"></p>
+          <div class="W_VacancyChips">
+            <span class="A_VacancyChips U_Salary" data-vacancy-wizard-target="previewSalary"></span>
+            <span class="A_VacancyChips" data-vacancy-wizard-target="previewEmploymentType"></span>
+          </div>
+        </div>
+        <div class="W_VacancyCardStack">
+          <div class="W_VacancyInfoRow">
+            <img class="Q_Location" src="../images/Q_Location.svg" alt="">
+            <p class="A_VacancyCardBodyText U_Secondary" data-vacancy-wizard-target="previewLocation"></p>
+            <p class="A_VacancyCardBodyText U_Secondary" data-vacancy-wizard-target="previewWorkplaceType"></p>
+          </div>
+          <p class="A_VacancyCardBodyText U_Medium">Т-Банк</p>
+        </div>
+      </div>
+    </div>
+<% end %>

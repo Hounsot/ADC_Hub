@@ -1,0 +1,19 @@
+.A_FormSteps{
+    border: 0;
+    font-size: 20px;
+    color: var(--font-default-color);
+    padding: 10px 20px;
+    background-color: var(--first-level-background);
+    border-radius: 12px;
+    cursor: pointer;
+    &:is(.U_Active){
+        background-color: var(--primary-button-bg-color);
+        color: var(--primary-button-text-color);
+        &:hover{
+            background-color: var(--primary-button-bg-color-hover);
+        }    
+    }
+    &:hover{
+        background-color: var(--first-level-background-hover);
+    }
+}

@@ -7,13 +7,16 @@
       color: var(--font-default-color);
     }
     &:is(.U_Full-time) {
-      background-color: var(--full-time-color);
+      background-color: var(--full-time-color) !important;
+      color: var(--first-level-background) !important;
     }
     &:is(.U_Part-time) {
-      background-color: var(--part-time-color);
+      background-color: var(--part-time-color) !important;
+      color: var(--first-level-background) !important;
     }
     &:is(.U_Intertship) {
-      background-color: var(--internship-color);
+      background-color: var(--internship-color) !important;
+      color: var(--first-level-background) !important;
     }
   }
   

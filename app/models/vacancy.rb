@@ -1,6 +1,5 @@
 class Vacancy < ApplicationRecord
-  belongs_to :company
   belongs_to :user
-
-  validates :title, :description, :employment_type, presence: true
+  belongs_to :company, optional: true
+  validates :title, :employment_type, presence: true
 end

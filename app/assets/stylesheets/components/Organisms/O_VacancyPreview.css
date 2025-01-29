@@ -1,0 +1,35 @@
+.O_VacancyPreview{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    background-image: url('/images/Q_PreviewBackground.png');
+    background-position: center;
+    .M_VacancyCard{
+        width: 668px;
+        min-width: 668px;
+        max-width: 668px;
+        height: 458px;
+        min-height: 458px;
+        max-height: 458px;
+    }
+    .A_VacancyTitle{
+        font-size: 54px;
+        font-weight: 500;
+    }
+    .A_VacancyChips{
+        background-color: var(--salary-color);
+        color: var(--font-default-color);
+        font-size: 28px;
+    }
+    .A_VacancyCardBodyText{
+        font-size: 28px;
+    }
+    .Q_Location{
+        width: 21px;
+        height: 27px;
+    }
+}

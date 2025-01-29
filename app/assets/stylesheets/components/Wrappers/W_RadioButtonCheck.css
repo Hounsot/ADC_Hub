@@ -1,0 +1,21 @@
+.W_RadioButtonCheck{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--primary-button-bg-color);
+    border-radius: 100px;
+    .U_RadioButtonCircle{
+        display: none;
+        border-radius: 100px;
+        background-color: var(--primary-button-bg-color);
+        min-width: 14px;
+        width: 14px;
+        min-height: 14px;
+        height: 14px;
+        &:is(U_Active){
+            display: block;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.W_TextAndLinkRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    span{
+        width: fit-content;
+        font-size: 18px;
+        color: var(--font-second-color);
+    }
+}

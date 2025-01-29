@@ -1,0 +1,8 @@
+.W_FormSteps{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

@@ -1,0 +1,5 @@
+.A_TextLink{
+    font-size: 18px;
+    text-decoration: underline;
+    color: var(--font-default-color);
+}

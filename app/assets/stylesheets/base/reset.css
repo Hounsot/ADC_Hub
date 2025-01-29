@@ -13,8 +13,25 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh;
+    min-height: 100vh;
     padding: 124px 24px 24px 24px;
     &:is(.U_NoScroll){
         /* overflow-y: hidden; */
     }
 }
+.VacancyWizard {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  /* Steps on the left, preview on the right */
+  .VacancyWizard-steps {
+    flex: 1;
+  }
+  
+  .VacancyWizard-preview {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }  

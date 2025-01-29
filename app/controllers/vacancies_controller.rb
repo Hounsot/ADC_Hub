@@ -1,5 +1,6 @@
 class VacanciesController < ApplicationController
   before_action :set_vacancy, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [ :new, :create ]
 
   def index
     @vacancies = Vacancy.includes(:company).order(created_at: :desc)
@@ -15,10 +16,11 @@ class VacanciesController < ApplicationController
   def create
     @vacancy = Vacancy.new(vacancy_params)
     @vacancy.user = current_user
-
+    @vacancy.company = current_user.company if current_user&.company.present?
     if @vacancy.save
-      redirect_to @vacancy, notice: "Vacancy was successfully created."
+      redirect_to @vacancy, notice: "Vacancy created successfully."
     else
+      Rails.logger.info "Vacancy save failed: #{@vacancy.errors.full_messages}"
       render :new
     end
   end
@@ -46,6 +48,6 @@ class VacanciesController < ApplicationController
   end
 
   def vacancy_params
-    params.require(:vacancy).permit(:title, :description, :salary, :location, :employment_type, :company_id)
+    params.require(:vacancy).permit(:title, :description, :salary, :location, :employment_type, :company_id, :workplace_type)
   end
 end

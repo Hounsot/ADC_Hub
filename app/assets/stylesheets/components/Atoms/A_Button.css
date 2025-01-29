@@ -11,6 +11,9 @@
     cursor: pointer;
     transition: var(--button-transitions);
     user-select: none;
+    &:is(.U_Secondary){
+        background-color: aqua;
+    }
     .A_VacancyCardBodyText{
         color: var(--primary-button-text-color);
     }
