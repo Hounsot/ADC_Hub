@@ -9,7 +9,7 @@
         background-color: var(--first-level-background-hover);
     }
     &:is(.U_Active){
-
+        background-color: var(--part-time-color);
     }
     input{
         position: absolute;

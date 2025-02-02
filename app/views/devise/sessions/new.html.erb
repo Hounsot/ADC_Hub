@@ -1,29 +1,30 @@
 <div class="SO_FormView">
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'SO_VacancyCreate')  do |f| %>
-  <div class="M_VacancyStep">
-
-  <h2 class="A_Subtitle">Вход</h2>
-  <div class="W_VacancyFields">
-    <div class="field">
-      <%= f.email_field :email, autofocus: true, class: 'A_TextField', placeholder: "Логин", autocomplete: "email" %>
-    </div>
-    <div class="field">
-      <%= f.password_field :password, class: 'A_TextField', placeholder: "Пароль", autocomplete: "current-password" %>
-    </div>
-  </div>
-        <% if devise_mapping.rememberable? %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'O_FormViewHalf'})  do |f| %>
+    <div class="M_VacancyStep">
+      <h2 class="A_Subtitle">Вход</h2>
+      <div class="W_VacancyFields">
+        <div class="field">
+          <%= f.email_field :email, autofocus: true, class: 'A_TextField', placeholder: "Логин", autocomplete: "email" %>
+        </div>
+        <div class="field">
+          <%= f.password_field :password, class: 'A_TextField', placeholder: "Пароль", autocomplete: "current-password" %>
+        </div>
+      </div>
+      <% if devise_mapping.rememberable? %>
         <div class="M_RememberMe">
-          <div class="A_CheckBox">
+          <div class="A_CheckBox" data-controller="devise-form">
             <%= f.check_box :remember_me %>
           </div>
           <p class="A_SmallText">Запомнить меня</p>
         </div>
       <% end %>
-  <div class="actions">
-    <%= f.submit "Войти", class: 'A_Button' %>
-  </div>
-<% end %>
+      <div class="actions">
+        <%= f.submit "Войти", class: 'A_Button' %>
+      </div>
       <%= render "devise/shared/links" %>
+    </div>
+  <% end %>
+  <div class="O_FormViewHalf">
+    <img src="../images/A_FormVisual-1.jpg" class="A_FormImage" alt="">
   </div>
 </div>
