@@ -1,0 +1,7 @@
+.SO_Landing{
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    min-width: 1636px;
+    max-width: 1636px;
+}

@@ -1,0 +1,10 @@
+.M_LandingStory{
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    width: 336px;
+    background-color: var(--first-level-background);
+    justify-content: flex-end;
+    padding: 24px;
+    border-radius: 12px;
+}

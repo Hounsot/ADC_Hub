@@ -1,0 +1,8 @@
+.A_LandingTitle{
+    font-size: 68px;
+    line-height: 100%;
+    color: var(--font-default-color);
+    &:is(.U_Center){
+        text-align: center;
+    }
+}

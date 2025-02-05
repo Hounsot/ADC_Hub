@@ -1,0 +1,10 @@
+.A_Link{
+    font-size: 18px;
+    padding: 10px 14px;
+    color: var(--font-default-color);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}

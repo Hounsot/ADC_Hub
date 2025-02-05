@@ -1,0 +1,14 @@
+.O_LandingFirstScreen{
+    display: flex;
+    flex-direction: column;
+    padding: 48px 10px 0px 10px;
+    height: 924px;
+    width: 100%;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--first-level-background);
+    background-image: url(/images/Q_LandingFirstScreenBg.png);
+    background-position: center;
+    background-size: cover;
+}
