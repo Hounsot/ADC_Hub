@@ -1,5 +1,5 @@
 .A_TextDescription{
-    font-size: 24px;
+    font-size: var(--landingParagraphSize);
     line-height: 120%;
     color: var(--font-default-color);
     &:is(.U_Center){

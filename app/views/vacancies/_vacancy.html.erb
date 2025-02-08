@@ -6,7 +6,7 @@
         <div class="A_VacancyChips U_Salary">
           <%= vacancy.salary %>
         </div>
-      <% end %>  
+      <% end %>
       <% if vacancy.employment_type.present? %>
         <div class="A_VacancyChips <%= case vacancy.employment_type
           when "Фулл-тайм" then "U_Full-time"
@@ -16,8 +16,8 @@
         end %>">
           <%= vacancy.employment_type %>
         </div>
-      <% end %>  
-    </div>  
+      <% end %>
+    </div>
   </div>
   <div class="W_VacancyCardStack">
     <% if vacancy.location.present? %>
@@ -27,7 +27,7 @@
       </div>
     <% end %>
     <% if vacancy.company.present? %>
-      <div class="W_VacancyInfoRow">  
+      <div class="W_VacancyInfoRow">
         <p class="A_VacancyCardBodyText U_Medium"><%= vacancy.company.name %></p>
         <div class="A_Circle"></div>
         <p class="A_VacancyCardBodyText U_Secondary"><%= "#{time_ago_in_words(vacancy.created_at)} назад" %></p>

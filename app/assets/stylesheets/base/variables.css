@@ -1,24 +1,78 @@
 :root {
-    --main-bg: #ffffff;
-    --main-color: #333333;
-    --salary-color: #818181;
-    --full-time-color: #6BA8D6;
-    --part-time-color: #4FE7A8;
-    --internship-color: #CFB2F5;  
-    --first-level-background: #121212;
-    --first-level-background-hover: #323232;
-    --zero-level-background: #08090A;
-    --font-default-color: #ffffff;
-    --font-second-color: #818181;
-    --primary-button-bg-color: #e6e6e6;
-    --primary-button-bg-color-hover: #ffffff;
-    --primary-button-text-color: #131313;
-    --navbar-background-color: rgba(38, 38, 38, 0.69);
-    --navbar-link-color: #616161;
-    --navbar-link-color-hover: #929292;
-    --blur-color: rgba(0, 0, 0, 0.50);;
-    /* button transitions */
-    --button-transitions: all .2s ease-in-out;
-    /* button height */
-    --button-height: 45px;
+  --main-bg: #ffffff;
+  --main-color: #333333;
+  --salary-color: #818181;
+  --full-time-color: #6ba8d6;
+  --part-time-color: #4fe7a8;
+  --internship-color: #cfb2f5;
+  --first-level-background: #121212;
+  --first-level-background-hover: #323232;
+  --zero-level-background: #08090a;
+  --font-default-color: #ffffff;
+  --font-second-color: #818181;
+  --primary-button-bg-color: #e6e6e6;
+  --primary-button-bg-color-hover: #ffffff;
+  --primary-button-text-color: #131313;
+  --navbar-background-color: rgba(38, 38, 38, 0.69);
+  --navbar-link-color: #616161;
+  --navbar-link-color-hover: #929292;
+  --blur-color: rgba(0, 0, 0, 0.5);
+  --navbarHeight: 60px;
+  /* paddings */
+  --bodyPaddings: var(--navbarHeight) 0 24px 0;
+  --landingSectionInsidePaddings: 72px 0 72px;
+  /* text sizes */
+  --landingTitleSize: 68px;
+  --landingSubtitleSize: 48px;
+  --landingParagraphSize: 24px;
+  /* gaps */
+  --landingGap: 48px;
+  /* page's width */
+  --landingMaxWidth: 1636px;
+  /* button transitions */
+  --button-transitions: all 0.2s ease-in-out;
+  /* button height */
+  --button-height: 45px;
+  /* с 1919 по 1600 пикселей */
+  @media all and (max-width: 1919px) {
+  }
+  /* с 1599 по 1366 пикселей */
+  @media all and (max-width: 1599px) {
+    /* text sizes */
+    --landingTitleSize: 58px;
+    --landingSubtitleSize: 42px;
+    --landingParagraphSize: 20px;
+    /* page's width */
+    --landingMaxWidth: 1174px;
+    /* paddings */
+    --landingSectionInsidePaddings: 48px 0 48px;
+  }
+  /* с 1365 по 1024 пикселей */
+  @media all and (max-width: 1365px) {
+    /* text sizes */
+    --landingTitleSize: 42px;
+    --landingSubtitleSize: 32px;
+    --landingParagraphSize: 20px;
+    /* page's width */
+    --landingMaxWidth: 940px;
+    /* gaps */
+    --landingGap: 24px;
+        /* paddings */
+        --landingSectionInsidePaddings: 24px 0 24px;
+  }
+  /* с 1023 по 768 пикселей */
+  @media all and (max-width: 1023px) {
+    /* text sizes */
+    --landingTitleSize: 42px;
+    --landingSubtitleSize: 26px;
+    --landingParagraphSize: 18px;
+    /* page's width */
+    --landingMaxWidth: 100%;
+    /* gaps */
+    --landingGap: 48px;
+  }
+  @media all and (max-width: 768px) {
+    /* page's width */
+    --landingMaxWidth: 100%;
+  }
 }

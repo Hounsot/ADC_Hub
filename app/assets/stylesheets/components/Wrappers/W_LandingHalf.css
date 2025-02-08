@@ -1,0 +1,76 @@
+.W_LandingHalf{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    &:is(.U_BG){
+        background-color: var(--first-level-background);
+        background-image: url('/images/Q_LandingCareerBG.png');
+        aspect-ratio: 1/1;
+        border-radius: 12px;
+        position: relative;
+        .M_VacancyCard{
+            box-sizing: border-box;
+            position: absolute;
+            max-width: 464px;
+            background-color: #2C2C2C;
+            max-height: 288px;
+            box-shadow: 0px 0px 33.6px 0px rgba(0, 0, 0, 0.25);
+            &:is(.U_First){
+                transform: rotate(-6.437deg);
+                left: -20px;
+                top: 40px;
+            }
+            &:is(.U_Second){
+                transform: rotate(-3.011deg);
+                left: 169px;
+                top: 288px;
+            }
+            &:is(.U_Third){
+                transform: rotate(12.948deg);
+                left: 357px;
+                bottom: 40px;
+            }
+        }
+        @media all and (max-width: 1023px) {
+            background: none;
+            height: 884px;
+            .M_VacancyCard{
+                width: 612px;
+                max-width: 612px;
+                min-width: 612px;
+                height: 380px;
+                max-height: 380px;    
+                min-height: 380px;    
+                box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.55);
+                .A_VacancyTitle{
+                    font-size: 48px;
+                }
+                .A_VacancyChips{
+                    font-size: 24px;
+                }
+                .A_VacancyCardBodyText{
+                    font-size: 24px;
+                }
+                &:is(.U_First){
+                    z-index: 1;
+                    transform: rotate(-10.73deg) translateX(-50%);
+                    left: 50%;
+                    top: 0;
+                }
+                &:is(.U_Second){
+                    z-index: 3;
+                    transform: rotate(3.46deg) translateX(-50%);
+                    left: 50%;
+                    top: 248px;
+                }
+                &:is(.U_Third){
+                    z-index: 2;
+                    transform: rotate(-5.93deg) translateX(-50%);
+                    left: 50%;
+                    top: 440px;
+                }
+            }    
+        }        
+    }
+}

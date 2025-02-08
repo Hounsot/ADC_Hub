@@ -1,0 +1,21 @@
+.W_LandingProjectsLinks{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    gap: 8px;
+    @media all and (max-width: 1023px) {
+    flex-direction: column;
+    .M_LandingStory{
+        max-height: 424px;
+    }
+    }
+    .M_LandingStory{
+        width: 100%;
+        height: 540px;
+        aspect-ratio: 1/1;
+        .A_LandingStoryTitle{
+            width: 200px;
+        }
+    }
+}

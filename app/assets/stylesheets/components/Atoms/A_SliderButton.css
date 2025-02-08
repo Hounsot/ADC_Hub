@@ -3,5 +3,30 @@
     width: 36px;
     height: 36px;
     border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--button-transitions);
     background-color: var(--first-level-background);
+    &:hover{
+        background-color: var(--first-level-background-hover);
+        img{
+            filter: opacity(1);
+        }
+    }
+    img{
+        width: 12px;
+        height: 16px;
+        filter: opacity(.5);
+        user-select: none; /* Standard syntax */
+        transition: var(--button-transitions);
+    }
+    &:is(.U_Left){
+        padding-left: 4px;
+        transform: scale(-1);
+
+    }
+    &:is(.U_Right){
+        padding-right: 0px;
+    }
 }

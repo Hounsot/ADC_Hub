@@ -1,5 +1,5 @@
 .A_LandingTitle{
-    font-size: 68px;
+    font-size: var(--landingTitleSize);
     line-height: 100%;
     color: var(--font-default-color);
     &:is(.U_Center){

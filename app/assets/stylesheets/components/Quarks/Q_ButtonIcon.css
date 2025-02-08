@@ -1,4 +1,9 @@
 .Q_ButtonIcon{
     width: 12px;
     height: 12px;
+    transform: rotate(0deg);
+    transition: var(--button-transitions);
+    &:is(.U_Active){
+        transform: rotate(-90deg);
+    }
 }

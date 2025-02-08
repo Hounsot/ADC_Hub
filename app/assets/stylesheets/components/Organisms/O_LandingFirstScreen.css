@@ -11,4 +11,17 @@
     background-image: url(/images/Q_LandingFirstScreenBg.png);
     background-position: center;
     background-size: cover;
+    @media all and (max-width: 1599px) {
+        height: 768px;
+    }
+    @media all and (max-width: 1365px) {
+        height: 704px;
+    }
+    @media all and (max-width: 1023px) {
+        justify-content: center;
+        height: calc(100vh - 24px - var(--navbarHeight) - 24px);
+        .W_ButtonsRow{
+            flex-direction: column;
+        }
+    }
 }

@@ -1,0 +1,18 @@
+.O_LandingCareer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: fit-content;
+    padding: var(--landingSectionInsidePaddings);
+    .A_LandingSubtitle{
+        width: 600px;
+    }
+    .A_TextDescription{
+        width: 500px;
+    }
+    @media all and (max-width: 1023px) {
+        flex-direction: column;
+        gap: 24px;
+    }    
+}

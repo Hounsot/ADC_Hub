@@ -13,4 +13,5 @@
     gap: 24px;
     padding: 10px 20px;
     border-radius: 200px;
+    z-index: 9999;
 }

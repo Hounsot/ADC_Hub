@@ -4,4 +4,6 @@
     justify-content: center;
     width: 30px;
     height: 30px;
+    border: 1px solid #9B9B9B;
+    border-radius: 100px;
 }

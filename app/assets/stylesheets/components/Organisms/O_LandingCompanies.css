@@ -1,6 +1,7 @@
-.O_LandingStories{
+.O_LandingCompanies{
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 24px;
+    align-items: center;
     padding: var(--landingSectionInsidePaddings);
 }

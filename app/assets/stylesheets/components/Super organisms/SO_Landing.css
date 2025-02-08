@@ -1,7 +1,11 @@
-.SO_Landing{
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
-    min-width: 1636px;
-    max-width: 1636px;
+.SO_Landing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--landingGap);
+  min-width: var(--landingMaxWidth);
+  max-width: var(--landingMaxWidth);
+  @media all and (max-width: 1023px) {
+    padding: 24px;
+    overflow-x: hidden;
+  }
 }

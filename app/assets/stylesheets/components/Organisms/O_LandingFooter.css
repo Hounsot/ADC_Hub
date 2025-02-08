@@ -1,0 +1,12 @@
+.O_LandingFooter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 96px 0;
+    height: 454px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--first-level-background);
+    background-image: url(/images/Q_LandingFooterBg.png);
+}
