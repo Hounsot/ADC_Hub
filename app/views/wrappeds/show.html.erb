@@ -1,0 +1,13 @@
+<!-- app/views/wrapped/show.html.erb -->
+<div class="wrapped-container" data-controller="wrapped">
+  <h1>Your Wrapped</h1>
+  <!-- The button that triggers the generateWrapped() method -->
+  <button
+    class="btn btn-primary"
+    data-action="click->wrapped#generateWrapped"
+    >
+    Generate My Wrapped
+  </button>
+  <!-- We'll show the results here -->
+  <div id="wrapped-results"></div>
+</div>

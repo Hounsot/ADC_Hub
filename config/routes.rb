@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get "vacancies/destroy"
   root "pages#home"
   resources :vacancies
+  resource :wrapped, only: [ :show ] do
+    get :generate, on: :member
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -21,6 +21,7 @@
         justify-content: center;
         height: calc(100vh - 24px - var(--navbarHeight) - 24px);
         .W_ButtonsRow{
+            gap: 0;
             flex-direction: column;
         }
     }

@@ -8,4 +8,10 @@
     &:is(.U_Inactive){
         filter: blur(10px) opacity(0);
     }
+    @media all and (max-width: 1365px) {
+        transform: translate(-50%, -50%) scale(.8);
+    }    
+    @media all and (max-width: 1023px) {
+        transform: translate(-50%, -50%) scale(1);
+    }    
 }

@@ -6,5 +6,8 @@
     padding: var(--landingSectionInsidePaddings);
     .A_TextDescription{
         width: 494px;
+        @media all and (max-width: 1023px) {
+            width: 100%;
+        }        
     }
 }

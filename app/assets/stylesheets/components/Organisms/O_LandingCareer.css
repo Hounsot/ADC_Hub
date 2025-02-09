@@ -7,10 +7,22 @@
     padding: var(--landingSectionInsidePaddings);
     .A_LandingSubtitle{
         width: 600px;
+        @media all and (max-width: 1599px) {
+            width: 100%;
+        }        
+        @media all and (max-width: 1023px) {
+            width: 100%;
+        }        
     }
     .A_TextDescription{
         width: 500px;
+        @media all and (max-width: 1365px) {
+            width: 100%;
+        }        
     }
+    @media all and (max-width: 1599px) {
+        gap: 24px;
+      }    
     @media all and (max-width: 1023px) {
         flex-direction: column;
         gap: 24px;

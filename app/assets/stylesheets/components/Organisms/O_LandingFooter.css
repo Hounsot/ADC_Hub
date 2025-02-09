@@ -9,4 +9,11 @@
     border-radius: 12px;
     background-color: var(--first-level-background);
     background-image: url(/images/Q_LandingFooterBg.png);
+    @media all and (max-width: 1023px) {
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        height: calc(100vh - 24px - var(--navbarHeight) - 24px);
+    }    
 }

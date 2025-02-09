@@ -57,8 +57,8 @@
     --landingMaxWidth: 940px;
     /* gaps */
     --landingGap: 24px;
-        /* paddings */
-        --landingSectionInsidePaddings: 24px 0 24px;
+    /* paddings */
+    --landingSectionInsidePaddings: 24px 0 24px;
   }
   /* с 1023 по 768 пикселей */
   @media all and (max-width: 1023px) {
@@ -71,7 +71,20 @@
     /* gaps */
     --landingGap: 48px;
   }
-  @media all and (max-width: 768px) {
+  /* с 767 по x пикселей */
+  @media all and (max-width: 767px) {
+    /* text sizes */
+    --landingTitleSize: 32px;
+    --landingSubtitleSize: 32px;
+    --landingParagraphSize: 19px;
+    /* page's width */
+    --landingMaxWidth: 100%;
+  }
+  @media all and (max-width: 500px) {
+    /* text sizes */
+    --landingTitleSize: 32px;
+    --landingSubtitleSize: 32px;
+    --landingParagraphSize: 19px;
     /* page's width */
     --landingMaxWidth: 100%;
   }
