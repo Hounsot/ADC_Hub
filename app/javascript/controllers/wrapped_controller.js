@@ -57,40 +57,40 @@ export default class extends Controller {
     // Example: create a few cards for the data
     const resultsHTML = `
       <div class="card mb-3 p-3">
-        <h3>Total Projects</h3>
-        <p>${total_projects}</p>
+        <h3 style="color: white">Total Projects</h3>
+        <p> style="color: white"${total_projects}</p>
       </div>
 
       <div class="card mb-3 p-3">
-        <h3>Average Mark</h3>
-        <p>${average_mark}</p>
+        <h3 style="color: white">Average Mark</h3>
+        <p style="color: white">${average_mark}</p>
       </div>
 
       <div class="card mb-3 p-3">
-        <h3>Average Rating</h3>
-        <p>${average_rating}</p>
+        <h3 style="color: white">Average Rating</h3>
+        <p style="color: white">${average_rating}</p>
       </div>
 
       <div class="card mb-3 p-3">
-        <h3>Top Collaborators</h3>
-        <ul>${collaboratorsHtml}</ul>
+        <h3 style="color: white">Top Collaborators</h3>
+        <ul style="color: white">${collaboratorsHtml}</ul>
       </div>
 
       <div class="card mb-3 p-3">
-        <h3>Highest Mark Project</h3>
+        <h3 style="color: white">Highest Mark Project</h3>
         ${
           highest_mark_project
-            ? `<p>${highest_mark_project.title} (${highest_mark_project.totalMark || "N/A"})</p>`
-            : "<p>N/A</p>"
+            ? `<p style="color: white">${highest_mark_project.title} (${highest_mark_project.totalMark || "N/A"})</p>`
+            : `<p style="color: white">N/A</p>`
         }
       </div>
 
       <div class="card mb-3 p-3">
-        <h3>Lowest Mark Project</h3>
+        <h3 style="color: white">Lowest Mark Project</h3>
         ${
           lowest_mark_project
-            ? `<p>${lowest_mark_project.title} (${lowest_mark_project.totalMark || "N/A"})</p>`
-            : "<p>N/A</p>"
+            ? `<p style="color: white">${lowest_mark_project.title} (${lowest_mark_project.totalMark || "N/A"})</p>`
+            : `<p style="color: white">N/A</p>`
         }
       </div>
     `

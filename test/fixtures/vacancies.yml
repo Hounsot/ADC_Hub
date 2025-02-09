@@ -6,6 +6,7 @@ one:
   salary: MyString
   location: MyString
   employment_type: MyString
+  workplace_type: MyString
   company: one
   user: one
 
@@ -15,5 +16,6 @@ two:
   salary: MyString
   location: MyString
   employment_type: MyString
+  workplace_type: MyString
   company: two
   user: two

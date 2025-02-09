@@ -4,6 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :vacancies
+         has_many :vacancies
   belongs_to :company, optional: true
 end
