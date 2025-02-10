@@ -1,0 +1,54 @@
+<div class="SO_UserProfile">
+  <div class="O_UserInformation">
+    <div>
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar.variant(resize_to_limit: [300, 300]) %>
+      <% else %>
+        <!-- Wrap the message in a clickable link -->
+        <p>
+          <a href="#" id="toggle-upload">
+            No profile picture uploaded. Click here to upload.
+          </a>
+        </p>
+        <!-- Hidden upload form -->
+        <div id="upload-form" style="display: none;">
+          <%= form_with model: @user, url: upload_avatar_user_path(@user), local: true, method: :patch, html: { multipart: true } do |f| %>
+            <div>
+              <%= f.label :avatar, "Upload Profile Picture" %><br>
+              <%= f.file_field :avatar %>
+            </div>
+            <div>
+              <%= f.submit "Upload" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @user.name.blank? && @user.surname.blank? %>
+        <h1><%= current_user == @user ? "Your name" : "Name" %></h1>
+      <% else %>
+        <h1><%= @user.name %> <%= @user.surname %></h1>
+      <% end %>
+      <p>Описание...</p>
+      <p><%= @user.email %></p>
+    </div>
+  </div>
+  <div class="O_UserProjects"></div>
+</div>
+<!-- Simple JavaScript to toggle the upload form -->
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    var toggleLink = document.getElementById("toggle-upload");
+    var uploadForm = document.getElementById("upload-form");
+    if (toggleLink && uploadForm) {
+      toggleLink.addEventListener("click", function(e){
+        e.preventDefault();
+        // Toggle the display style between none and block
+        if (uploadForm.style.display === "none") {
+          uploadForm.style.display = "block";
+        } else {
+          uploadForm.style.display = "none";
+        }
+      });
+    }
+  });
+</script>

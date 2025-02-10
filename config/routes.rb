@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "users/show"
   get "pages/home"
   devise_for :users
   get "vacancies/index"
@@ -10,6 +11,11 @@ Rails.application.routes.draw do
   get "vacancies/destroy"
   root "pages#home"
   resources :vacancies
+  resources :users, only: [ :show, :edit, :update ] do
+    member do
+      patch :upload_avatar
+    end
+  end
   resource :wrapped, only: [ :show ] do
     get :generate, on: :member
   end

@@ -6,11 +6,11 @@
     min-width: 400px;
     padding: 24px;
     flex: 1 1 200px;
-    background-color: var(--first-level-background);
+    background-color: var(--second-level-background);
     justify-content: space-between;
     border-radius: 12px;
     transition: var(--button-transitions);
     &:hover{
-        background-color: var(--first-level-background-hover);
+        background-color: var(--second-level-background-hover);
     }
 }

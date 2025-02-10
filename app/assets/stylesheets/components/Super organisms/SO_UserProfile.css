@@ -1,0 +1,7 @@
+.SO_UserProfile{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    gap: 24px;
+}
