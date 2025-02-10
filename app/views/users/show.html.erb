@@ -5,11 +5,9 @@
         <%= image_tag @user.avatar.variant(resize_to_limit: [300, 300]) %>
       <% else %>
         <!-- Wrap the message in a clickable link -->
-        <p>
-          <a href="#" id="toggle-upload">
-            No profile picture uploaded. Click here to upload.
-          </a>
-        </p>
+        <a href="#" id="toggle-upload">
+          <%= image_tag asset_path("Q_DefaultAvatar.png"), alt: "Default avatar" %>
+        </a>
         <!-- Hidden upload form -->
         <div id="upload-form" style="display: none;">
           <%= form_with model: @user, url: upload_avatar_user_path(@user), local: true, method: :patch, html: { multipart: true } do |f| %>
@@ -32,23 +30,35 @@
       <p><%= @user.email %></p>
     </div>
   </div>
-  <div class="O_UserProjects"></div>
-</div>
-<!-- Simple JavaScript to toggle the upload form -->
-<script>
-  document.addEventListener("DOMContentLoaded", function(){
-    var toggleLink = document.getElementById("toggle-upload");
-    var uploadForm = document.getElementById("upload-form");
-    if (toggleLink && uploadForm) {
-      toggleLink.addEventListener("click", function(e){
-        e.preventDefault();
-        // Toggle the display style between none and block
-        if (uploadForm.style.display === "none") {
-          uploadForm.style.display = "block";
-        } else {
-          uploadForm.style.display = "none";
-        }
-      });
-    }
-  });
-</script>
+  <div class="O_UserProjectsAndBanner">
+    <p class="A_SmallTitle">Мое место работы</p>
+    <div class="M_UserEmploymentBanner">
+      <div class="W_EmploymentBannerText">
+        <p class="A_BannerText"><span <%= @user.position.present? ? "test" : %q(class="Name") %>>Старший дизайнер</span> в <span class="U_Gray"><%= @user.company.name %></span></p>
+        </div>
+        <% if current_user == @user %>
+          <div class="A_Button">Запросить рекомендацию</div>
+        <% end %>
+      </div>
+      <p class="A_SmallTitle">Мои проекты</p>
+      <div class="M_UserProjects"></div>
+    </div>
+  </div>
+  <!-- Simple JavaScript to toggle the upload form -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      var toggleLink = document.getElementById("toggle-upload");
+      var uploadForm = document.getElementById("upload-form");
+      if (toggleLink && uploadForm) {
+        toggleLink.addEventListener("click", function(e){
+          e.preventDefault();
+          // Toggle the display style between none and block
+          if (uploadForm.style.display === "none") {
+            uploadForm.style.display = "block";
+          } else {
+            uploadForm.style.display = "none";
+          }
+        });
+      }
+    });
+  </script>

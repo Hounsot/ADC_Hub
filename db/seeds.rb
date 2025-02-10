@@ -108,8 +108,8 @@ EMAILS = [
 #    Uncomment these lines if you want a fresh start each time you run seeds:
 #
 Vacancy.destroy_all
-Company.destroy_all
 User.destroy_all
+Company.destroy_all
 
 # 3. Create a few Users (if you don't already have them):
 puts "Creating Users..."

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "vacancies/destroy"
   root "pages#home"
   resources :vacancies
-  resources :users, only: [ :show, :edit, :update ] do
+  resources :users, only: [ :show, :index, :edit, :update ] do
     member do
       patch :upload_avatar
     end

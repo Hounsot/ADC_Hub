@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [ :show ]  # We use this for the show action
 
   def show
-    # @user is set by set_user (and for show, it should be provided via params)
+  end
+  def index
+    @users = User.all.order(:id)
   end
 
   def upload_avatar

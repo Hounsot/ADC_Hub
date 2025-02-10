@@ -3,4 +3,7 @@
     font-size: 60px;
     line-height: 100%;
     font-weight: 500;
+    .U_Gray{
+        color: var(--font-second-color);
+    }
 }
