@@ -103,11 +103,14 @@ EMAILS = [
   "dave@example.com",
   "eve@example.com"
 ]
+CARD_TYPES = [ "text", "link", "image", "job", "divider" ]
+
 
 # 2. (Optional) Clear existing data to avoid duplicates:
 #    Uncomment these lines if you want a fresh start each time you run seeds:
 #
 Vacancy.destroy_all
+Card.destroy_all
 User.destroy_all
 Company.destroy_all
 
@@ -120,6 +123,8 @@ puts "Creating Users..."
 USERNAMES.each_with_index do |username, i|
   User.create!(
     email: EMAILS[i],
+    name: username,
+    surname: username,
     password: "password"
   )
 end
@@ -175,5 +180,58 @@ companies.each do |company|
 end
 
 puts "Created #{Vacancy.count} Vacancies."
+
+def generate_card_title(card_type)
+  case card_type
+  when "text"
+    "Sample Text Card"
+  when "link"
+    "Check this link out!"
+  when "image"
+    "My cool image"
+  when "job"
+    "Job Overview"
+  when "divider"
+    "Section Divider"
+  else
+    "Generic Card"
+  end
+end
+
+def generate_card_content(card_type)
+  case card_type
+  when "text"
+    "Some interesting text content goes here."
+  when "job"
+    "My current job details..."
+  when "image"
+    "Just an example image card"
+  when "link"
+    "A short description of the link"
+  when "divider"
+    ""  # no content needed for a divider
+  else
+    "No specific content"
+  end
+end
+
+puts "Creating random Cards for each user..."
+users.each do |user|
+  # Decide how many cards to create for this user
+  num_cards = rand(7..15)
+
+  num_cards.times do |index|
+    card_type = CARD_TYPES.sample
+    user.cards.create!(
+      card_type: card_type,
+      title: generate_card_title(card_type),
+      content: generate_card_content(card_type),
+      url: (card_type == "link" ? "https://www.example.com" : nil),
+      position: index + 1  # simple ascending positions
+    )
+  end
+end
+
+puts "Created #{Card.count} Cards."
 
 puts "Seed data created successfully!"

@@ -1,0 +1,15 @@
+.M_ActionBarOption{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding: 12px;
+    max-width: 100%;
+    width: 100%;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 12px;
+    user-select: none;
+    &:hover{
+        background-color: var(--surface-secondary);
+    }
+}

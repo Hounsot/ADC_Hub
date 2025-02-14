@@ -1,0 +1,5 @@
+.A_PortfolioDivider{
+    font-size: var(--text-section-size);
+    color: var(--font-default-color);
+    line-height: 100%;
+}

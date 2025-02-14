@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  card_type: MyString
+  title: MyString
+  content: MyText
+  url: MyString
+  position: 1
+
+two:
+  user: two
+  card_type: MyString
+  title: MyString
+  content: MyText
+  url: MyString
+  position: 1

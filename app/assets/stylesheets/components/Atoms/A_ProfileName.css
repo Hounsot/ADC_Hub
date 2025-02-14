@@ -1,0 +1,10 @@
+.A_ProfileName{
+    font-size: var(--text-name-size);
+    color: var(--font-default-color);
+    &:is(.U_Interactive){
+        cursor: pointer;
+    }
+    &:is(.U_Empty){
+        color: var(--font-second-color);
+    }
+}

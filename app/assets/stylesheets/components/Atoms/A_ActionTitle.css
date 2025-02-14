@@ -1,0 +1,4 @@
+.A_ActionTitle{
+    font-size: var(--text-action-title-size);
+    color: var(--font-default-color);
+}

@@ -1,0 +1,13 @@
+.A_AddCardButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 10px 15px;
+    background-color: var(--surface-invert);
+    border-radius: 40px;
+    cursor: pointer;
+    height: 45px;
+    max-height: 45px;
+    min-height: 45px;
+}

@@ -1,0 +1,9 @@
+.W_AddCardTop{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0px;
+    &:is(.U_Active){
+        width: 495px;
+    }
+}

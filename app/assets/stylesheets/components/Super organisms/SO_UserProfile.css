@@ -4,4 +4,8 @@
     width: 100%;
     height: fit-content;
     gap: 24px;
+    padding: var(--profilePaddings);
+    @media all and (max-width: 1023px) {
+        flex-direction: column;
+      }    
 }

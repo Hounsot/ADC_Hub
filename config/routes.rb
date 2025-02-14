@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get "cards/new"
+  get "cards/edit"
+  get "cards/create"
+  get "cards/update"
+  get "cards/destroy"
   get "users/show"
   get "pages/home"
   devise_for :users
@@ -12,6 +17,7 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :vacancies
   resources :users, only: [ :show, :index, :edit, :update ] do
+    resources :cards, only: [ :create ]  # or [:index, :new, :edit, :update, :destroy] if you need more
     member do
       patch :upload_avatar
     end

@@ -1,0 +1,6 @@
+<div class="A_UserCard U_Square" style="color: white;">
+  <p><%= card.title %></p>
+  <% if card.image.attached? %>
+    <%= image_tag card.image.variant(resize_to_limit: [400, 400]) %>
+  <% end %>
+</div>

@@ -1,4 +1,29 @@
 :root {
+  /* primitives */
+  /* sizes */
+  --xs: 14px;
+  --sm: 18px;
+  --md: 20px;
+  --xmd: 36px;
+  --lg: 42px;
+  --xl: 48px;
+  --xxl: 60px;
+  --xxxl: 18px;
+  --xxxxl: 18px;
+  /* colors */
+  /* shades */
+  --1000: #08090a;
+  --800: #121212;
+  --600: #252525;
+  --200: #9b9b9b;
+  --0: #ffffff;
+  /* brand */
+  --green: #4fe7a8;
+  --violet: #cfb2f5;
+  /* alpha */
+  --dark-alpha: rgba(0, 0, 0, 0.5);
+  --light-alpha: rgba(0, 0, 0, 0.5);
+  /* other */
   --main-bg: #ffffff;
   --main-color: #333333;
   --salary-color: #818181;
@@ -11,6 +36,22 @@
   --first-level-background-hover: #323232;
   --zero-level-background: #08090a;
   --font-default-color: #ffffff;
+  /* typography */
+  /* sizes */
+  --text-banner-size: var(--xxl);
+  --text-name-size: var(--xxl);
+  --text-description-size: var(--sm);
+  --text-section-size: var(--md);
+  --text-action-title-size: var(--md);
+  --text-action-description-size: var(--xs);
+  /* colors */
+  --text-secondary: var(--200);
+  /* surfaces */
+  --surface-secondary: var(--800);
+  --surface-secondary-hover: var(--second-level-background-hover);
+  --surface-invert: var(--0);
+  --surface-invert-hover: var(--second-level-background-hover);
+  --surface-alpha: var(--dark-alpha);
   --font-second-color: #818181;
   --primary-button-bg-color: #e6e6e6;
   --primary-button-bg-color-hover: #ffffff;
@@ -21,6 +62,7 @@
   --blur-color: rgba(0, 0, 0, 0.5);
   --navbarHeight: 60px;
   /* paddings */
+  --profilePaddings: 0 96px 24px 96px;
   --bodyPaddings: var(--navbarHeight) 0 24px 0;
   --landingSectionInsidePaddings: 72px 0 72px;
   /* text sizes */
@@ -40,6 +82,11 @@
   }
   /* с 1599 по 1366 пикселей */
   @media all and (max-width: 1599px) {
+    /* typography */
+    --text-banner-size: var(--xl);
+    --text-name-size: var(--xmd);
+    --text-description-size: var(--sm);
+    --text-section-size: var(--md);
     /* text sizes */
     --landingTitleSize: 58px;
     --landingSubtitleSize: 42px;
@@ -47,6 +94,7 @@
     /* page's width */
     --landingMaxWidth: 1174px;
     /* paddings */
+    --profilePaddings: 0 48px 24px 48px;
     --landingSectionInsidePaddings: 48px 0 48px;
   }
   /* с 1365 по 1024 пикселей */
@@ -64,6 +112,13 @@
   }
   /* с 1023 по 768 пикселей */
   @media all and (max-width: 1023px) {
+    /* paddings */
+    --profilePaddings: 0 48px 24px 48px;
+    /* typography */
+    --text-banner-size: var(--xl);
+    --text-name-size: var(--xl);
+    --text-description-size: var(--sm);
+    --text-section-size: var(--md);
     /* text sizes */
     --landingTitleSize: 42px;
     --landingSubtitleSize: 26px;
@@ -82,7 +137,14 @@
     /* page's width */
     --landingMaxWidth: 100%;
   }
-  @media all and (max-width: 500px) {
+  @media all and (max-width: 600px) {
+    /* paddings */
+    --profilePaddings: 0 24px 24px 24px;
+    /* typography */
+    --text-banner-size: var(--lg);
+    --text-name-size: var(--xmd);
+    --text-description-size: var(--md);
+    --text-section-size: var(--sm);
     /* text sizes */
     --landingTitleSize: 32px;
     --landingSubtitleSize: 32px;

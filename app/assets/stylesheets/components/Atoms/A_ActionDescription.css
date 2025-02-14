@@ -1,0 +1,4 @@
+.A_ActionDescription{
+    font-size: var(--text-action-description-size);
+    color: var(--text-secondary);
+}

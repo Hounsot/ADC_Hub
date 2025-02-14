@@ -1,6 +1,6 @@
 .A_BannerText{
     color: var(--font-default-color);
-    font-size: 60px;
+    font-size: var(--text-banner-size);
     line-height: 100%;
     font-weight: 500;
     .U_Gray{

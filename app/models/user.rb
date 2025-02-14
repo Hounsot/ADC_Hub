@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :vacancies
+  has_many :cards, dependent: :destroy
   belongs_to :company, optional: true
   has_one_attached :avatar
 end

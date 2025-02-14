@@ -1,0 +1,15 @@
+.A_ProfilePicture{
+    width: 180px;
+    height: 180px;
+    border-radius: 100px;
+    &:hover{
+
+    }
+    &:is(.U_Owner){
+        border: 1px solid #ffffff;
+    }
+    @media all and (max-width: 767px) {
+        width: 140px;
+        height: 140px;
+    }    
+}
