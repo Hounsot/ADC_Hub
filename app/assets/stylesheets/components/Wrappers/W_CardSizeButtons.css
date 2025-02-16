@@ -1,0 +1,17 @@
+.W_CardSizeButtons{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 36px;
+    height: fit-content;
+    border-radius: 12px;
+    padding: 4px;
+    background-color: var(--dark-alpha);
+    backdrop-filter: blur(7px);
+    filter: opacity(0);
+    pointer-events: none;
+    transition: var(--button-transitions);
+}

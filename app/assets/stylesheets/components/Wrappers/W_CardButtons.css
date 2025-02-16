@@ -1,0 +1,11 @@
+.W_CardButtons{
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 16px * 2);
+    filter: opacity(0);
+    pointer-events: none;
+    position: absolute;
+    justify-content: space-between;
+    right: 16px;
+    transition: var(--button-transitions);
+}

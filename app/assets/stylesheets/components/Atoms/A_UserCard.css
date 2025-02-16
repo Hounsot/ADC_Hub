@@ -1,10 +1,14 @@
 .A_UserCard{
     background-color: var(--surface-secondary);
     border-radius: 12px;
-    cursor: pointer;
-    padding: 24px;
+    position: relative;
+    padding: 16px;
     &:hover{
         background-color: var(--surface-secondary-hover);
+        .W_CardButtons, .W_CardSizeButtons{
+            filter: opacity(1);
+            pointer-events: all;
+        }
     }
     &:is(.U_Square){
         aspect-ratio: 1/1;

@@ -17,8 +17,10 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :vacancies
   resources :users, only: [ :show, :index, :edit, :update ] do
-    resources :cards, only: [ :create ]  # or [:index, :new, :edit, :update, :destroy] if you need more
-    member do
+    resources :cards, only: [ :create, :update, :destroy ] do
+      patch :update_size, on: :member
+    end
+      member do
       patch :upload_avatar
     end
   end

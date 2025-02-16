@@ -1,7 +1,7 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user
-  before_action :set_card, only: [ :edit, :update, :destroy ]
+  before_action :set_card, only: [ :edit, :update, :destroy, :update_size ]
 
   def new
     @card = @user.cards.new
@@ -33,6 +33,25 @@ class CardsController < ApplicationController
     end
   end
 
+  def update_size
+    new_size = params[:size] # expect "square" or "medium"
+    card_type = @card.card_type # e.g. "image"
+    partial_name = "cards/#{card_type}_card"
+
+    if @card.update(size: new_size)
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@card, partial: partial_name, locals: { card: @card })
+        end
+        format.html { redirect_to user_path(@card.user), notice: "Card size updated." }
+      end
+    else
+      # Handle error (you can add error feedback here)
+      redirect_to user_path(@card.user), alert: "There was a problem updating the card size."
+    end
+  end
+
+
   def edit
   end
 
@@ -45,6 +64,7 @@ class CardsController < ApplicationController
   end
 
   def destroy
+    @card = @user.cards.find(params[:id])
     @card.destroy
     redirect_to @user, notice: "Card deleted."
   end

@@ -1,0 +1,12 @@
+.A_CardSizeButton{
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover{
+        background-color: var(--surface-secondary);
+    }
+}

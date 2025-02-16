@@ -1,4 +1,4 @@
-<body data-controller="portfolio">
+<body data-controller="portfolio" data-controller="cards">
   <div class="SO_UserProfile">
     <div class="O_UserInformation">
       <div>
@@ -53,8 +53,12 @@
   <% if current_user == @user %>
     <div class="W_AddCard" data-portfolio-target="actionBar">
       <div class="W_AddCardTop">
-        <div class="W_AddCardOptions">
-          <div class="M_ActionBarOption">
+        <div class="W_AddCardOptions"
+     data-controller="cards"
+     data-cards-url-value="<%= user_cards_path(@user) %>">
+          <div class="M_ActionBarOption"
+       data-action="click->cards#create"
+            data-cards-type-value="link">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">
             </div>
@@ -63,7 +67,9 @@
               <p class="A_ActionDescription">Ссылка на сторонний ресурс</p>
             </div>
           </div>
-          <div class="M_ActionBarOption">
+          <div class="M_ActionBarOption"
+       data-action="click->cards#create"
+            data-cards-type-value="image">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">
             </div>
@@ -72,7 +78,9 @@
               <p class="A_ActionDescription">Jpeg, png, gif, webp</p>
             </div>
           </div>
-          <div class="M_ActionBarOption">
+          <div class="M_ActionBarOption"
+       data-action="click->cards#create"
+            data-cards-type-value="text">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">
             </div>
@@ -81,7 +89,9 @@
               <p class="A_ActionDescription">Блок с текстом</p>
             </div>
           </div>
-          <div class="M_ActionBarOption">
+          <div class="M_ActionBarOption"
+       data-action="click->cards#create"
+            data-cards-type-value="job">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">
             </div>
@@ -90,7 +100,9 @@
               <p class="A_ActionDescription">Блок с позицией и местом работы</p>
             </div>
           </div>
-          <div class="M_ActionBarOption">
+          <div class="M_ActionBarOption"
+       data-action="click->cards#create"
+            data-cards-type-value="divider">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">
             </div>
@@ -99,6 +111,7 @@
               <p class="A_ActionDescription">Satisfying key sounds</p>
             </div>
           </div>
+          <!-- Repeat for "text", "job", "divider", etc. -->
         </div>
         <div class="A_AddCardLine"></div>
       </div>
@@ -108,36 +121,6 @@
     </div>
   <% end %>
   <!-- Cards container -->
-  <div id="cards-container" data-controller="cards"
-     data-cards-url-value="<%= user_cards_path(@user) %>">
-    <div class="dropdown">
-      <button type="button" data-action="click->cards#toggleDropdown">
-        Add Card
-      </button>
-      <div id="card-types-dropdown" data-cards-target="dropdown" style="display:none;">
-        <button data-action="click->cards#create"
-          data-cards-type-value="text">
-          Text Card
-        </button>
-        <button data-action="click->cards#create"
-          data-cards-type-value="link">
-          Link Card
-        </button>
-        <button data-action="click->cards#create"
-          data-cards-type-value="image">
-          Image Card
-        </button>
-        <button data-action="click->cards#create"
-          data-cards-type-value="job">
-          Job Card
-        </button>
-        <button data-action="click->cards#create"
-          data-cards-type-value="divider">
-          Divider
-        </button>
-      </div>
-    </div>
-  </div>
   <!-- Add Card Dropdown -->
   <!-- Simple JavaScript to toggle the upload form -->
   <script>

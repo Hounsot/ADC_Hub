@@ -1,4 +1,30 @@
-<div class="A_UserCard U_Square" style="color: white;">
+<div class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" id="<%= dom_id(card) %>">
+  <% if current_user == @user %>
+    <div class="W_CardSizeButtons">
+      <%= link_to "S", update_size_user_card_path(card.user, card, size: "square"),
+            method: :patch,
+            data: { turbo_method: :patch },
+            class: "A_CardSizeButton" %>
+      <%= link_to "M", update_size_user_card_path(card.user, card, size: "medium"),
+            method: :patch,
+            data: { turbo_method: :patch },
+            class: "A_CardSizeButton" %>
+    </div>
+  <% end %>
+  <div class="W_CardButtons">
+    <div class="C_CardControls">
+      <% if current_user == @user %>
+        <%= link_to user_card_path(card.user, card),
+            data: { turbo_method: :delete },
+            class: "A_CardButton" do %>
+          <img src="../images/Q_CardDeleteIcon.svg" alt="">
+        <% end %>
+      <% end %>
+      <div class="A_CardButton">
+        <img src="../images/Q_CardSettingsIcon.svg" alt="">
+      </div>
+    </div>
+  </div>
   <p><%= card.title %></p>
   <% if card.image.attached? %>
     <%= image_tag card.image.variant(resize_to_limit: [400, 400]) %>

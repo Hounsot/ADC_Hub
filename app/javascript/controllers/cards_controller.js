@@ -42,8 +42,7 @@ export default class extends Controller {
   }
 
   appendCard(html) {
-    // Insert the new card partial at the bottom of the container
-    const container = document.getElementById("cards-container")
-    container.insertAdjacentHTML("beforeend", html)
+    const cardsContainer = document.querySelector(".M_UserCards")
+    cardsContainer.insertAdjacentHTML("beforeend", html)
   }
-}
+  }
