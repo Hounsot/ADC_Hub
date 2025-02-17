@@ -43,7 +43,7 @@
       </div>
       <p class="A_PortfolioDivider">Мои проекты</p>
       <div class="M_UserCards" style="--grid-gap: 10px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
-        <% @user.cards.order(:position).each do |card| %>
+        <% @user.cards.order(created_at: :desc).each do |card| %>
           <%= render "cards/#{card.card_type}_card", card: card %>
         <% end %>
       </div>
@@ -56,6 +56,7 @@
         <div class="W_AddCardOptions"
      data-controller="cards"
      data-cards-url-value="<%= user_cards_path(@user) %>">
+          <input data-cards-target="imageFileInput" type="file" accept="image/*" style="display:none;"/>
           <div class="M_ActionBarOption"
        data-action="click->cards#create"
             data-cards-type-value="link">
@@ -68,7 +69,7 @@
             </div>
           </div>
           <div class="M_ActionBarOption"
-       data-action="click->cards#create"
+       data-action="click->cards#pickImage"
             data-cards-type-value="image">
             <div class="A_ActionIcon">
               <img src="../images/Q_ActionCardIcon.svg" alt="">

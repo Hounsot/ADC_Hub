@@ -3,6 +3,7 @@
     border-radius: 12px;
     position: relative;
     padding: 16px;
+    overflow: hidden;
     &:hover{
         background-color: var(--surface-secondary-hover);
         .W_CardButtons, .W_CardSizeButtons{
@@ -15,8 +16,19 @@
         width: calc(33.33% - var(--grid-gap, 0px));
     }
     &:is(.U_Medium){
-        aspect-ratio: 2/1;
+        aspect-ratio: 712/350;
         width: calc(66.66% - var(--grid-gap, 0px));
+    }
+    &:is(.U_Image){
+        padding: 0;
+        .W_CardButtons{
+            top: 16px;
+        }
+        .Q_UserCardImage{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
     }
     @media all and (max-width: 767px) {
         &:is(.U_Square){

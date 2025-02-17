@@ -9,6 +9,11 @@ class CardsController < ApplicationController
 
   def create
     @card = @user.cards.build(card_params)
+
+    if @card.card_type == "text" && @card.content.blank?
+      @card.content = "click here to rewrite me"
+    end
+
     respond_to do |format|
       if @card.save
         format.html { redirect_to @user, notice: "Card created!" }
@@ -57,9 +62,15 @@ class CardsController < ApplicationController
 
   def update
     if @card.update(card_params)
-      redirect_to @user, notice: "Card updated!"
-    else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            @card,
+            partial: "cards/#{@card.card_type}_card",
+            locals: { card: @card }
+          )
+        end
+      end
     end
   end
 
@@ -80,6 +91,6 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:card_type)
+    params.require(:card).permit(:card_type, :image, :size, :title, :content)
   end
 end

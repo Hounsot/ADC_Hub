@@ -10,6 +10,6 @@
     background-color: var(--dark-alpha);
     backdrop-filter: blur(7px);
     &:hover{
-
+        background-color: var(--surface-secondary);
     }
 }
