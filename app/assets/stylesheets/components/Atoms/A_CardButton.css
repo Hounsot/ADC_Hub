@@ -12,4 +12,7 @@
     &:hover{
         background-color: var(--surface-secondary);
     }
+    &:is(.U_Color){
+        background-color: var(--surface-button-brand);
+    }
 }
