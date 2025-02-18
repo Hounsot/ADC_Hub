@@ -70,6 +70,7 @@ class CardsController < ApplicationController
             locals: { card: @card }
           )
         end
+        format.json { render json: { message: "Card updated successfully" } }
       end
     end
   end

@@ -1,0 +1,4 @@
+.A_PopupParagraph{
+    color: var(--font-default-color);
+    font-size: var(--text-text-popup-paragraph-size);
+}

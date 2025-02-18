@@ -4,6 +4,7 @@
   --xs: 14px;
   --sm: 18px;
   --md: 20px;
+  --xsmd: 24px;
   --xmd: 36px;
   --lg: 42px;
   --xl: 48px;
@@ -45,10 +46,16 @@
   --text-section-size: var(--md);
   --text-action-title-size: var(--md);
   --text-action-description-size: var(--xs);
+  --text-text-popup-title-size: var(--xl);
+  --text-text-popup-paragraph-size: var(--xsmd);
+  --text-section-title-size: var(--md);
   /* colors */
   --text-secondary: var(--200);
   /* surfaces */
   --surface-secondary: var(--800);
+  --surface-secondary-hover: var(--second-level-background-hover);
+  --surface-third: var(--600);
+  --surface-third-hover: var(--600);
   --surface-secondary-hover: var(--second-level-background-hover);
   --surface-invert: var(--0);
   --surface-invert-hover: var(--second-level-background-hover);

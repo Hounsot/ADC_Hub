@@ -69,23 +69,23 @@ export default class extends Controller {
       },
       body: JSON.stringify({ card: { card_type: cardType } })
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok")
-      }
-      return response.json()
-    })
-    .then(data => {
-      // data.html contains the rendered partial
-      this.appendCard(data.html)
-    })
-    .catch(error => {
-      console.error("Error creating card:", error)
-    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        return response.json()
+      })
+      .then(data => {
+        // data.html contains the rendered partial
+        this.appendCard(data.html)
+      })
+      .catch(error => {
+        console.error("Error creating card:", error)
+      })
   }
 
   appendCard(html) {
     const cardsContainer = document.querySelector(".M_UserCards")
     cardsContainer.insertAdjacentHTML("afterbegin", html)
   }
-  }
+}

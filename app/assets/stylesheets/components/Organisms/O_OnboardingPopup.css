@@ -1,0 +1,15 @@
+.O_OnboardingPopup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    background-color: var(--surface-secondary);
+    padding: 24px;
+    align-items: center;
+    border-radius: 12px;
+    width: 593px;
+    .A_Button{
+        font-size: 18px;
+        height: 50px;
+    }
+}

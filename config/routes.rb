@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get "cards/destroy"
   get "users/show"
   get "pages/home"
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: "users/registrations"
+  }
   get "vacancies/index"
   get "vacancies/show"
   get "vacancies/new"

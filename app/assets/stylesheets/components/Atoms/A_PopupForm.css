@@ -1,0 +1,14 @@
+.A_PopupForm{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+    .W_VacancyFields{
+        width: 100%;
+    }
+    .A_Button{
+        width: 100%;
+        border-radius: 12px;
+    }
+}

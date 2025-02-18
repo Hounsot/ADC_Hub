@@ -1,0 +1,6 @@
+.A_FormDescription{
+    font-size: 14px;
+    color: var(--font-default-color);
+    opacity: 0.5;
+    width: 100%;
+}

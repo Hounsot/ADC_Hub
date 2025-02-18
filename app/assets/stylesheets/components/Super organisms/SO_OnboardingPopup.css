@@ -1,0 +1,13 @@
+.SO_OnboardingPopup{
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-alpha);
+    z-index: 100000;
+    backdrop-filter: blur(8px);
+}

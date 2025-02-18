@@ -1,0 +1,5 @@
+.A_CardsSectionTitle{
+    font-size: var(--text-section-title-size);
+    color: var(--font-second-color);
+    font-weight: 500;
+}

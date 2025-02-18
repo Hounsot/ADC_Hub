@@ -1,0 +1,19 @@
+<!-- app/views/users/_onboarding_step2.html.erb -->
+<div id="onboarding-popup" class="SO_OnboardingPopup">
+  <div class="O_OnboardingPopup">
+    <div class="A_PopupBody">
+      <div class="W_PopupBodyContent">
+        <h2 class="A_PopupTitle">Все готово</h2>
+        <img src="../images/Q_GifFish.gif">
+        <p class="A_PopupParagraph">Мы уже создали несколько карточек в твоем профиле. Ты можешь их редактировать или удалить, просто наведя курсор или кликнув на их содержимое. Приятного пользования! </p>
+      </div>
+      <%= link_to "Продолжить", user_path(@user), 
+          class: "A_Button",
+          data: { 
+            turbo_method: :get,
+            action: "click->turbo#clearCache"
+          } %>
+    </div>
+  </div>
+</div>
+s

@@ -19,6 +19,33 @@
         aspect-ratio: 712/350;
         width: calc(66.66% - var(--grid-gap, 0px));
     }
+    &:is(.U_Divider){
+        position: relative;
+        height: fit-content;
+        width: 100%;
+        background-color: #00000000;
+        transition: var(--button-transitions);
+        padding: 16px 0;
+        .W_CardButtons{
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            filter: opacity(0);
+            transition: var(--button-transitions);
+            display: flex;
+            flex-direction: row;
+            height: fit-content;
+            gap: 4px;
+        }
+        &:hover{
+            padding: 16px;
+            background-color: var(--surface-secondary-hover);
+            .W_CardButtons{
+                filter: opacity(1);
+            }
+        }
+    }
     &:is(.U_Image){
         padding: 0;
         .W_CardButtons{

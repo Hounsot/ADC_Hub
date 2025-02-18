@@ -1,4 +1,19 @@
-<div class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;">
-  <h3>Divider Card</h3>
-  <p>Just a placeholder divider. In production, you might display a simple <hr> or custom markup.</p>
+<div class="A_UserCard U_Divider" style="color: white;" id="<%= dom_id(card) %>" data-controller="inline-divider-card" data-inline-divider-card-url-value="<%= user_card_path(card.user, card) %>">
+  <h3 class="A_CardsSectionTitle" contenteditable="<%= current_user == @user %>" data-inline-divider-card-target="title">
+    <%= card.title.presence || "Divider Card" %>
+  </h3>
+  <div class="W_CardButtons">
+    <% if current_user == @user %>
+      <div class="A_CardButton U_Color" data-action="click->inline-divider-card#save">
+        <img src="../images/Q_CardMarkIcon.svg" alt="">
+      </div>
+    <% end %>
+    <% if current_user == @user %>
+      <%= link_to user_card_path(card.user, card),
+            data: { turbo_method: :delete },
+            class: "A_CardButton" do %>
+        <img src="../images/Q_CardDeleteIcon.svg" alt="">
+      <% end %>
+    <% end %>
+  </div>
 </div>

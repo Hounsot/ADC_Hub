@@ -1,0 +1,4 @@
+.A_PopupTitle{
+    font-size: var(--text-text-popup-title-size);;
+    color: var(--font-default-color);
+}

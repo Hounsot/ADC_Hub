@@ -41,7 +41,6 @@
           <div class="A_Button">Запросить рекомендацию</div>
         <% end %>
       </div>
-      <p class="A_PortfolioDivider">Мои проекты</p>
       <div class="M_UserCards" style="--grid-gap: 10px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
         <% @user.cards.order(created_at: :desc).each do |card| %>
           <%= render "cards/#{card.card_type}_card", card: card %>
@@ -124,6 +123,18 @@
   <!-- Cards container -->
   <!-- Add Card Dropdown -->
   <!-- Simple JavaScript to toggle the upload form -->
+  <%# Onboarding popup partial (hidden by default) %>
+  <%= render "onboarding_popup" %>
+  <%# Trigger the popup if we have onboarding param %>
+  <% if params[:onboarding] %>
+    <script>
+      // Option 1: If you're using plain JavaScript:
+      document.addEventListener("DOMContentLoaded", function() {
+        var popup = document.getElementById("onboarding-popup");
+        if (popup) popup.style.display = "flex";
+      });
+    </script>
+  <% end %>
   <script>
     document.addEventListener("DOMContentLoaded", function(){
       var toggleLink = document.getElementById("toggle-upload");

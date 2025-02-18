@@ -1,0 +1,50 @@
+<!-- app/views/users/_onboarding_popup.html.erb -->
+<div id="onboarding-popup" style="display: none;" class="SO_OnboardingPopup">
+  <div class="O_OnboardingPopup">
+    <div class="A_PopupHeader">
+      <h2 class="A_PopupTitle">Добро пожаловать!</h2>
+      <p class="A_PopupParagraph">Расскажи немного о себе</p>
+    </div>
+    <!-- Add `data: { turbo_stream: true }` to make the form submit with Turbo -->
+    <%= form_with(
+          model: @user, 
+          url: user_path(@user), 
+          method: :put, 
+          local: false, 
+          data: { turbo_stream: true }, 
+          html: { class: 'A_PopupForm' }
+        ) do |f| %>
+      <div class="A_PopupAvatar">
+        <%= f.file_field :avatar, class: 'hidden-file-input', style: 'display: none;' %>
+        <div class="A_PopupAvatarImage" onclick="document.querySelector('.hidden-file-input').click()">
+          <img src="../images/Q_DefaultAvatar.png" alt="" id="avatar-preview">
+        </div>
+        <p class="A_PopupAvatarDescription" onclick="document.querySelector('.hidden-file-input').click()">
+          Добавь фото
+        </p>
+      </div>
+      <div class="W_VacancyFields">
+        <div>
+          <%= f.text_field :name, class: 'A_TextField U_TopLevel', placeholder: 'Имя' %>
+        </div>
+        <div>
+          <%= f.text_field :portfolio_link, class: 'A_TextField U_TopLevel', placeholder: 'Cсылка на студенческое портфолио' %>
+        </div>
+        <p class="A_FormDescription">Примеры правильных ссылок: portfolio.hse.ru/Student/..., portfolio.hse.ru/User/..., design.hse.ru/team/... или hsedesign.ru/designer/...
+        </p>
+        <%= f.submit "Продолжить", class: 'A_Button' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  document.querySelector('.hidden-file-input').addEventListener('change', function(e) {
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('avatar-preview').src = e.target.result;
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+</script>
