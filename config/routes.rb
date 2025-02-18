@@ -22,8 +22,10 @@ Rails.application.routes.draw do
     resources :cards, only: [ :create, :update, :destroy ] do
       patch :update_size, on: :member
     end
-      member do
+    member do
       patch :upload_avatar
+      patch :update_name
+      patch :update_bio
     end
   end
   resource :wrapped, only: [ :show ] do

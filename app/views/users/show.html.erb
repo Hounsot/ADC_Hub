@@ -22,11 +22,13 @@
             <% end %>
           </div>
         <% end %>
-        <% if @user.name.blank? && @user.surname.blank? %>
-          <h1 class="A_ProfileName <%= current_user == @user ? 'U_Interactive' : '' %> U_Empty"><%= current_user == @user ? "Твое имя" : "Имя" %></h1>
-        <% else %>
-          <h1 class="A_ProfileName <%= current_user == @user ? 'U_Interactive' : '' %>"><%= @user.name %> <%= @user.surname %></h1>
-        <% end %>
+        <turbo-frame id="name_edit">
+          <% if current_user == @user %>
+            <%= render partial: "users/name_editor", locals: { user: @user } %>
+          <% else %>
+            <h1 class="A_ProfileName"><%= @user.name %> <%= @user.surname %></h1>
+          <% end %>
+        </turbo-frame>
         <p>Описание...</p>
         <p><%= @user.email %></p>
       </div>

@@ -1,0 +1,11 @@
+<turbo-frame id="name_edit">
+  <%= form_with model: @user, url: update_name_user_path(@user), method: :patch, data: { turbo_frame: "name_edit" }, html: { class: "M_NameEditor" }  do |f| %>
+    <%= f.text_field :name, maxlength: 24, placeholder: "Твое имя", class: "A_ProfileName U_Input #{'U_Empty' if @user.name.blank?}" %>
+    <small><span id="name_counter"><%= @user.name.to_s.length %></span> / 50</small>
+    # replace this
+    <%= f.submit "Save", class: "A_Button", data: { disable_with: "Saving..." } %>
+    <div class="A_CardButton U_Color" data-action="click->inline-text-card#save">
+      <img src="../images/Q_CardMarkIcon.svg" alt="">
+    </div>
+  <% end %>
+</turbo-frame>

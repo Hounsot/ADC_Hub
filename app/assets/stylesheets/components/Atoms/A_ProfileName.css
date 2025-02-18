@@ -7,4 +7,16 @@
     &:is(.U_Empty){
         color: var(--font-second-color);
     }
+    &:is(.U_Input){
+        color: var(--font-second-color);
+        border: none;
+        background-color: transparent;
+        outline: none;
+        width: 100%;
+        &:focus{
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+    }
 }

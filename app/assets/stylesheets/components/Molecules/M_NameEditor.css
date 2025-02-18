@@ -1,0 +1,7 @@
+.M_NameEditor{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
