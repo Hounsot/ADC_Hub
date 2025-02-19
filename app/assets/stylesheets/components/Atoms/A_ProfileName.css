@@ -8,11 +8,12 @@
         color: var(--font-second-color);
     }
     &:is(.U_Input){
-        color: var(--font-second-color);
+        color: var(--font-default-color);
         border: none;
         background-color: transparent;
         outline: none;
         width: 100%;
+        height: fit-content;
         &:focus{
             border: none;
             background-color: transparent;

@@ -20,6 +20,7 @@
   --0: #ffffff;
   /* brand */
   --green: #4fe7a8;
+  --green-hover: #1CB475;
   --violet: #cfb2f5;
   /* alpha */
   --dark-alpha: rgba(0, 0, 0, 0.5);
@@ -32,6 +33,7 @@
   --part-time-color: #4fe7a8;
   --internship-color: #cfb2f5;
   --surface-button-brand: var(--green);
+  --surface-button-brand-hover: var(--green-hover);
   --second-level-background: #252525;
   --second-level-background-hover: #424141;
   --first-level-background: #121212;
@@ -41,7 +43,7 @@
   /* typography */
   /* sizes */
   --text-banner-size: var(--xxl);
-  --text-name-size: var(--xxl);
+  --text-name-size: var(--xl);
   --text-description-size: var(--sm);
   --text-section-size: var(--md);
   --text-action-title-size: var(--md);

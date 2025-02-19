@@ -2,47 +2,38 @@
   <div class="SO_UserProfile">
     <div class="O_UserInformation">
       <div>
-        <% if @user.avatar.attached? %>
-          <%= image_tag @user.avatar.variant(resize_to_limit: [300, 300]), class: "A_ProfilePicture #{'U_Owner' if current_user == @user}" %>
-        <% else %>
-          <!-- Wrap the message in a clickable link -->
-          <a href="#" id="toggle-upload">
-            <%= image_tag asset_path("Q_DefaultAvatar.png"), alt: "Default avatar", class: "A_ProfilePicture #{'U_Owner' if current_user == @user}" %>
-          </a>
-          <!-- Hidden upload form -->
-          <div id="upload-form" style="display: none;">
-            <%= form_with model: @user, url: upload_avatar_user_path(@user), local: true, method: :patch, html: { multipart: true } do |f| %>
-              <div>
-                <%= f.label :avatar, "Upload Profile Picture" %><br>
-                <%= f.file_field :avatar %>
-              </div>
-              <div>
-                <%= f.submit "Upload" %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-        <turbo-frame id="name_edit">
+        <div>
           <% if current_user == @user %>
-            <%= render partial: "users/name_editor", locals: { user: @user } %>
+            <turbo-frame id="avatar_update">
+              <%= form_with model: @user, url: upload_avatar_user_path(@user), local: true, method: :patch, html: { multipart: true } do |f| %>
+                <label for="avatar-input" style="cursor: pointer;">
+                  <% if @user.avatar.attached? %>
+                    <%= image_tag @user.avatar.variant(resize_to_limit: [300, 300]), class: "A_ProfilePicture U_Owner" %>
+                  <% else %>
+                    <%= image_tag asset_path("Q_DefaultAvatar.png"), alt: "Default avatar", class: "A_ProfilePicture U_Owner" %>
+                  <% end %>
+                </label>
+                <%= f.file_field :avatar, id: "avatar-input", style: "display: none;", onchange: "this.form.submit()" %>
+              <% end %>
+            </turbo-frame>
           <% else %>
-            <h1 class="A_ProfileName"><%= @user.name %> <%= @user.surname %></h1>
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar.variant(resize_to_limit: [300, 300]), class: "A_ProfilePicture" %>
+            <% else %>
+              <%= image_tag asset_path("Q_DefaultAvatar.png"), alt: "Default avatar", class: "A_ProfilePicture" %>
+            <% end %>
           <% end %>
-        </turbo-frame>
+        </div>
+        <% if current_user == @user %>
+          <%= render partial: "users/name_editor", locals: { user: @user } %>
+        <% else %>
+          <h1 class="A_ProfileName"><%= @user.name %> <%= @user.surname %></h1>
+        <% end %>
         <p>Описание...</p>
         <p><%= @user.email %></p>
       </div>
     </div>
     <div class="O_UserProjectsAndBanner">
-      <p class="A_PortfolioDivider">Мое место работы</p>
-      <div class="M_UserEmploymentBanner">
-        <div class="W_EmploymentBannerText">
-          <p class="A_BannerText"><span class="<%= @user.position.present? ? "" : %q(U_Gray) %>"><%= @user.position.present? ? @user.position : 'Твоя позиция' %></span> в <span class="U_Gray"><%= @user.company.present? ? @user.company.name : "какой-то компании" %></span></p>
-        </div>
-        <% if current_user == @user %>
-          <div class="A_Button">Запросить рекомендацию</div>
-        <% end %>
-      </div>
       <div class="M_UserCards" style="--grid-gap: 10px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
         <% @user.cards.order(created_at: :desc).each do |card| %>
           <%= render "cards/#{card.card_type}_card", card: card %>

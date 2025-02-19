@@ -78,7 +78,12 @@ class CardsController < ApplicationController
   def destroy
     @card = @user.cards.find(params[:id])
     @card.destroy
-    redirect_to @user, notice: "Card deleted."
+  respond_to do |format|
+    format.turbo_stream do
+      render turbo_stream: turbo_stream.remove("card_#{@card.id}")
+    end
+      format.html { redirect_to user_path(@user), notice: "Card deleted successfully." }
+    end
   end
 
   private

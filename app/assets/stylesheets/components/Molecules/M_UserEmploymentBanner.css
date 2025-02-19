@@ -1,5 +1,6 @@
 .M_UserEmploymentBanner{
     display: flex;
+    position: relative;
     justify-content: space-between;
     flex-direction: column;
     width: 100%;
@@ -12,5 +13,18 @@
     .A_Button{
         padding: 7px 32px;
         border-radius: 14px;
+    }
+    form{
+        position: relative;
+        .W_CardButtons{
+            top: 0px;
+            right: 0px;
+        }
+    }
+    &:hover{
+        .W_CardButtons{
+            pointer-events: all;
+            filter: opacity(1);
+        }
     }
 }

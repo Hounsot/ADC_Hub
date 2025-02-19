@@ -3,6 +3,9 @@
     font-size: var(--text-banner-size);
     line-height: 100%;
     font-weight: 500;
+    background-color: transparent;
+    border: none;
+    outline: none;
     .U_Gray{
         color: var(--font-second-color);
     }

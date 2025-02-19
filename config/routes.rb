@@ -1,9 +1,4 @@
 Rails.application.routes.draw do
-  get "cards/new"
-  get "cards/edit"
-  get "cards/create"
-  get "cards/update"
-  get "cards/destroy"
   get "users/show"
   get "pages/home"
   devise_for :users, controllers: {
@@ -19,13 +14,16 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :vacancies
   resources :users, only: [ :show, :index, :edit, :update ] do
-    resources :cards, only: [ :create, :update, :destroy ] do
-      patch :update_size, on: :member
+    resources :cards do
+      member do
+        patch :update_size
+      end
     end
     member do
       patch :upload_avatar
       patch :update_name
       patch :update_bio
+      patch :update_job
     end
   end
   resource :wrapped, only: [ :show ] do

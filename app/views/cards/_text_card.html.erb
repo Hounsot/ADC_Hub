@@ -1,12 +1,4 @@
-<!-- app/views/cards/_text_card.html.erb -->
-<div
-  class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>"
-  style="color: white;"
-  id="<%= dom_id(card) %>"
-
-  data-controller="inline-text-card"
-  data-inline-text-card-url-value="<%= user_card_path(card.user, card) %>"
->
+<turbo-frame id="card_<%= card.id %>" class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" data-controller="inline-text-card" data-inline-text-card-url-value="<%= user_card_path(card.user, card) %>">
   <% if current_user == @user %>
     <div class="W_CardSizeButtons">
       <%= link_to "S", update_size_user_card_path(card.user, card, size: "square"), method: :patch, data: { turbo_method: :patch }, class: "A_CardSizeButton" %>
@@ -26,24 +18,16 @@
         <img src="../images/Q_CardSettingsIcon.svg" alt="">
       </div>
     </div>
-    <!-- "Save" button triggers our Stimulus action -->
     <% if current_user == @user %>
       <div class="A_CardButton U_Color" data-action="click->inline-text-card#save">
         <img src="../images/Q_CardMarkIcon.svg" alt="">
       </div>
     <% end %>
   </div>
-  <!-- Make title & content editable if the user is the owner -->
-  <h3
-    contenteditable="<%= current_user == @user %>"
-    data-inline-text-card-target="title"
-  >
+  <h3 contenteditable="<%= current_user == @user %>" data-inline-text-card-target="title">
     <%= card.title.presence || "Untitled" %>
   </h3>
-  <p
-    contenteditable="<%= current_user == @user %>"
-    data-inline-text-card-target="content"
-  >
+  <p contenteditable="<%= current_user == @user %>" data-inline-text-card-target="content">
     <%= card.content %>
   </p>
-</div>
+</turbo-frame>

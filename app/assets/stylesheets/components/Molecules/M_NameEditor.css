@@ -4,4 +4,22 @@
     align-items: center;
     gap: 10px;
     width: 100%;
+    padding: 16px 16px 16px 0;
+    transition: var(--button-transitions);
+    border-radius: 12px;
+    position: relative;
+    .A_CardButton{
+        filter: opacity(0);
+        cursor: pointer;
+        position: absolute;
+        right: 16px;
+    }
+    &:hover{
+        width: 100%;
+        background-color: var(--surface-secondary-hover);
+        padding: 16px 16px 16px 16px;
+        .A_CardButton{
+            filter: opacity(1);
+        }
+    }
 }

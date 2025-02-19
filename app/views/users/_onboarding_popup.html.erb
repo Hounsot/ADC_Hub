@@ -1,11 +1,9 @@
-<!-- app/views/users/_onboarding_popup.html.erb -->
 <div id="onboarding-popup" style="display: none;" class="SO_OnboardingPopup">
   <div class="O_OnboardingPopup">
     <div class="A_PopupHeader">
       <h2 class="A_PopupTitle">Добро пожаловать!</h2>
       <p class="A_PopupParagraph">Расскажи немного о себе</p>
     </div>
-    <!-- Add `data: { turbo_stream: true }` to make the form submit with Turbo -->
     <%= form_with(
           model: @user, 
           url: user_path(@user), 

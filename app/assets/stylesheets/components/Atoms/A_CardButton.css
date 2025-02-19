@@ -9,10 +9,15 @@
     border-radius: 100px;
     background-color: var(--dark-alpha);
     backdrop-filter: blur(7px);
+    cursor: pointer;
+    transition: var(--button-transitions);
     &:hover{
         background-color: var(--surface-secondary);
     }
     &:is(.U_Color){
         background-color: var(--surface-button-brand);
+        &:hover{
+            background-color: var(--surface-button-brand-hover);
+        }
     }
 }

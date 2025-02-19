@@ -15,4 +15,11 @@ export default class extends Controller {
     this.blurTarget.classList.toggle('U_Active')
     this.actionBarTarget.classList.toggle("U_Active");
   }
+  submitForm(event) {
+    event.preventDefault();
+    const form = event.currentTarget.closest("form");
+    if (form) {
+      form.requestSubmit();
+    }
+  }
 }

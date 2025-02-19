@@ -1,4 +1,4 @@
-<div class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" id="<%= dom_id(card) %>">
+<turbo-frame id="card_<%= card.id %>" class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" data-controller="inline-text-card" data-inline-text-card-url-value="<%= user_card_path(card.user, card) %>">
   <% if current_user == @user %>
     <div class="W_CardSizeButtons">
       <%= link_to "S", update_size_user_card_path(card.user, card, size: "square"),
@@ -30,4 +30,4 @@
   </div>
   <h3>Link Card</h3>
   <a href="<%= card.url %>"><%= card.title %></a>
-</div>
+</turbo-frame>

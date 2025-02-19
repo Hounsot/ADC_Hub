@@ -56,6 +56,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_job
+    if @user.update(position: params[:user][:position])
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("job-edit", partial: "cards/job_card", locals: { user: @user })
+        end
+        format.html { redirect_to @user, notice: "Name updated!" }
+      end
+    else
+        Rails.logger.debug "User update errors: #{@user.errors.full_messages}"
+        render :show, status: :unprocessable_entity
+    end
+  end
+
   def update_bio
     if @user.update(user_params)
       redirect_to @user, notice: "Profile updated successfully."
@@ -75,7 +89,6 @@ class UsersController < ApplicationController
       render :show, status: :unprocessable_entity
     end
   end
-
   def user_params
     params.require(:user).permit(:name, :surname, :email, :avatar, :portfolio_link)
   end
