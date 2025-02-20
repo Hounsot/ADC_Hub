@@ -81,27 +81,53 @@ SALARIES = [
 ]
 
 DESCRIPTIONS = [
-  "We’re looking for someone who is passionate about technology and ready to push boundaries.",
-  "As part of our team, you’ll be working on cutting-edge solutions for modern businesses.",
+  "We're looking for someone who is passionate about technology and ready to push boundaries.",
+  "As part of our team, you'll be working on cutting-edge solutions for modern businesses.",
   "Join us and help shape the future of our industry with creativity and innovation.",
   "In this role, you will collaborate with cross-functional teams to deliver high-quality results.",
   "We value work-life balance and offer a flexible environment for our employees."
 ]
 
 USERNAMES = [
-  "alice",
-  "bob",
-  "charlie",
-  "dave",
-  "eve"
+  "Даниил Парамонов",
+  "Александр Иванов",
+  "Иван Петров",
+  "Максим Сидоров",
+  "Кирилл Кузнецов",
+  "Михаил Морозов",
+  "Никита Федоров",
+  "Артем Попов",
+  "Дмитрий Соколов",
+  "Сергей Козлов",
+  "Алексей Орлов",
+  "Михаил Кузнецов",
+  "Александр Петров",
+  "Александр Кузнецов",
+  "Александр Петров",
+  "Александр Кузнецов",
+  "Александр Петров",
+  "Александр Кузнецов"
 ]
 
 EMAILS = [
-  "alice@example.com",
-  "bob@example.com",
-  "charlie@example.com",
-  "dave@example.com",
-  "eve@example.com"
+  "danil@example.com",
+  "alex@example.com",
+  "ivan@example.com",
+  "maxim@example.com",
+  "kirill@example.com",
+  "mikhail@example.com",
+  "nikita@example.com",
+  "artem@example.com",
+  "dmitriy@example.com",
+  "sergey@example.com",
+  "alexander@example.com",
+  "harry@example.com",
+  "ian@example.com",
+  "jack@example.com",
+  "kyle@example.com",
+  "larry@example.com",
+  "mike@example.com",
+  "nick@example.com"
 ]
 CARD_TYPES = [ "text", "link", "image", "job", "divider" ]
 
@@ -120,17 +146,31 @@ puts "Creating Users..."
 # We assume Devise or similar is used, requiring an email and password.
 # We'll just create 5 example users.
 
+# Helper method to get random avatar
+def random_avatar
+  avatars_path = Rails.root.join('db', 'seeds', 'avatars')
+  avatars = Dir[File.join(avatars_path, '*')].select { |f| File.file?(f) }
+  File.open(avatars.sample)
+end
+
 USERNAMES.each_with_index do |username, i|
-  User.create!(
+  user = User.create!(
     email: EMAILS[i],
     name: username,
-    surname: username,
-    password: "password"
+    password: "password",
+    position: POSITIONS.sample
+  )
+
+  # Attach a random avatar
+  user.avatar.attach(
+    io: random_avatar,
+    filename: "avatar_#{username}.jpg",
+    content_type: 'image/jpeg'
   )
 end
 
 users = User.all
-puts "Created #{users.count} Users."
+puts "Created #{users.count} Users with avatars."
 
 # 4. Create Companies from the TECH_COMPANIES array:
 puts "Creating Companies..."

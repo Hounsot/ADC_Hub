@@ -1,0 +1,15 @@
+<%= link_to user_path(user), class: "M_User" do %>
+  <% if user.avatar.attached? %>
+    <%= image_tag user.avatar, alt: "#{user.name} avatar" %>
+  <% else %>
+    <%= image_tag asset_path("Q_DefaultAvatar.png"), size: "50x50", alt: "Default avatar" %>
+  <% end %>
+  <div class="W_UserListUserInfo">
+    <p class="A_UserListUserNameText">
+      <%= user.name %>
+    </p>
+    <p class="A_UserListUserPositionText">
+      <%= user.position %>
+    </p>
+  </div>
+<% end %>

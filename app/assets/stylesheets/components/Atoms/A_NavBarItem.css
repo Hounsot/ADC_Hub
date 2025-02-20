@@ -1,0 +1,26 @@
+.A_NavBarItem{
+    width: 60px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: var(--button-transitions);
+    &:is(.U_Profile){
+        img{
+            border-radius: 100%;
+        }
+    }
+    &:is(.U_Hover){
+        img{
+            transition: var(--button-transitions);
+            filter: brightness(1) invert(0);
+        }
+        &:hover{
+            background-color: var(--surface-secondary-hover);
+            img{
+                filter: brightness(0) invert(1);
+            }
+        }    
+    }
+}

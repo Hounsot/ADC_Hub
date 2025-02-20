@@ -121,8 +121,7 @@
   <%# Trigger the popup if we have onboarding param %>
   <% if params[:onboarding] %>
     <script>
-      // Option 1: If you're using plain JavaScript:
-      document.addEventListener("DOMContentLoaded", function() {
+      document.addEventListener("turbo:load", function() {
         var popup = document.getElementById("onboarding-popup");
         if (popup) popup.style.display = "flex";
       });

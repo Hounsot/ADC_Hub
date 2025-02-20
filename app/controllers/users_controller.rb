@@ -5,14 +5,14 @@ class UsersController < ApplicationController
   def show
   end
   def index
-    @users = User.all.order(:id)
+    @users = User.all
   end
   def update
     if @user.update(user_params)
+      @user.update(onboarding_completed: true)
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            # 1 Replace the popup content with your success partial
             turbo_stream.replace(
               "onboarding-popup",
               partial: "users/onboarding_success",
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
     end
   end
   def user_params
-    params.require(:user).permit(:name, :surname, :email, :avatar, :portfolio_link)
+    params.require(:user).permit(:name, :surname, :email, :avatar, :portfolio_link, :onboarding_completed)
   end
 
   private

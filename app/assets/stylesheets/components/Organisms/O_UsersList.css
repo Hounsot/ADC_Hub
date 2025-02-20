@@ -1,0 +1,10 @@
+.O_UsersList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: var(--usersListWidth);
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}

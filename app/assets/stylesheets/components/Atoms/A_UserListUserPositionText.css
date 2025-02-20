@@ -1,0 +1,4 @@
+.A_UserListUserPositionText{
+    font-size: var(--text-user-list-position-size);
+    color: var(--font-second-color);
+}

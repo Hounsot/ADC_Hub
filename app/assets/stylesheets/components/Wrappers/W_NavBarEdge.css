@@ -1,0 +1,24 @@
+.W_NavBarEdge{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    max-width: 50px;
+    min-width: 50px;
+    height: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    overflow: hidden;
+    &:is(.U_Logo){
+        img{ 
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+    }
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

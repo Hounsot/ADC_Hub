@@ -1,0 +1,32 @@
+  <nav class="O_NavBarVertical">
+  <div class="W_NavBarEdge U_Logo">
+    <img src="../images/Q_Logo.svg" alt="">
+  </div>
+  <div class="W_NavBarItems">
+    <%= link_to root_path, class: "A_NavBarItem U_Hover" do %>
+      <img src="../images/Q_NavHomeIcon.svg" alt="">
+    <% end %>
+    <%= link_to vacancies_path, class: "A_NavBarItem U_Hover" do %>
+      <img src="../images/Q_NavVacancyIcon.svg" alt="">
+    <% end %>
+    <%= link_to users_path, class: "A_NavBarItem U_Hover" do %>
+      <img src="../images/Q_NavNotificationsIcon.svg" alt="">
+    <% end %>
+    <div class="A_NavBarItem U_Hover">
+      <img src="../images/Q_NavSearchIcon.svg" alt="">
+    </div>
+  </div>
+  <div class="W_NavBarEdge">
+    <% if current_user %>
+      <% if current_user.avatar.attached? %>
+        <%= link_to user_path(current_user), class: "A_NavBarItem U_Profile" do %>
+          <%= image_tag current_user.avatar, class: "A_NavBarItemImage" %>
+        <% end %>
+      <% else %>
+        <%= link_to user_path(current_user), class: "A_NavBarItem U_Profile" do %>
+          <%= image_tag asset_path("Q_DefaultAvatar.png"), size: "50x50", alt: "Default avatar" %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</nav>

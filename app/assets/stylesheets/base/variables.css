@@ -51,6 +51,8 @@
   --text-text-popup-title-size: var(--xl);
   --text-text-popup-paragraph-size: var(--xsmd);
   --text-section-title-size: var(--md);
+  --text-user-list-name-size: var(--sm);
+  --text-user-list-position-size: var(--xs);
   /* colors */
   --text-secondary: var(--200);
   /* surfaces */
@@ -83,6 +85,7 @@
   --landingGap: 48px;
   /* page's width */
   --landingMaxWidth: 1636px;
+  --usersListWidth: 864px;
   /* button transitions */
   --button-transitions: all 0.2s ease-in-out;
   /* button height */

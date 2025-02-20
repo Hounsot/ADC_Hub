@@ -1,0 +1,4 @@
+.A_UserListUserNameText{
+    font-size: var(--text-user-list-name-size);
+    color: var(--font-default-color);
+}
