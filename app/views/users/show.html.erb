@@ -35,8 +35,8 @@
     </div>
     <div class="O_UserProjectsAndBanner">
       <div class="M_UserCards" style="--grid-gap: 10px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
-        <% @user.cards.order(created_at: :desc).each do |card| %>
-          <%= render "cards/#{card.card_type}_card", card: card %>
+        <% @user.sections.order(created_at: :desc).each do |section| %>
+          <%= render "sections/section", section: section %>
         <% end %>
       </div>
     </div>
@@ -47,7 +47,7 @@
       <div class="W_AddCardTop">
         <div class="W_AddCardOptions"
      data-controller="cards"
-     data-cards-url-value="<%= user_cards_path(@user) %>">
+     data-cards-url-value="<%= user_section_cards_path(@user, @section) %>">
           <input data-cards-target="imageFileInput" type="file" accept="image/*" style="display:none;"/>
           <div class="M_ActionBarOption"
        data-action="click->cards#create"

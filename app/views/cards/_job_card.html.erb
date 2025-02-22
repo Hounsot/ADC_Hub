@@ -1,12 +1,12 @@
 <turbo-frame class="M_UserEmploymentBanner" id="card_<%= card.id %>">
-  <% if current_user == @user %>
-    <%= form_with model: @user, url: update_job_user_path(@user), method: :patch, data: { turbo_frame: "job_edit" }  do |f| %>
+  <% if current_user == card.section.user %>
+    <%= form_with model: card.section.user, url: update_job_user_path(card.section.user), method: :patch, data: { turbo_frame: "job_edit" }  do |f| %>
       <%# f.text_field :company, placeholder: "Твоя компания", class: "A_ProfileName U_Input #{'U_Empty' if @user.name.blank?}" %>
-      <%= f.text_field :position, placeholder: "Твоя позиция", class: "A_BannerText U_Input #{'U_Empty' if @user.name.blank?}" %>
+      <%= f.text_field :position, placeholder: "Твоя позиция", class: "A_BannerText U_Input #{'U_Empty' if card.section.user.name.blank?}" %>
       <div class="W_CardButtons">
         <div class="C_CardControls">
-          <% if current_user == @user  %>
-            <%= link_to user_card_path(card.user, card),
+          <% if current_user == card.section.user %>
+            <%= link_to user_section_card_path(card.section.user, card.section, card),
             data: { turbo_method: :delete },
             class: "A_CardButton" do %>
               <img src="../images/Q_CardDeleteIcon.svg" alt="">
@@ -20,15 +20,15 @@
     <% end %>
   <% else %>
     <div class="W_EmploymentBannerText">
-      <p class="A_BannerText"><span class="<%= @user.position.present? ? "" : %q(U_Gray) %>"><%= @user.position.present? ? @user.position : 'Твоя позиция' %></span> в <span class="U_Gray"><%= @user.company.present? ? @user.company.name : "какой-то компании" %></span></p>
+      <p class="A_BannerText"><span class="<%= card.section.user.position.present? ? "" : %q(U_Gray) %>"><%= card.section.user.position.present? ? card.section.user.position : 'Твоя позиция' %></span> в <span class="U_Gray"><%= card.section.user.company.present? ? card.section.user.company.name : "какой-то компании" %></span></p>
     </div>
-    <% if current_user != @user %>
+    <% if current_user != card.section.user %>
       <div class="A_Button">Запросить рекомендацию</div>
     <% end %>
     <div class="W_CardButtons">
       <div class="C_CardControls">
-        <% if current_user == @user  %>
-          <%= link_to user_card_path(card.user, card),
+        <% if current_user == card.section.user  %>
+          <%= link_to user_section_card_path(card.section.user, card.section, card),
             data: { turbo_method: :delete },
             class: "A_CardButton" do %>
             <img src="../images/Q_CardDeleteIcon.svg" alt="">

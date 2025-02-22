@@ -26,6 +26,26 @@
         background-color: #00000000;
         transition: var(--button-transitions);
         padding: 16px 0;
+        form{ 
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            .W_CardButtons{
+                position: absolute;
+                filter: opacity(0);
+                top: 50%;
+                transform: translateY(-50%);
+                right: 0px;
+            }
+            &:hover{
+                .A_CardButton{
+                    filter: opacity(1);
+                }
+            }    
+        }
         .W_CardButtons{
             position: absolute;
             right: 24px;

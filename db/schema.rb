@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_173059) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_22_211037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,16 +43,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_173059) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "section_id", null: false
     t.string "card_type"
     t.string "title"
     t.text "content"
     t.string "url"
     t.integer "position"
+    t.string "size", default: "square"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "size", default: "square"
-    t.index ["user_id"], name: "index_cards_on_user_id"
+    t.index ["section_id"], name: "index_cards_on_section_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -61,6 +61,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_173059) do
     t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sections_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,7 +108,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_173059) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "cards", "users"
+  add_foreign_key "cards", "sections"
+  add_foreign_key "sections", "users"
   add_foreign_key "users", "companies"
   add_foreign_key "vacancies", "companies"
   add_foreign_key "vacancies", "users"

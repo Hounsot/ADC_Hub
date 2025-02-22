@@ -3,7 +3,9 @@ class UsersController < ApplicationController
   before_action :set_user, except: [ :index ]
 
   def show
-  end
+    @sections = @user.sections.order(created_at: :desc)
+    @section = @sections.first || @user.sections.create!(title: "My Projects") # fallback for new users
+    end
   def index
     @users = User.all
   end

@@ -2,4 +2,11 @@
     font-size: var(--text-section-title-size);
     color: var(--font-second-color);
     font-weight: 500;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    
 }

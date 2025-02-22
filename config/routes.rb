@@ -14,9 +14,11 @@ Rails.application.routes.draw do
   root "pages#home"
   resources :vacancies
   resources :users, only: [ :show, :index, :edit, :update ] do
-    resources :cards do
-      member do
-        patch :update_size
+    resources :sections do
+      resources :cards do
+        member do
+          patch :update_size
+        end
       end
     end
     member do

@@ -5,19 +5,21 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :vacancies
-  has_many :cards, dependent: :destroy
+  has_many :sections, dependent: :destroy
+  has_many :cards, through: :sections
   belongs_to :company, optional: true
   has_one_attached :avatar
-  after_create :create_default_cards
+  after_create :create_default_section
 
-  def create_default_cards
-    cards.create!(
-      card_type: "job",
-      position: "Мое место работы"
-    )
-    cards.create!(
-      card_type: "divider",
-      title: "Мое место работы"
-    )
+  def create_default_section
+    sections.create!(
+      title: "My Work",
+      position: 1
+    ).tap do |section|
+      section.cards.create!(
+        card_type: "job",
+        position: "My Position"
+      )
+    end
   end
 end

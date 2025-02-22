@@ -1,0 +1,6 @@
+<%= turbo_frame_tag dom_id(section), class: "M_UserCards" do %>
+  <%= render "sections/section_title", section: @section %>
+  <% section.cards.each do |card| %>
+    <%= render "cards/#{card.card_type}_card", card: card %>
+  <% end %>
+<% end %>

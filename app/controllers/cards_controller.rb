@@ -1,14 +1,14 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user
+  before_action :set_section
   before_action :set_card, only: [ :edit, :update, :destroy, :update_size ]
 
   def new
-    @card = @user.cards.new
+    @card = @section.cards.new
   end
 
   def create
-    @card = @user.cards.build(card_params)
+    @card = @section.cards.build(card_params)
 
     if @card.card_type == "text" && @card.content.blank?
       @card.content = "click here to rewrite me"
@@ -16,7 +16,7 @@ class CardsController < ApplicationController
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @user, notice: "Card created!" }
+        format.html { redirect_to @section.user, notice: "Card created!" }
 
         # If you want to use Turbo (Rails 7+ or 8+), you can render a turbo_stream
         format.turbo_stream
@@ -31,7 +31,7 @@ class CardsController < ApplicationController
           render json: { html: card_html }
         end
       else
-        format.html { redirect_to @user, alert: "Error creating card" }
+        format.html { redirect_to @section.user, alert: "Error creating card" }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash") }
         format.json { render json: { error: @card.errors.full_messages }, status: :unprocessable_entity }
       end
@@ -76,24 +76,24 @@ class CardsController < ApplicationController
   end
 
   def destroy
-    @card = @user.cards.find(params[:id])
+    @card = @section.cards.find(params[:id])
     @card.destroy
   respond_to do |format|
     format.turbo_stream do
       render turbo_stream: turbo_stream.remove("card_#{@card.id}")
     end
-      format.html { redirect_to user_path(@user), notice: "Card deleted successfully." }
+      format.html { redirect_to user_path(@section.user), notice: "Card deleted successfully." }
     end
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def set_section
+    @section = Section.find(params[:section_id])
   end
 
   def set_card
-    @card = @user.cards.find(params[:id])
+    @card = @section.cards.find(params[:id])
   end
 
   def card_params

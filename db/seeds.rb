@@ -255,23 +255,42 @@ def generate_card_content(card_type)
   end
 end
 
-puts "Creating random Cards for each user..."
-users.each do |user|
-  # Decide how many cards to create for this user
-  num_cards = rand(7..15)
+SECTION_TITLES = [
+  "My Work",
+  "Projects",
+  "Education",
+  "Skills",
+  "Achievements"
+]
 
-  num_cards.times do |index|
-    card_type = CARD_TYPES.sample
-    user.cards.create!(
-      card_type: card_type,
-      title: generate_card_title(card_type),
-      content: generate_card_content(card_type),
-      url: (card_type == "link" ? "https://www.example.com" : nil),
-      position: index + 1  # simple ascending positions
+puts "Creating random Sections and Cards for each user..."
+users.each do |user|
+  # Create 2-4 sections for each user
+  num_sections = rand(2..4)
+
+  num_sections.times do |section_index|
+    section = user.sections.create!(
+      title: SECTION_TITLES[section_index] || "Custom Section #{section_index + 1}",
+      position: section_index + 1
     )
+
+    # Create 3-5 cards for each section
+    num_cards = rand(3..5)
+
+    num_cards.times do |card_index|
+      card_type = CARD_TYPES.sample
+      section.cards.create!(
+        card_type: card_type,
+        title: generate_card_title(card_type),
+        content: generate_card_content(card_type),
+        url: (card_type == "link" ? "https://www.example.com" : nil),
+        position: card_index + 1,  # simple ascending positions
+        size: [ "square", "medium" ].sample
+      )
+    end
   end
 end
 
-puts "Created #{Card.count} Cards."
+puts "Created #{Section.count} Sections with #{Card.count} Cards."
 
 puts "Seed data created successfully!"
