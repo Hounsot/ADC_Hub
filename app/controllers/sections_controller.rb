@@ -35,6 +35,47 @@ class SectionsController < ApplicationController
     end
   end
 
+  def create
+    @section = current_user.sections.new(section_params)
+
+    if @section.save
+      # Reorder all sections to ensure continuous positions
+      current_user.sections
+                 .order(:position)
+                 .each.with_index(1) do |section, index|
+        section.update_column(:position, index)
+      end
+
+      respond_to do |format|
+        format.html { redirect_to user_path(@section.user) }
+        format.turbo_stream {
+          Rails.logger.info "Rendering turbo stream for section #{@section.id}"
+          render turbo_stream: [
+            turbo_stream.before("section_create_button_#{@section.position}",
+              partial: "sections/section",
+              locals: { section: @section }
+            )
+          ]
+        }
+        format.json {
+          Rails.logger.info "Rendering JSON for section #{@section.id}"
+          render json: {
+            success: true,
+            message: "Section created successfully"
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to user_path(@section.user), alert: "Error creating section" }
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.update("flash", "Error creating section")
+        }
+        format.json { render json: { error: @section.errors.full_messages }, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def set_section
@@ -42,7 +83,7 @@ class SectionsController < ApplicationController
   end
 
   def section_params
-    params.require(:section).permit(:title)
+    params.require(:section).permit(:title, :position)
   end
 
   def authorize_user!

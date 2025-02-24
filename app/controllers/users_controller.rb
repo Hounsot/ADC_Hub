@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @sections = @user.sections.order(created_at: :desc)
-    @section = @sections.first || @user.sections.create!(title: "My Projects") # fallback for new users
+    @section = @sections.first || @user.sections.create!(title: "My Projects", position: 1) # fallback for new users
     end
   def index
     @users = User.all

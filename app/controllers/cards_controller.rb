@@ -10,12 +10,20 @@ class CardsController < ApplicationController
   def create
     @card = @section.cards.build(card_params)
 
+    # Set the position to be the last in this section
+    @card.position = (@section.cards.maximum(:position) || 0) + 1
+
     if @card.card_type == "text" && @card.content.blank?
-      @card.content = "click here to rewrite me"
+      @card.content = "Нажмите для редактирования"
     end
 
     respond_to do |format|
       if @card.save
+        # Reorder all cards in this section to ensure continuous positions
+        @section.cards.order(:position).each.with_index(1) do |card, index|
+          card.update_column(:position, index)
+        end
+
         format.html { redirect_to @section.user, notice: "Card created!" }
 
         # If you want to use Turbo (Rails 7+ or 8+), you can render a turbo_stream
@@ -78,10 +86,18 @@ class CardsController < ApplicationController
   def destroy
     @card = @section.cards.find(params[:id])
     @card.destroy
-  respond_to do |format|
-    format.turbo_stream do
-      render turbo_stream: turbo_stream.remove("card_#{@card.id}")
-    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        if @section.cards.empty? && current_user == @section.user
+          render turbo_stream: [
+            turbo_stream.remove("card_#{@card.id}"),
+            turbo_stream.append(@section, partial: "sections/add_card_button", locals: { section: @section })
+          ]
+        else
+          render turbo_stream: turbo_stream.remove("card_#{@card.id}")
+        end
+      end
       format.html { redirect_to user_path(@section.user), notice: "Card deleted successfully." }
     end
   end

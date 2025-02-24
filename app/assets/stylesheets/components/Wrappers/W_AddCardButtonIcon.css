@@ -1,0 +1,9 @@
+.W_AddCardButtonIcon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: var(--surface-third);
+    border-radius: 100%;
+}

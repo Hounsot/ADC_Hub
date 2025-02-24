@@ -1,9 +1,11 @@
 .W_AddCardOptions{
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0;
     width: 100%;
     height: 300px;
-    overflow-y: scroll;
     gap: 12px;
+    &:is(.U_Active){
+        display: flex;
+      }    
 }

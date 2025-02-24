@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   def create_default_section
     sections.create!(
-      title: "My Work",
+      title: "Место работы",
       position: 1
     ).tap do |section|
       section.cards.create!(
