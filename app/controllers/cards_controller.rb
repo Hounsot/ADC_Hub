@@ -101,7 +101,6 @@ class CardsController < ApplicationController
       format.html { redirect_to user_path(@section.user), notice: "Card deleted successfully." }
     end
   end
-
   private
 
   def set_section

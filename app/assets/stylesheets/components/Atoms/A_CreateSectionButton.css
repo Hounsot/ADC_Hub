@@ -5,17 +5,22 @@
     gap: 8px;
     padding: 16px;
     width: 100%;
-    background-color: var(--surface-secondary);
+    height: 50px;
+    background-color: transparent;
     border-radius: 12px;
     cursor: pointer;
     transition: var(--button-transitions);
     justify-content: center;
     &:hover {
-        background-color: var(--surface-secondary-hover);
+        .W_CreateButtonIcon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--surface-secondary-hover);
+        }    
     }
 
     .W_CreateButtonIcon {
-        width: 24px;
-        height: 24px;
+        width: 40px;
+        height: 40px;
     }
 } 

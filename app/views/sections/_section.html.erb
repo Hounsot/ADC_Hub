@@ -4,63 +4,8 @@
     <% section.cards.order(:position).each do |card| %>
       <%= render "cards/#{card.card_type}_card", card: card %>
     <% end %>
-  <% elsif current_user == section.user %>
-    <div class="W_AddCard" data-portfolio-target="actionBar">
-      <div class="W_AddCardOptions"
-             data-controller="cards"
-             data-cards-url-value="<%= user_section_cards_path(section.user, section) %>">
-        <input data-cards-target="imageFileInput" type="file" accept="image/*" style="display:none;"/>
-        <div class="M_ActionBarOption"
-               data-action="click->cards#create"
-          data-cards-type-value="link">
-          <div class="A_ActionIcon">
-            <img src="../images/Q_ActionCardIcon.svg" alt="">
-          </div>
-          <div class="W_ActionBarText">
-            <p class="A_ActionTitle">Ссылка</p>
-            <p class="A_ActionDescription">Ссылка на сторонний ресурс</p>
-          </div>
-        </div>
-        <div class="M_ActionBarOption"
-               data-action="click->cards#pickImage"
-          data-cards-type-value="image">
-          <div class="A_ActionIcon">
-            <img src="../images/Q_ActionCardIcon.svg" alt="">
-          </div>
-          <div class="W_ActionBarText">
-            <p class="A_ActionTitle">Изображение</p>
-            <p class="A_ActionDescription">Jpeg, png, gif, webp</p>
-          </div>
-        </div>
-        <div class="M_ActionBarOption"
-               data-action="click->cards#create"
-          data-cards-type-value="text">
-          <div class="A_ActionIcon">
-            <img src="../images/Q_ActionCardIcon.svg" alt="">
-          </div>
-          <div class="W_ActionBarText">
-            <p class="A_ActionTitle">Текст</p>
-            <p class="A_ActionDescription">Блок с текстом</p>
-          </div>
-        </div>
-        <div class="M_ActionBarOption"
-               data-action="click->cards#create"
-          data-cards-type-value="job">
-          <div class="A_ActionIcon">
-            <img src="../images/Q_ActionCardIcon.svg" alt="">
-          </div>
-          <div class="W_ActionBarText">
-            <p class="A_ActionTitle">Работа</p>
-            <p class="A_ActionDescription">Блок с позицией и местом работы</p>
-          </div>
-        </div>
-      </div>
-      <div class="A_AddCardButton" data-portfolio-target="addButton" data-action="click->portfolio#toggleActionBar">
-        <div class="W_AddCardButtonIcon">
-          <img src="../images/Q_Plus.svg" alt="">
-        </div>
-        <p class="A_VacancyCardBodyText">Добавить карточку</p>
-      </div>
-    </div>
+  <% end %>
+  <% if current_user == section.user %>
+    <%= render "sections/add_card_button", section: section %>
   <% end %>
 <% end %>

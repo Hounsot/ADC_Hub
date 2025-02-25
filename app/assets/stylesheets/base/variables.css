@@ -16,6 +16,7 @@
   --1000: #08090a;
   --800: #121212;
   --600: #252525;
+  --400: #3b3b3b;
   --200: #9b9b9b;
   --0: #ffffff;
   /* brand */
@@ -59,7 +60,7 @@
   --surface-secondary: var(--800);
   --surface-secondary-hover: var(--second-level-background-hover);
   --surface-third: var(--600);
-  --surface-third-hover: var(--600);
+  --surface-third-hover: var(--400);
   --surface-secondary-hover: var(--second-level-background-hover);
   --surface-invert: var(--0);
   --surface-invert-hover: var(--second-level-background-hover);

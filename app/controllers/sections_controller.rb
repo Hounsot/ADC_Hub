@@ -26,6 +26,8 @@ class SectionsController < ApplicationController
 
     if current_user == @section.user
       @section.destroy
+      current_user.sections.where("position > ?", @section.position).
+                   update_all("position = position - 1")
       respond_to do |format|
         format.html { redirect_to user_path(@section.user), notice: "Section was successfully deleted." }
         format.turbo_stream { render turbo_stream: turbo_stream.remove("section_#{@section.id}") }
@@ -36,42 +38,34 @@ class SectionsController < ApplicationController
   end
 
   def create
-    @section = current_user.sections.new(section_params)
+    # Get the position from params
+    position = params[:position].to_i
 
-    if @section.save
-      # Reorder all sections to ensure continuous positions
-      current_user.sections
-                 .order(:position)
-                 .each.with_index(1) do |section, index|
-        section.update_column(:position, index)
-      end
+    # Make room for the new section by incrementing positions of existing sections
+    current_user.sections.where("position >= ?", position).
+                 update_all("position = position + 1")
 
-      respond_to do |format|
-        format.html { redirect_to user_path(@section.user) }
-        format.turbo_stream {
-          Rails.logger.info "Rendering turbo stream for section #{@section.id}"
-          render turbo_stream: [
-            turbo_stream.before("section_create_button_#{@section.position}",
-              partial: "sections/section",
-              locals: { section: @section }
-            )
-          ]
-        }
-        format.json {
-          Rails.logger.info "Rendering JSON for section #{@section.id}"
-          render json: {
-            success: true,
-            message: "Section created successfully"
-          }
-        }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to user_path(@section.user), alert: "Error creating section" }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.update("flash", "Error creating section")
-        }
-        format.json { render json: { error: @section.errors.full_messages }, status: :unprocessable_entity }
+    # Create the new section with the specified position
+    @section = current_user.sections.create!(
+      title: "Новая секция",
+      position: position
+    )
+
+    respond_to do |format|
+      format.html { redirect_to user_path(current_user) }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace(
+            "section_create_button_#{position}",
+            partial: "sections/section",
+            locals: { section: @section }
+          ),
+          turbo_stream.after(
+            "section_#{@section.id}",
+            partial: "sections/section_create_button",
+            locals: { user: current_user, position: position }
+          )
+        ]
       end
     end
   end
