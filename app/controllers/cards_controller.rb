@@ -91,8 +91,7 @@ class CardsController < ApplicationController
       format.turbo_stream do
         if @section.cards.empty? && current_user == @section.user
           render turbo_stream: [
-            turbo_stream.remove("card_#{@card.id}"),
-            turbo_stream.append(@section, partial: "sections/add_card_button", locals: { section: @section })
+            turbo_stream.remove("card_#{@card.id}")
           ]
         else
           render turbo_stream: turbo_stream.remove("card_#{@card.id}")
