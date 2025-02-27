@@ -9,8 +9,19 @@ class User < ApplicationRecord
   has_many :cards, through: :sections
   belongs_to :company, optional: true
   has_one_attached :avatar
+
+
+  after_create :create_user_activity
   after_create :create_default_section
 
+  private
+
+  def create_user_activity
+    Activity.create!(
+      action: "user_registered",
+      actor: self
+    )
+  end
   def create_default_section
     sections.create!(
       title: "Место работы",

@@ -1,0 +1,16 @@
+.SO_ActivityFeed {
+    --text-banner-size: var(--xsmd);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 800px;
+    .M_UserEmploymentBanner{
+        height: fit-content;
+        gap: 48px;
+        background-color: var(--surface-third);
+        background-position: 0 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+  }

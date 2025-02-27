@@ -1,0 +1,11 @@
+<div class="SO_ActivityFeed">
+  <h1 class="A_FeedTitle">Новое</h1>
+  <div class="O_FeedItems">
+    <% @activities.each do |activity| %>
+      <%= render partial: "activities/types/#{activity.action}", locals: { activity: activity } %>
+    <% end %>
+  </div>
+  <div class="O_Pagination">
+    <%= paginate @activities %>
+  </div>
+</div>

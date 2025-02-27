@@ -1,0 +1,14 @@
+.M_FeedItem {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: var(--surface-secondary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    .A_UserCard{
+        border-radius: 6px;
+    }
+    &:is(.U_SectionCreated){
+        gap: 20px;
+    }
+}

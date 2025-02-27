@@ -1,0 +1,54 @@
+<div class="M_FeedItem U_SectionCreated">
+  <div class="W_FeedItemHeader">
+    <div class="W_FeedItemAvatar">
+      <% if activity.actor.avatar.attached? %>
+        <%= image_tag activity.actor.avatar, class: "A_FeedAvatar" %>
+      <% else %>
+        <%= image_tag asset_path("Q_DefaultAvatar.png"), class: "A_FeedAvatar" %>
+      <% end %>
+    </div>
+    <div class="W_FeedItemContent">
+      <p class="W_FeedItemText">
+        <%= link_to activity.actor.name, user_path(activity.actor), class: "A_FeedUserName" %>
+        <span class="A_FeedAction">добавил(а) новую секцию </span>«<span class="A_FeedEntityText"><%= activity.subject.title %></span>»
+      </p>
+      <div class="A_FeedTimestamp"><%= time_ago_in_words(activity.created_at) %></div>
+    </div>
+  </div>
+  <div class="M_UserCards" style="--grid-gap: 12px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
+    <% activity.subject.cards.order(:position).each do |card| %>
+      <% case card.card_type %>
+      <% when "text" %>
+        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
+          <p class=""><%= truncate(card.content, length: 100) %></p>
+        </div>
+      <% when "job" %>
+        <div class="M_UserEmploymentBanner">
+          <div class="W_EmploymentBannerText">
+            <p class="A_BannerText"><span class="<%= card.section.user.position.present? ? "" : %q(U_Gray) %>"><%= card.section.user.position.present? ? card.section.user.position : 'Твоя позиция' %></span> в <span class="U_Gray"><%= card.section.user.company.present? ? card.section.user.company.name : "какой-то компании" %></span></p>
+          </div>
+          <% if current_user != card.section.user %>
+            <div class="A_Button">Запросить рекомендацию</div>
+          <% end %>
+          <div class="W_CardButtons">
+            <div class="C_CardControls">
+              <div class="A_CardButton">
+                <img src="../images/Q_CardSettingsIcon.svg" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      <% when "link" %>
+        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
+          <%= link_to card.title, card.url, class: "", target: "_blank" %>
+        </div>
+      <% when "image" %>
+        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
+          <% if card.image.attached? %>
+            <%= image_tag card.image, class: "Q_UserCardImage" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

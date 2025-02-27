@@ -1,9 +1,9 @@
   <nav class="O_NavBarVertical">
-  <div class="W_NavBarEdge U_Logo">
+  <%= link_to root_path, class: "W_NavBarEdge U_Logo" do %>
     <img src="../images/Q_ShortLogo.svg" alt="">
-  </div>
+  <% end %>
   <div class="W_NavBarItems">
-    <%= link_to root_path, class: "A_NavBarItem U_Hover" do %>
+    <%= link_to activities_path, class: "A_NavBarItem U_Hover" do %>
       <img src="../images/Q_NavHomeIcon.svg" alt="">
     <% end %>
     <%= link_to vacancies_path, class: "A_NavBarItem U_Hover" do %>

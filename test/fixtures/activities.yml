@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  action: MyString
+  actor: one
+  actor_type: Actor
+  subject: one
+  subject_type: Subject
+
+two:
+  action: MyString
+  actor: two
+  actor_type: Actor
+  subject: two
+  subject_type: Subject

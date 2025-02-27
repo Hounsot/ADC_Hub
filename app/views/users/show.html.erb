@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="O_UserProjectsAndBanner">
-      <div class="M_UserCards" style="--grid-gap: 10px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
+      <div class="M_UserCards" style="--grid-gap: 12px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);">
         <% @user.sections.order(:position).each_with_index do |section, index| %>
           <%= render "sections/section", section: section %>
           <%= render "sections/section_create_button", user: @user, position: index + 1 if current_user == @user %>

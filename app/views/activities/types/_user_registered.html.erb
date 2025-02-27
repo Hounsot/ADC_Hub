@@ -1,0 +1,18 @@
+<div class="M_FeedItem U_UserRegistered">
+  <div class="W_FeedItemHeader">
+    <div class="W_FeedItemAvatar">
+      <% if activity.actor.avatar.attached? %>
+        <%= image_tag activity.actor.avatar, class: "A_FeedAvatar" %>
+      <% else %>
+        <%= image_tag asset_path("Q_DefaultAvatar.png"), class: "A_FeedAvatar" %>
+      <% end %>
+    </div>
+    <div class="W_FeedItemContent">
+      <p class="W_FeedItemText">
+        <%= link_to activity.actor.name, user_path(activity.actor), class: "A_FeedUserName" %>
+        <span class="A_FeedAction">теперь с нами!</span>
+      </p>
+      <div class="A_FeedTimestamp"><%= time_ago_in_words(activity.created_at) %></div>
+    </div>
+  </div>
+</div>

@@ -13,11 +13,11 @@
     }
     &:is(.U_Square){
         aspect-ratio: 1/1;
-        width: calc(33.33% - var(--grid-gap, 0px));
+        width: calc(33.33% - var(--grid-gap, 0px) / 2);
     }
     &:is(.U_Medium){
         aspect-ratio: 712/350;
-        width: calc(66.66% - var(--grid-gap, 0px));
+        width: calc(66.66% - var(--grid-gap, 0px) / 2);
     }
     &:is(.U_Divider){
         position: relative;

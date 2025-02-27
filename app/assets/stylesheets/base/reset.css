@@ -41,3 +41,47 @@ body{
     border: 1px solid #ccc;
     padding: 1rem;
   }  
+  /* temporary */  
+  
+  .A_FeedEntityText {
+    font-weight: 500;
+  }
+    
+  .W_FeedVacancyPreview {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }  
+
+.O_Pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pagination span {
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.pagination .current {
+  background-color: #2563eb;
+  color: white;
+}
+
+.pagination a {
+  color: #666;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.pagination a:hover {
+  background-color: #f3f4f6;
+}  

@@ -129,7 +129,7 @@ EMAILS = [
   "mike@example.com",
   "nick@example.com"
 ]
-CARD_TYPES = [ "text", "link", "image", "job", "divider" ]
+CARD_TYPES = [ "text", "link", "image" ]
 
 
 # 2. (Optional) Clear existing data to avoid duplicates:
@@ -139,6 +139,7 @@ Vacancy.destroy_all
 Card.destroy_all
 User.destroy_all
 Company.destroy_all
+Section.destroy_all
 
 # 3. Create a few Users (if you don't already have them):
 puts "Creating Users..."
@@ -231,8 +232,6 @@ def generate_card_title(card_type)
     "My cool image"
   when "job"
     "Job Overview"
-  when "divider"
-    "Section Divider"
   else
     "Generic Card"
   end
@@ -248,8 +247,6 @@ def generate_card_content(card_type)
     "Just an example image card"
   when "link"
     "A short description of the link"
-  when "divider"
-    ""  # no content needed for a divider
   else
     "No specific content"
   end
@@ -266,7 +263,7 @@ SECTION_TITLES = [
 puts "Creating random Sections and Cards for each user..."
 users.each do |user|
   # Create 2-4 sections for each user
-  num_sections = rand(2..4)
+  num_sections = rand(1..2)
 
   num_sections.times do |section_index|
     section = user.sections.create!(
@@ -292,5 +289,99 @@ users.each do |user|
 end
 
 puts "Created #{Section.count} Sections with #{Card.count} Cards."
+
+puts "Creating image sections from folders..."
+
+# This helper method creates a section for a user and populates it with image cards
+# Parameters:
+#   user: The User model instance who will own this section
+#   folder_path: Path to the folder containing images
+#   section_name: Name to use for the section title
+def create_image_section(user, folder_path, section_name)
+  # Don't create more than 6 sections per user
+  if user.sections.count >= 6
+    puts "Skipping section creation for #{user.name} - already has 6 sections"
+    return
+  end
+
+  # Create a new section for this set of images
+  # titleize converts names like "project_photos" to "Project Photos"
+  section = user.sections.create!(
+    title: section_name.titleize,
+    position: user.sections.count + 1  # Place it after existing sections
+  )
+
+  # Find all image files in the specified folder
+  # Select only files that end with image extensions
+  images = Dir[File.join(folder_path, '*')].select { |f|
+    File.file?(f) && f.match?(/\.(jpg|jpeg|png|gif)$/i)
+  }
+
+  # Create a card for each image in the folder
+  images.each_with_index do |image_path, index|
+    # Check the previous card's size to prevent consecutive medium cards
+    previous_card = section.cards.find_by(position: index)
+    # If previous card was medium, make this one square
+    # Otherwise randomly choose between square and medium
+    size = if previous_card&.size == "medium"
+      "square"
+    else
+      [ "square", "medium" ].sample
+    end
+
+    # Create the card with the determined size
+    card = section.cards.create!(
+      card_type: "image",
+      position: index + 1,
+      size: size
+    )
+
+    # Attach the actual image file to the card using Active Storage
+    card.image.attach(
+      io: File.open(image_path),
+      filename: File.basename(image_path),
+      content_type: "image/#{File.extname(image_path).delete('.')}"
+    )
+  end
+end
+
+# Set the base path where all image folders are located
+# Rails.root.join creates a proper path for any operating system
+base_path = Rails.root.join('db', 'seeds', 'images')
+
+# Collect all paths to image folders
+# We're looking for a structure like:
+# - images/
+#   - Category1/
+#     - Subcategory1/
+#     - Subcategory2/
+#   - Category2/
+#     - Subcategory3/
+subcategory_paths = []
+Dir[File.join(base_path, '*')].each do |category_path|
+  next unless File.directory?(category_path)
+  Dir[File.join(category_path, '*')].each do |subcategory_path|
+    next unless File.directory?(subcategory_path)
+    subcategory_paths << subcategory_path
+  end
+end
+
+# Randomly distribute image sections among users
+# We shuffle the paths to ensure random distribution of content
+subcategory_paths.shuffle.each do |subcategory_path|
+  # Find users who don't yet have 6 sections
+  eligible_users = User.all.select { |user| user.sections.count < 6 }
+  # Stop if all users have reached their section limit
+  break if eligible_users.empty?
+
+  # Pick a random eligible user for this section
+  user = eligible_users.sample
+  # Get the folder name to use as section title
+  subcategory_name = File.basename(subcategory_path)
+  # Create the section with its images
+  create_image_section(user, subcategory_path, subcategory_name)
+end
+
+puts "Finished creating image sections!"
 
 puts "Seed data created successfully!"

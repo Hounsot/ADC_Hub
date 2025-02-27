@@ -1,0 +1,5 @@
+.A_FeedEntityLink {
+    font-weight: 500;
+    color: var(--font-default-color);
+    text-decoration: none;
+}

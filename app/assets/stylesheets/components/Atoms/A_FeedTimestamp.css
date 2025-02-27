@@ -1,0 +1,5 @@
+.A_FeedTimestamp{
+    font-size: 16px;
+    color: var(--font-second-color);
+    min-width: fit-content;
+}
