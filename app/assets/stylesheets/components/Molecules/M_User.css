@@ -15,4 +15,12 @@
         height: 260px;
         object-fit: cover;
     }
+    @media all and (max-width: 800px) {
+        aspect-ratio: 280 / 320;
+        width: calc(50% - 12px);
+        height: auto;
+        img{
+            height: 100%;
+        }
+    }
 }

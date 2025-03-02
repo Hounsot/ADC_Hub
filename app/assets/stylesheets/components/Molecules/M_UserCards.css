@@ -4,4 +4,13 @@
     flex-wrap: wrap;
     width: 100%;
     gap: 12px;
+    position: relative;
+    .A_CardPositionButton{
+        filter: opacity(0);
+    }
+    &:hover{
+        .A_CardPositionButton{
+            filter: opacity(1);
+        }
+    }
 }

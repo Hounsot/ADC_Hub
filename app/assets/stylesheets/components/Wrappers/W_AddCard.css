@@ -4,5 +4,9 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 1/1;
-  width: calc(33.33% - var(--grid-gap, 0px));
+  width: calc(33.33% - var(--grid-gap) * 2 / 3);
+  height: auto;
+  @media all and (max-width: 800px) {
+    width: calc(50% - var(--grid-gap, 0px) / 2);
+  }
 }

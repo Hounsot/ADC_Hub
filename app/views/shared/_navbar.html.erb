@@ -3,13 +3,13 @@
     <img src="../images/Q_ShortLogo.svg" alt="">
   <% end %>
   <div class="W_NavBarItems">
-    <%= link_to activities_path, class: "A_NavBarItem U_Hover" do %>
+    <%= link_to activities_path, class: "A_NavBarItem U_Hover#{' U_Active' if current_page?(activities_path)}" do %>
       <img src="../images/Q_NavHomeIcon.svg" alt="">
     <% end %>
-    <%= link_to vacancies_path, class: "A_NavBarItem U_Hover" do %>
+    <%= link_to vacancies_path, class: "A_NavBarItem U_Hover#{' U_Active' if current_page?(vacancies_path)}" do %>
       <img src="../images/Q_NavVacancyIcon.svg" alt="">
     <% end %>
-    <%= link_to users_path, class: "A_NavBarItem U_Hover" do %>
+    <%= link_to users_path, class: "A_NavBarItem U_Hover#{' U_Active' if current_page?(users_path)}" do %>
       <img src="../images/Q_NavNotificationsIcon.svg" alt="">
     <% end %>
     <div class="A_NavBarItem U_Hover">

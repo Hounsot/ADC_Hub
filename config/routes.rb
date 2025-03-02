@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :vacancies
   resources :users, only: [ :show, :index, :edit, :update ] do
     resources :sections do
+      member do
+        patch :move_up
+        patch :move_down
+      end
       resources :cards do
         member do
           patch :update_size

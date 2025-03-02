@@ -1,10 +1,14 @@
 .SO_ActivityFeed {
     --text-banner-size: var(--xsmd);
+    --text-feed-link-size: var(--s);
+    --text-feed-link-description-size: var(--xs);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    max-width: 800px;
+    width: 800px;
+    max-width: 100%;
+    padding: var(--feedPaddings);
     .M_UserEmploymentBanner{
         height: fit-content;
         gap: 48px;
@@ -12,5 +16,8 @@
         background-position: 0 0;
         background-size: cover;
         background-repeat: no-repeat;
+    }
+    .W_LinkCardText{
+        gap: 0px;
     }
   }

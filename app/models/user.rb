@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   after_create :create_user_activity
   after_create :create_default_section
+  before_destroy :cleanup_activities
 
   private
 
@@ -32,5 +33,9 @@ class User < ApplicationRecord
         position: "My Position"
       )
     end
+  end
+  def cleanup_activities
+    Activity.where(subject_type: "User", subject_id: self.id).destroy_all
+    Activity.where(actor_type: "User", actor_id: self.id).destroy_all
   end
 end

@@ -1,0 +1,23 @@
+<turbo-frame id="new_link_card_form" class="A_UserCard U_Square">
+  <%= form_with model: Card.new, 
+                url: user_section_cards_path(section.user, section),
+                local: false,
+                class: "W_LinkCardForm" do |f| %>
+    <%= f.hidden_field :card_type, value: 'link' %>
+    <div class="W_LinkFormInputs">
+      <%= f.text_field :url, 
+                       placeholder: "Ссылка",
+                       class: "A_LinkFormInput" %>
+      <%= f.text_field :title, 
+                       placeholder: "Название",
+                       class: "A_LinkFormInput" %>
+    </div>
+    <div class="W_CardButtons">
+      <% if current_user == section.user %>
+        <div class="A_CardButton U_Color" data-action="click->portfolio#submitForm">
+          <img src="../images/Q_CardMarkIcon.svg" alt="">
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</turbo-frame> 

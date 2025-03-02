@@ -1,0 +1,7 @@
+<div class="M_UserCards" style="--grid-gap: 12px; display: flex; flex-wrap: wrap; gap: var(--grid-gap);" id="sections-container">
+  <% user.sections.order(:position).each_with_index do |section, index| %>
+    <%= render "sections/section", section: section %>
+    <%= render "sections/section_create_button", user: user, position: index + 1 if current_user == user %>
+  <% end %>
+  <%= render "sections/section_create_button", user: user, position: user.sections.count if current_user == user && user.sections.empty? %>
+</div>

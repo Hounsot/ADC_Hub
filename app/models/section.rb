@@ -4,6 +4,7 @@ class Section < ApplicationRecord
 
   validates :title, presence: true
   after_create :create_section_activity
+  before_destroy :cleanup_activities
 
   private
 
@@ -13,5 +14,9 @@ class Section < ApplicationRecord
       actor: self.user,
       subject: self
     )
+  end
+
+  def cleanup_activities
+    Activity.where(subject_type: "Section", subject_id: self.id).destroy_all
   end
 end

@@ -70,6 +70,64 @@ class SectionsController < ApplicationController
     end
   end
 
+  def move_up
+    @section = Section.find(params[:id])
+
+    if current_user == @section.user && @section.position > 1
+      # Find the section above this one
+      @section_above = current_user.sections.find_by(position: @section.position - 1)
+
+      # Store original positions before changing them
+      current_position = @section.position
+      above_position = @section_above.position
+
+      # Swap positions
+      if @section_above
+        Section.transaction do
+          # Swap the positions directly
+          @section.update_column(:position, above_position)
+          @section_above.update_column(:position, current_position)
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to user_path(current_user) }
+        format.turbo_stream
+      end
+    else
+      head :forbidden
+    end
+  end
+
+  def move_down
+    @section = Section.find(params[:id])
+
+    if current_user == @section.user && @section.position < current_user.sections.count
+      # Find the section below this one
+      @section_below = current_user.sections.find_by(position: @section.position + 1)
+
+      # Store original positions before changing them
+      current_position = @section.position
+      below_position = @section_below.position
+
+      # Swap positions
+      if @section_below
+        Section.transaction do
+          # Swap the positions directly
+          @section.update_column(:position, below_position)
+          @section_below.update_column(:position, current_position)
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to user_path(current_user) }
+        format.turbo_stream
+      end
+    else
+      head :forbidden
+    end
+  end
+
   private
 
   def set_section

@@ -1,0 +1,27 @@
+.A_CardPositionButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--surface-secondary);
+    color: var(--font-default-color);
+    border-radius: 100%;
+    cursor: pointer;
+    position: absolute;
+    z-index: 100;
+    transition: var(--button-transitions);
+    &.U_Up{
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &.U_Down{
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &:hover{
+        background-color: var(--surface-secondary-hover);
+    }
+}

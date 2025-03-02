@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["dropdown", "imageFileInput"]
+  static targets = ["dropdown", "imageFileInput", "linkForm"]
   static values = {
     url: String,
     type: String
@@ -62,8 +62,14 @@ export default class extends Controller {
   create(event) {
     event.preventDefault()
     const section = this.element.closest('[data-section-id]')
-    console.log(`sectionId: ${section}`)
     const cardType = event.currentTarget.dataset.cardsTypeValue
+
+    if (cardType === 'link') {
+      this.showLinkForm(section)
+      return
+    }
+
+    console.log(`sectionId: ${section}`)
 
     fetch(this.urlValue, {
       method: 'POST',
@@ -97,6 +103,30 @@ export default class extends Controller {
     } else {
       // Fallback to appending at the end if W_AddCard is not found
       section.insertAdjacentHTML('beforeend', html)
+    }
+  }
+
+  showLinkForm(section) {
+    fetch(this.urlValue, {
+      method: 'GET',
+      headers: {
+        'Accept': 'text/vnd.turbo-stream.html'
+      }
+    })
+    .then(response => response.text())
+    .then(html => {
+      const addCardDiv = section.querySelector('.W_AddCard')
+      if (addCardDiv) {
+        addCardDiv.insertAdjacentHTML('beforebegin', html)
+      }
+    })
+  }
+
+  cancelLinkForm(event) {
+    event.preventDefault()
+    const form = event.target.closest('turbo-frame')
+    if (form) {
+      form.remove()
     }
   }
 }

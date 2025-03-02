@@ -12,6 +12,21 @@
         <div class="A_CardButton U_Color" data-action="click->portfolio#submitForm">
           <img src="../images/Q_CardMarkIcon.svg" alt="">
         </div>
+        <!-- Add reordering buttons -->
+        <% unless section.position == 1 %>
+          <%= link_to move_up_user_section_path(section.user, section), 
+                data: { turbo_method: :patch },
+                class: "A_CardButton" do %>
+            <img src="../images/Q_SectionMoveUpIcon.svg" alt="">
+          <% end %>
+        <% end %>
+        <% unless section.position == section.user.sections.count %>
+          <%= link_to move_down_user_section_path(section.user, section), 
+                data: { turbo_method: :patch },
+                class: "A_CardButton" do %>
+            <img src="../images/Q_SectionMoveDownIcon.svg" alt="">
+          <% end %>
+        <% end %>
         <%= link_to user_section_path(section.user, section),
               data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this section and all its cards?" },
               class: "A_CardButton" do %>

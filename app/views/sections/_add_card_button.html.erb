@@ -1,4 +1,4 @@
-<div class="W_AddCard" data-portfolio-target="actionBar">
+<%= turbo_frame_tag "new_card_form_#{section.id}", class: "W_AddCard", data: { portfolio_target: "actionBar" } do %>
   <div class="W_AddCardOptions"
              data-controller="cards"
              data-cards-url-value="<%= user_section_cards_path(section.user, section) %>">
@@ -54,4 +54,4 @@
     </div>
     <p class="A_VacancyCardBodyText">Добавить карточку</p>
   </div>
-</div>
+<% end %>

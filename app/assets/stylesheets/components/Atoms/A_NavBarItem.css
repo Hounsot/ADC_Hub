@@ -6,6 +6,11 @@
     justify-content: center;
     border-radius: 12px;
     transition: var(--button-transitions);
+    &:is(.U_Active){
+        img{
+            filter: brightness(0) invert(1) !important;
+        }
+    }
     &:is(.U_Profile){
         img{
             border-radius: 100%;

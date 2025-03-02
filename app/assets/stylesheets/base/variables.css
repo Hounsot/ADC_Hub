@@ -2,6 +2,7 @@
   /* primitives */
   /* sizes */
   --xs: 14px;
+  --s: 16px;
   --sm: 18px;
   --md: 20px;
   --xsmd: 24px;
@@ -54,6 +55,8 @@
   --text-section-title-size: var(--md);
   --text-user-list-name-size: var(--sm);
   --text-user-list-position-size: var(--xs);
+  --text-feed-link-size: var(--md);
+  --text-feed-link-description-size: var(--sm);
   /* colors */
   --text-secondary: var(--200);
   /* surfaces */
@@ -78,6 +81,8 @@
   --profilePaddings: 0 96px 24px 96px;
   --bodyPaddings: var(--navbarHeight) 0 24px 0;
   --landingSectionInsidePaddings: 72px 0 72px;
+  --feedPaddings: 0 24px;
+  --vacanciesPaddings: 0 24px;
   /* text sizes */
   --landingTitleSize: 68px;
   --landingSubtitleSize: 48px;

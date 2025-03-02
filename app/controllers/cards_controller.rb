@@ -4,7 +4,17 @@ class CardsController < ApplicationController
   before_action :set_card, only: [ :edit, :update, :destroy, :update_size ]
 
   def new
-    @card = @section.cards.new
+    @card = @section.cards.new(card_type: params[:card_type])
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "new_card_form_#{@section.id}",
+          partial: "cards/#{params[:card_type]}_form",
+          locals: { section: @section, card: @card }
+        )
+      end
+    end
   end
 
   def create
@@ -13,8 +23,15 @@ class CardsController < ApplicationController
     # Set the position to be the last in this section
     @card.position = (@section.cards.maximum(:position) || 0) + 1
 
-    if @card.card_type == "text" && @card.content.blank?
-      @card.content = "Нажмите для редактирования"
+    case @card.card_type
+    when "link"
+      render turbo_stream: turbo_stream.replace(
+        "new_link_card_form",
+        partial: "cards/link_form",
+        locals: { section: @section }
+      ) and return unless params[:card][:url].present?
+    when "text"
+      @card.content = "Нажмите для редактирования" if @card.content.blank?
     end
 
     respond_to do |format|
@@ -100,6 +117,19 @@ class CardsController < ApplicationController
       format.html { redirect_to user_path(@section.user), notice: "Card deleted successfully." }
     end
   end
+
+  def index
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "new_card_form_#{@section.id}",
+          partial: "cards/link_form",
+          locals: { section: @section }
+        )
+      end
+    end
+  end
+
   private
 
   def set_section
@@ -111,6 +141,6 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:card_type, :image, :size, :title, :content)
+    params.require(:card).permit(:card_type, :image, :size, :title, :content, :url)
   end
 end

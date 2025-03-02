@@ -7,6 +7,12 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     .A_UserCard{
         border-radius: 6px;
+        &:is(.U_Link){
+            background-color: var(--surface-third);
+            &:hover{
+                background-color: var(--surface-third-hover);
+            }
+        }
     }
     &:is(.U_SectionCreated){
         gap: 20px;

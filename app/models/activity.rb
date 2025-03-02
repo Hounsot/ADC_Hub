@@ -1,6 +1,6 @@
 class Activity < ApplicationRecord
   belongs_to :actor, polymorphic: true, optional: true  # Who performed the action
-  belongs_to :subject, polymorphic: true, optional: true  # What was acted upon
+  belongs_to :subject, polymorphic: true, optional: true, dependent: :destroy_async # What was acted upon
 
   validates :action, presence: true
 

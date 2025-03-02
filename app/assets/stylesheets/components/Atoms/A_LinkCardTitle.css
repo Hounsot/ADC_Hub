@@ -1,0 +1,7 @@
+.A_LinkCardTitle{
+    font-size: var(--text-feed-link-size);
+    font-weight: 500;
+    color: var(--font-default-color);
+    text-align: center;
+    text-decoration: none;
+}

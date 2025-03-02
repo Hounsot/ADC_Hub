@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--font-default-color);
     cursor: pointer;
     &:hover{
         background-color: var(--surface-secondary);

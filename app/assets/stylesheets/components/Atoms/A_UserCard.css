@@ -4,6 +4,7 @@
     position: relative;
     padding: 16px;
     overflow: hidden;
+    transition: var(--button-transitions);
     &:hover{
         background-color: var(--surface-secondary-hover);
         .W_CardButtons, .W_CardSizeButtons{
@@ -13,11 +14,14 @@
     }
     &:is(.U_Square){
         aspect-ratio: 1/1;
-        width: calc(33.33% - var(--grid-gap, 0px) / 2);
+        width: calc(33.33% - var(--grid-gap) * 2 / 3);
     }
     &:is(.U_Medium){
         aspect-ratio: 712/350;
         width: calc(66.66% - var(--grid-gap, 0px) / 2);
+        .A_LinkCardIcon{
+            width: 16%;
+        }
     }
     &:is(.U_Divider){
         position: relative;
@@ -26,6 +30,7 @@
         background-color: #00000000;
         transition: var(--button-transitions);
         padding: 16px 0;
+        margin-bottom: -12px;
         form{ 
             display: flex;
             flex-direction: row;
@@ -77,7 +82,14 @@
             height: 100%;
         }
     }
-    @media all and (max-width: 767px) {
+    &:is(.U_Link){
+        cursor: pointer;
+        padding: 0;
+        .W_CardButtons{
+            top: 16px;
+        }
+    }
+    @media all and (max-width: 800px) {
         &:is(.U_Square){
             width: calc(50% - var(--grid-gap, 0px) / 2);
         }

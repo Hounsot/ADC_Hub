@@ -1,0 +1,10 @@
+.A_LinkFormInput{
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    background-color: var(--surface-secondary);
+    padding: 0 16px;
+    font-size: var(--text-feed-link-size);
+    border: none;
+    color: var(--font-default-color);
+}

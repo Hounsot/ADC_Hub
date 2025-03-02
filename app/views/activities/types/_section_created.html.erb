@@ -30,17 +30,18 @@
           <% if current_user != card.section.user %>
             <div class="A_Button">Запросить рекомендацию</div>
           <% end %>
-          <div class="W_CardButtons">
-            <div class="C_CardControls">
-              <div class="A_CardButton">
-                <img src="../images/Q_CardSettingsIcon.svg" alt="">
-              </div>
-            </div>
-          </div>
         </div>
       <% when "link" %>
-        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
-          <%= link_to card.title, card.url, class: "", target: "_blank" %>
+        <div class="A_UserCard U_Link <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+          <a href="<%= card.url %>" target="_blank" class="A_LinkCardUrl">
+            <div class="W_LinkCardContent">
+              <img src="../images/Q_<%= website_type(card.url).capitalize %>Icon.svg" alt="<%= website_type(card.url) %> icon" class="A_LinkCardIcon">
+              <div class="W_LinkCardText">
+                <h3 class="A_LinkCardTitle"><%= card.title %></h3>
+                <%= simplified_domain(card.url) %>
+              </div>
+            </div>
+          </a>
         </div>
       <% when "image" %>
         <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
