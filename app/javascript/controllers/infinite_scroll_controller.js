@@ -7,51 +7,75 @@ export default class extends Controller {
   connect() {
     this.pageValue = this.pageValue || 1
     this.loadingValue = false
-    this.intersectionObserver = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !this.loadingValue) {
-        this.loadMore()
-      }
-    })
-    
-    if (this.hasPaginationTarget) {
-      this.intersectionObserver.observe(this.paginationTarget)
-    }
+    this.scrollTimeout = null
+    this.boundScrollHandler = this.handleScrollDebounced.bind(this)
+    window.addEventListener('scroll', this.boundScrollHandler)
   }
 
   disconnect() {
-    this.intersectionObserver.disconnect()
+    window.removeEventListener('scroll', this.boundScrollHandler)
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout)
+    }
+  }
+  
+  handleScrollDebounced() {
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout)
+    }
+    
+    this.scrollTimeout = setTimeout(() => {
+      this.handleScroll()
+    }, 200)
+  }
+  
+  handleScroll() {
+    if (this.loadingValue || !this.hasPaginationTarget) return
+    
+    const paginationRect = this.paginationTarget.getBoundingClientRect()
+    const windowHeight = window.innerHeight
+    
+    const isNearBottom = paginationRect.top < windowHeight + 100;
+    
+    if (isNearBottom) {
+      this.loadMore()
+    }
   }
   
   loadMore() {
     this.loadingValue = true
-    const nextPage = this.pageValue + 1
+    this.paginationTarget.classList.add('loading')
     
-    fetch(`/activities?page=${nextPage}`, {
+    fetch(`/activities?page=${this.pageValue + 1}`, {
       headers: {
-        Accept: "text/html",
         "X-Requested-With": "XMLHttpRequest"
       }
     })
-    .then(response => response.text())
+    .then(response => {
+      if (!response.ok) throw new Error("Network response was not ok")
+      return response.text()
+    })
     .then(html => {
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(html, "text/html")
-      const newActivities = doc.querySelector(".O_FeedItems").innerHTML
-      
-      // Append new content
-      this.entriesTarget.insertAdjacentHTML("beforeend", newActivities)
-      
-      // Update page number
-      this.pageValue = nextPage
-      
-      // Check if there are more pages
-      const hasPagination = doc.querySelector(".pagination .next")
-      if (!hasPagination) {
-        // No more results, disconnect observer
-        this.intersectionObserver.disconnect()
+      if (html.trim()) {
+        this.entriesTarget.insertAdjacentHTML('beforeend', html)
+        this.pageValue++
+        
+        const newItems = html.match(/<div class="M_FeedItem/g) || []
+        if (newItems.length < 20) {
+          // Reached the end, remove scroll listener
+          window.removeEventListener('scroll', this.boundScrollHandler)
+        }
+      } else {
+        // No more content
+        window.removeEventListener('scroll', this.boundScrollHandler)
       }
-      
+    })
+    .catch(error => {
+      console.error("Error loading more activities:", error)
+    })
+    .finally(() => {
       this.loadingValue = false
+      this.paginationTarget.classList.remove('loading')
     })
   }
-} 
+}

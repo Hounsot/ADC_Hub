@@ -1,0 +1,3 @@
+<% activities.each do |activity| %>
+  <%= render partial: "activities/types/#{activity.action}", locals: { activity: activity } %>
+<% end %> 
