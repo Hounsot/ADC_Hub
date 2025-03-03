@@ -1,0 +1,10 @@
+.A_SectionSaveButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.A_SectionSaveButton.hidden {
+  display: none;
+} 

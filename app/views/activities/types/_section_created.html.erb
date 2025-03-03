@@ -19,8 +19,13 @@
     <% activity.subject.cards.order(:position).each do |card| %>
       <% case card.card_type %>
       <% when "text" %>
-        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>">
-          <p class=""><%= truncate(card.content, length: 100) %></p>
+        <div class="A_UserCard U_<%= card.size.capitalize %> U_<%= card.card_type.capitalize %>" style="color: white;">
+          <h3 data-inline-text-card-target="title">
+            <%= card.title.presence || "Untitled" %>
+          </h3>
+          <p data-inline-text-card-target="content">
+            <%= card.content %>
+          </p>
         </div>
       <% when "job" %>
         <div class="M_UserEmploymentBanner">

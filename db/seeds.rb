@@ -22,14 +22,6 @@ TECH_COMPANIES = [
   "Microsoft",
   "Google",
   "Amazon",
-  "IBM",
-  "Intel",
-  "Cisco",
-  "Oracle",
-  "SAP",
-  "Dell Technologies",
-  "Salesforce",
-  "Adobe",
   "VMware",
   "Samsung",
   "Tencent",
@@ -87,6 +79,61 @@ DESCRIPTIONS = [
   "In this role, you will collaborate with cross-functional teams to deliver high-quality results.",
   "We value work-life balance and offer a flexible environment for our employees."
 ]
+RANDOM_LINKS = [
+  # YouTube links
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "https://www.youtube.com/watch?v=9bZkp7q19f0",
+  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+  "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+
+  # Behance links
+  "https://www.behance.net/gallery/96851215/Digital-Art-Collection",
+  "https://www.behance.net/gallery/87349339/UI-Design-Portfolio",
+  "https://www.behance.net/gallery/72635295/Brand-Identity-Project",
+
+  # Spotify links
+  "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT",
+  "https://open.spotify.com/album/1DFixLWuPkv3KT3TnV35m3",
+  "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
+
+  # VK links
+  "https://vk.com/feed",
+  "https://vk.com/music",
+  "https://vk.com/video",
+
+  # Rutube links
+  "https://rutube.ru/video/person/1037293/",
+  "https://rutube.ru/video/private/79053c3c5c3dac1eed3703ed65da3ce0/",
+  "https://rutube.ru/video/c0596a7b8b5f6f3a77c9f3e56e87ce67/",
+
+  # X (Twitter) links
+  "https://twitter.com/elonmusk",
+  "https://twitter.com/NASA",
+  "https://twitter.com/NatGeo",
+
+  # Yandex Music links
+  "https://music.yandex.ru/album/5307396",
+  "https://music.yandex.ru/artist/41126",
+  "https://music.yandex.ru/users/music-blog/playlists/1000",
+
+  # Wikipedia links
+  "https://en.wikipedia.org/wiki/Web_development",
+  "https://en.wikipedia.org/wiki/Artificial_intelligence",
+  "https://en.wikipedia.org/wiki/Data_science",
+
+  # Vimeo links
+  "https://vimeo.com/22439234",
+  "https://vimeo.com/channels/staffpicks/713347905",
+  "https://vimeo.com/groups/motion/videos/73686146",
+
+  # Dprofile links
+  "https://dprofile.ru/user/1234567890",
+  "https://dprofile.ru/user/9876543210",
+  "https://dprofile.ru/user/1122334455",
+  "https://dprofile.ru/user/6677889900",
+  "https://dprofile.ru/user/5566778899",
+  "https://dprofile.ru/user/4455667788"
+]
 
 USERNAMES = [
   "Даниил Парамонов",
@@ -131,6 +178,13 @@ EMAILS = [
 ]
 CARD_TYPES = [ "text", "link", "image" ]
 
+SECTION_TITLES = [
+  "My Work",
+  "Projects",
+  "Education",
+  "Skills",
+  "Achievements"
+]
 
 # 2. (Optional) Clear existing data to avoid duplicates:
 #    Uncomment these lines if you want a fresh start each time you run seeds:
@@ -141,86 +195,28 @@ User.destroy_all
 Company.destroy_all
 Section.destroy_all
 
-# 3. Create a few Users (if you don't already have them):
-puts "Creating Users..."
-
-# We assume Devise or similar is used, requiring an email and password.
-# We'll just create 5 example users.
-
-# Helper method to get random avatar
+# Helper methods
 def random_avatar
   avatars_path = Rails.root.join('db', 'seeds', 'avatars')
   avatars = Dir[File.join(avatars_path, '*')].select { |f| File.file?(f) }
   File.open(avatars.sample)
 end
 
-USERNAMES.each_with_index do |username, i|
-  user = User.create!(
-    email: EMAILS[i],
-    name: username,
-    password: "password",
-    position: POSITIONS.sample
-  )
+def random_image
+  # Look in various image directories and get a random image
+  base_path = Rails.root.join('db', 'seeds', 'images')
 
-  # Attach a random avatar
-  user.avatar.attach(
-    io: random_avatar,
-    filename: "avatar_#{username}.jpg",
-    content_type: 'image/jpeg'
-  )
-end
-
-users = User.all
-puts "Created #{users.count} Users with avatars."
-
-# 4. Create Companies from the TECH_COMPANIES array:
-puts "Creating Companies..."
-
-TECH_COMPANIES.each do |company_name|
-  Company.create!(
-    name: company_name,
-    description: "#{company_name} is an industry leader in advanced tech solutions.",
-    link: "https://www.#{company_name.downcase.gsub(/\s+/, '')}.com"
-    # If you have Active Storage for profile_picture, you could attach a file here.
-  )
-end
-
-companies = Company.all
-puts "Created #{companies.count} Companies."
-
-puts "Assigning each user to a random company..."
-
-# 6. Assign each user with random company:
-
-users.each do |user|
-  user.update!(company: companies.sample)
-end
-
-puts "Done assigning companies to users!"
-
-# 6. Create Vacancies for each company:
-#
-#    - We pick random positions, locations, salaries, descriptions.
-#    - We assign each vacancy to a random user as its creator.
-#    - We create a random number of vacancies per company (3 to 7).
-
-puts "Creating Vacancies..."
-
-companies.each do |company|
-  rand(3..7).times do
-    Vacancy.create!(
-      title: POSITIONS.sample,
-      description: DESCRIPTIONS.sample,
-      salary: SALARIES.sample,
-      location: LOCATIONS.sample,
-      employment_type: [ "Фулл-тайм", "Парт-тайм", "Стажировка" ].sample,
-      company: company,
-      user: users.sample  # pick any user at random
-    )
+  # Get all image files from all subdirectories
+  image_files = []
+  Dir.glob(File.join(base_path, '**', '*')).each do |file|
+    if File.file?(file) && file.match?(/\.(jpg|jpeg|png|gif)$/i)
+      image_files << file
+    end
   end
-end
 
-puts "Created #{Vacancy.count} Vacancies."
+  # Return a File object for a random image
+  File.open(image_files.sample)
+end
 
 def generate_card_title(card_type)
   case card_type
@@ -252,51 +248,7 @@ def generate_card_content(card_type)
   end
 end
 
-SECTION_TITLES = [
-  "My Work",
-  "Projects",
-  "Education",
-  "Skills",
-  "Achievements"
-]
-
-puts "Creating random Sections and Cards for each user..."
-users.each do |user|
-  # Create 2-4 sections for each user
-  num_sections = rand(1..2)
-
-  num_sections.times do |section_index|
-    section = user.sections.create!(
-      title: SECTION_TITLES[section_index] || "Custom Section #{section_index + 1}",
-      position: section_index + 1
-    )
-
-    # Create 3-5 cards for each section
-    num_cards = rand(3..5)
-
-    num_cards.times do |card_index|
-      card_type = CARD_TYPES.sample
-      section.cards.create!(
-        card_type: card_type,
-        title: generate_card_title(card_type),
-        content: generate_card_content(card_type),
-        url: (card_type == "link" ? "https://www.example.com" : nil),
-        position: card_index + 1,  # simple ascending positions
-        size: [ "square", "medium" ].sample
-      )
-    end
-  end
-end
-
-puts "Created #{Section.count} Sections with #{Card.count} Cards."
-
-puts "Creating image sections from folders..."
-
-# This helper method creates a section for a user and populates it with image cards
-# Parameters:
-#   user: The User model instance who will own this section
-#   folder_path: Path to the folder containing images
-#   section_name: Name to use for the section title
+# Create a section for a user and populate it with image cards
 def create_image_section(user, folder_path, section_name)
   # Don't create more than 6 sections per user
   if user.sections.count >= 6
@@ -305,14 +257,12 @@ def create_image_section(user, folder_path, section_name)
   end
 
   # Create a new section for this set of images
-  # titleize converts names like "project_photos" to "Project Photos"
   section = user.sections.create!(
     title: section_name.titleize,
     position: user.sections.count + 1  # Place it after existing sections
   )
 
   # Find all image files in the specified folder
-  # Select only files that end with image extensions
   images = Dir[File.join(folder_path, '*')].select { |f|
     File.file?(f) && f.match?(/\.(jpg|jpeg|png|gif)$/i)
   }
@@ -321,8 +271,8 @@ def create_image_section(user, folder_path, section_name)
   images.each_with_index do |image_path, index|
     # Check the previous card's size to prevent consecutive medium cards
     previous_card = section.cards.find_by(position: index)
-    # If previous card was medium, make this one square
-    # Otherwise randomly choose between square and medium
+
+    # If previous card was medium, make this one square, otherwise randomly choose
     size = if previous_card&.size == "medium"
       "square"
     else
@@ -345,18 +295,55 @@ def create_image_section(user, folder_path, section_name)
   end
 end
 
-# Set the base path where all image folders are located
-# Rails.root.join creates a proper path for any operating system
+# 3. STEP 1: Create prerequisites (Users & Companies)
+puts "Creating Users..."
+
+users = []
+USERNAMES.each_with_index do |username, i|
+  user = User.create!(
+    email: EMAILS[i],
+    name: username,
+    password: "password",
+    position: POSITIONS.sample
+  )
+
+  # Attach a random avatar
+  user.avatar.attach(
+    io: random_avatar,
+    filename: "avatar_#{username}.jpg",
+    content_type: 'image/jpeg'
+  )
+
+  users << user
+end
+
+puts "Created #{users.count} Users with avatars."
+
+puts "Creating Companies..."
+
+companies = []
+TECH_COMPANIES.each do |company_name|
+  company = Company.create!(
+    name: company_name,
+    description: "#{company_name} is an industry leader in advanced tech solutions.",
+    link: "https://www.#{company_name.downcase.gsub(/\s+/, '')}.com"
+  )
+  companies << company
+end
+
+puts "Created #{companies.count} Companies."
+
+puts "Assigning each user to a random company..."
+
+users.each do |user|
+  user.update!(company: companies.sample)
+end
+
+puts "Done assigning companies to users!"
+
+# 4. STEP 2: Prepare image section data
 base_path = Rails.root.join('db', 'seeds', 'images')
 
-# Collect all paths to image folders
-# We're looking for a structure like:
-# - images/
-#   - Category1/
-#     - Subcategory1/
-#     - Subcategory2/
-#   - Category2/
-#     - Subcategory3/
 subcategory_paths = []
 Dir[File.join(base_path, '*')].each do |category_path|
   next unless File.directory?(category_path)
@@ -366,22 +353,122 @@ Dir[File.join(base_path, '*')].each do |category_path|
   end
 end
 
-# Randomly distribute image sections among users
-# We shuffle the paths to ensure random distribution of content
-subcategory_paths.shuffle.each do |subcategory_path|
-  # Find users who don't yet have 6 sections
-  eligible_users = User.all.select { |user| user.sections.count < 6 }
-  # Stop if all users have reached their section limit
-  break if eligible_users.empty?
+subcategory_paths.shuffle!
 
-  # Pick a random eligible user for this section
-  user = eligible_users.sample
-  # Get the folder name to use as section title
-  subcategory_name = File.basename(subcategory_path)
-  # Create the section with its images
-  create_image_section(user, subcategory_path, subcategory_name)
+# 5. STEP 3: Create a list of mixed actions to be performed in random order
+puts "Preparing randomized creation actions..."
+
+# Each action will be a Proc that creates something
+actions = []
+
+# Add vacancy creation actions
+companies.each do |company|
+  # Each company will have 3-7 vacancies
+  rand(1..2).times do
+    actions << -> {
+      Vacancy.create!(
+        title: POSITIONS.sample,
+        description: DESCRIPTIONS.sample,
+        salary: SALARIES.sample,
+        location: LOCATIONS.sample,
+        employment_type: [ "Фулл-тайм", "Парт-тайм", "Стажировка" ].sample,
+        company: company,
+        user: users.sample  # pick any user at random
+      )
+      # Sleep a short time to ensure different timestamps
+      sleep(0.1)
+    }
+  end
 end
 
-puts "Finished creating image sections!"
+# Add regular section creation actions
+users.each do |user|
+  # Create 1-2 regular sections for each user
+  num_sections = rand(1..2)
+
+  num_sections.times do |section_index|
+    actions << -> {
+      section = user.sections.create!(
+        title: SECTION_TITLES[section_index] || "Custom Section #{section_index + 1}",
+        position: user.sections.count + 1
+      )
+
+      # Create 3-5 cards for this section
+      num_cards = rand(3..5)
+
+      num_cards.times do |card_index|
+        card_type = CARD_TYPES.sample
+
+        # Check the previous card's size to prevent consecutive medium cards
+        previous_card = section.cards.find_by(position: card_index)
+
+        # If previous card was medium, make this one square, otherwise randomly choose
+        size = if previous_card&.size == "medium"
+          "square"
+        else
+          [ "square", "medium" ].sample
+        end
+
+        card = section.cards.create!(
+          card_type: card_type,
+          title: generate_card_title(card_type),
+          content: generate_card_content(card_type),
+          url: (card_type == "link" ? RANDOM_LINKS.sample : nil),
+          position: card_index + 1,  # simple ascending positions
+          size: size  # Use the determined size instead of random selection
+        )
+
+        # If this is an image card, attach a random image
+        if card_type == "image"
+          begin
+            random_img = random_image
+            card.image.attach(
+              io: random_img,
+              filename: File.basename(random_img.path),
+              content_type: "image/#{File.extname(random_img.path).delete('.')}"
+            )
+          rescue => e
+            puts "Error attaching image to card: #{e.message}"
+          end
+        end
+      end
+      # Sleep a short time to ensure different timestamps
+      sleep(0.1)
+    }
+  end
+end
+
+# Add image section creation actions
+subcategory_paths.each do |subcategory_path|
+  subcategory_name = File.basename(subcategory_path)
+
+  actions << -> {
+    # Find users who don't yet have 6 sections
+    eligible_users = User.all.select { |user| user.sections.count < 4 }
+
+    # Skip if all users have reached their section limit
+    if eligible_users.present?
+      # Pick a random eligible user for this section
+      user = eligible_users.sample
+
+      # Create the section with its images
+      create_image_section(user, subcategory_path, subcategory_name)
+
+      # Sleep a short time to ensure different timestamps
+      sleep(0.1)
+    end
+  }
+end
+
+# 6. STEP 4: Shuffle the actions to randomize creation order
+actions.shuffle!
+
+# 7. STEP 5: Execute the actions in random order
+puts "Creating mixed content (vacancies, sections, cards)..."
+actions.each_with_index do |action, index|
+  action.call
+  puts "Completed action #{index + 1}/#{actions.count}" if (index + 1) % 10 == 0
+end
 
 puts "Seed data created successfully!"
+puts "Created #{Vacancy.count} Vacancies, #{Section.count} Sections with #{Card.count} Cards"

@@ -20,4 +20,9 @@
     .W_LinkCardText{
         gap: 0px;
     }
+    .A_UserCard{
+        &:is(.U_Text){
+            background-color: var(--surface-third);
+        }
+    }
   }

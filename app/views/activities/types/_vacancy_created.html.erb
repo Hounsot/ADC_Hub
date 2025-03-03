@@ -1,24 +1,18 @@
 <div class="M_FeedItem U_VacancyCreated">
   <div class="W_FeedItemAvatar">
-    <% if activity.actor.avatar.attached? %>
-      <%= image_tag activity.actor.avatar, class: "A_FeedAvatar" %>
-    <% else %>
-      <%= image_tag asset_path("Q_DefaultAvatar.png"), class: "A_FeedAvatar" %>
-    <% end %>
+    <img src="../images/Q_NavVacancyIcon.svg" alt="">
+    <%# if activity.actor.avatar.attached? %>
+    <%# image_tag activity.actor.avatar, class: "A_FeedAvatar" %>
+    <%# else %>
+    <%# image_tag asset_path("Q_DefaultAvatar.png"), class: "A_FeedAvatar" %>
+    <%# end %>
   </div>
   <div class="W_FeedItemContent">
     <p class="W_FeedItemText">
-      <span class="A_FeedAction">Новая вакансия от</span>
-      <%= link_to activity.subject.title, vacancy_path(activity.subject), class: "A_FeedEntityLink" %>
+      <span class="A_FeedAction">Новая вакансия</span>
+      «<%= link_to activity.subject.title, vacancy_path(activity.subject), class: "A_FeedEntityLink" %>»
+      от <%= link_to activity.subject.company.name, user_path(activity.actor), class: "A_FeedEntityLink" %>
     </p>
     <div class="A_FeedTimestamp"><%= time_ago_in_words(activity.created_at) %> ago</div>
-  </div>
-  <div class="W_FeedVacancyPreview">
-    <div class="A_VacancyChips <%= activity.subject.employment_type == 'Фулл-тайм' ? 'U_Full-time' : 'U_Part-time' %>">
-      <%= activity.subject.employment_type %>
-    </div>
-    <% if activity.subject.salary.present? %>
-      <div class="A_VacancyChips U_Salary"><%= activity.subject.salary %></div>
-    <% end %>
   </div>
 </div>

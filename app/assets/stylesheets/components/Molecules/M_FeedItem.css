@@ -17,4 +17,19 @@
     &:is(.U_SectionCreated){
         gap: 20px;
     }
+    &:is(.U_VacancyCreated){
+        flex-direction: row;
+        gap: 12px;
+        .W_FeedItemAvatar{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--surface-invert);
+            border-radius: 8px;
+            img{
+                width: 60px;
+                height: 60px;
+            }
+        }
+    }
 }

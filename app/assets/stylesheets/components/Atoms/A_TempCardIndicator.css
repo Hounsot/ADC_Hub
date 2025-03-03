@@ -1,0 +1,15 @@
+.A_TempCardIndicator {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background-color: rgba(255, 193, 7, 0.8);
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.U_TempCard {
+  border: 1px dashed var(--surface-accent);
+} 
