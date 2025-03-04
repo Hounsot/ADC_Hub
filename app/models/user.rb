@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :vacancies
   has_many :sections, dependent: :destroy
-  has_many :cards, through: :sections
+  has_many :cards
   belongs_to :company, optional: true
   has_one_attached :avatar
 
