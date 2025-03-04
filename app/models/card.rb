@@ -1,6 +1,7 @@
 class Card < ApplicationRecord
   belongs_to :section
   belongs_to :user
+
   has_one_attached :image
   before_destroy :cleanup_activities
 

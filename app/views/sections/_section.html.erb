@@ -1,4 +1,4 @@
-<%= turbo_frame_tag dom_id(section), class: "M_UserCards", data: { controller: "portfolio", section_id: section.id } do %>
+<%= turbo_frame_tag dom_id(section), class: "M_UserCards", data: { controller: "portfolio", section_id: section.id, action: "card:change->portfolio#registerCardChange" } do %>
   <%= render "sections/section_title", section: section %>
   <% if section.cards.any? %>
     <% section.cards.order(:position).each do |card| %>

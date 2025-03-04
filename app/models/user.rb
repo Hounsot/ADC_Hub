@@ -30,7 +30,8 @@ class User < ApplicationRecord
     ).tap do |section|
       section.cards.create!(
         card_type: "job",
-        position: "My Position"
+        position: "My Position",
+        user: self
       )
     end
   end

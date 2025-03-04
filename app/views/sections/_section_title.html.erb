@@ -12,6 +12,11 @@
         <div class="A_CardButton U_Color" data-action="click->portfolio#submitForm">
           <img src="../images/Q_CardMarkIcon.svg" alt="">
         </div>
+        <!-- Add batch save button for all cards in the section -->
+        <div class="A_CardButton U_BatchSave" data-action="click->portfolio#batchSaveSection">
+          <img src="../images/Q_SaveAllIcon.svg" alt="Save All">
+          <span class="A_BatchSaveText">Save All</span>
+        </div>
         <!-- Add reordering buttons -->
         <% unless section.position == 1 %>
           <%= link_to move_up_user_section_path(section.user, section), 

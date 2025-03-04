@@ -1,71 +1,79 @@
 class SectionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_section, only: [ :update ]
-  before_action :authorize_user!, only: [ :update ]
+  before_action :set_section, only: [ :update, :batch_update ]
+  before_action :authorize_user!, only: [ :update, :batch_update ]
 
   def update
-    if @section.update(section_params)
-      respond_to do |format|
-        format.turbo_stream
-        format.json { render json: { message: "Section updated successfully" } }
-      end
-    else
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(
-          "section_#{@section.id}_title",
-          partial: "sections/section_title",
-          locals: { section: @section }
-        ) }
-        format.json { render json: { errors: @section.errors.full_messages }, status: :unprocessable_entity }
+  end
+
+  # Batch update all cards in a section along with the section itself
+  def batch_update
+    # First update the section attributes if any are provided
+    section_updated = true
+    if section_params.present?
+      section_updated = @section.update(section_params)
+    end
+
+    # Then batch update all the cards
+    cards_updated = true
+    if params[:cards].present?
+      cards_updated = @section.batch_save_cards(params[:cards])
+    end
+
+    respond_to do |format|
+      if section_updated && cards_updated
+        format.html { redirect_to user_path(@section.user), notice: "Section and cards updated successfully." }
+        format.json { render json: { success: true, message: "Section and cards updated successfully." } }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            dom_id(@section),
+            partial: "sections/section",
+            locals: { section: @section }
+          )
+        end
+      else
+        format.html { redirect_to user_path(@section.user), alert: "Error updating section or cards." }
+        format.json { render json: { success: false, error: "Error updating section or cards." }, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
     @section = Section.find(params[:id])
+    @section.destroy
 
-    if current_user == @section.user
-      @section.destroy
-      current_user.sections.where("position > ?", @section.position).
-                   update_all("position = position - 1")
-      respond_to do |format|
-        format.html { redirect_to user_path(@section.user), notice: "Section was successfully deleted." }
-        format.turbo_stream { render turbo_stream: turbo_stream.remove("section_#{@section.id}") }
-      end
-    else
-      head :forbidden
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: [
+          turbo_stream.remove("section_#{@section.id}"),
+          turbo_stream.remove("section_create_button_#{@section.position}")
+        ]
+      }
     end
   end
 
   def create
-    # Get the position from params
-    position = params[:position].to_i
-
-    # Make room for the new section by incrementing positions of existing sections
-    current_user.sections.where("position >= ?", position).
-                 update_all("position = position + 1")
-
-    # Create the new section with the specified position
-    @section = current_user.sections.create!(
-      title: "Новая секция",
-      position: position
-    )
+    @section = Section.new(title: "Новая секция")
+    @section.user = current_user
+    @section.position = current_user.sections.count + 1
 
     respond_to do |format|
-      format.html { redirect_to user_path(current_user) }
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace(
-            "section_create_button_#{position}",
-            partial: "sections/section",
-            locals: { section: @section }
-          ),
-          turbo_stream.after(
-            "section_#{@section.id}",
-            partial: "sections/section_create_button",
-            locals: { user: current_user, position: position }
+      if @section.save
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.append("sections-container", partial: "sections/section", locals: { section: @section }),
+            turbo_stream.append("sections-container", partial: "sections/section_create_button", locals: { user: current_user, position: @section.position + 1 })
+          ]
+        }
+      else
+        format.turbo_stream {
+          # Just refresh the container if something goes wrong
+          render turbo_stream: turbo_stream.replace(
+            "sections-container",
+            partial: "sections/sections_container",
+            locals: { user: current_user }
           )
-        ]
+        }
       end
     end
   end
@@ -122,6 +130,27 @@ class SectionsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to user_path(current_user) }
         format.turbo_stream
+      end
+    else
+      head :forbidden
+    end
+  end
+
+  def publish
+    @section = Section.find(params[:id])
+
+    if current_user == @section.user
+      @section.update(published: true)
+      @section.create_section_activity # Создаем активность при публикации
+
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(
+            "section_#{@section.id}",
+            partial: "sections/section",
+            locals: { section: @section }
+          )
+        }
       end
     else
       head :forbidden

@@ -1,0 +1,60 @@
+/* Styles for the batch save button */
+.A_CardButton.U_BatchSave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 36px;
+  padding: 0 12px;
+  border-radius: 18px;
+  background-color: var(--dark-alpha);
+  transition: var(--button-transitions);
+  position: relative;
+  overflow: hidden;
+}
+
+.A_CardButton.U_BatchSave .A_BatchSaveText {
+  display: none;
+  margin-left: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--font-default-color);
+}
+
+.A_CardButton.U_BatchSave:hover {
+  width: auto;
+  background-color: var(--surface-secondary);
+}
+
+.A_CardButton.U_BatchSave:hover .A_BatchSaveText {
+  display: inline;
+}
+
+/* Style for when there are unsaved changes */
+.A_CardButton.U_BatchSave.U_HasChanges {
+  background-color: var(--surface-button-brand);
+}
+
+.A_CardButton.U_BatchSave.U_HasChanges:hover {
+  background-color: var(--surface-button-brand-hover);
+}
+
+/* Style for success indication after saving */
+.A_CardButton.U_BatchSave.U_Success {
+  background-color: #28a745;
+}
+
+.A_CardButton.U_BatchSave.U_Success .A_BatchSaveText {
+  display: inline;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .A_CardButton.U_BatchSave:hover .A_BatchSaveText {
+    display: none;
+  }
+  
+  .A_CardButton.U_BatchSave.U_Success .A_BatchSaveText {
+    display: none;
+  }
+} 

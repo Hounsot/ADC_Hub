@@ -259,8 +259,10 @@ def create_image_section(user, folder_path, section_name)
   # Create a new section for this set of images
   section = user.sections.create!(
     title: section_name.titleize,
-    position: user.sections.count + 1  # Place it after existing sections
+    position: user.sections.count + 1,  # Place it after existing sections
+    published: true
   )
+  section.create_section_activity
 
   # Find all image files in the specified folder
   images = Dir[File.join(folder_path, '*')].select { |f|
@@ -283,7 +285,8 @@ def create_image_section(user, folder_path, section_name)
     card = section.cards.create!(
       card_type: "image",
       position: index + 1,
-      size: size
+      size: size,
+      user: user
     )
 
     # Attach the actual image file to the card using Active Storage
@@ -390,9 +393,10 @@ users.each do |user|
     actions << -> {
       section = user.sections.create!(
         title: SECTION_TITLES[section_index] || "Custom Section #{section_index + 1}",
-        position: user.sections.count + 1
+        position: user.sections.count + 1,
+        published: true
       )
-
+      section.create_section_activity
       # Create 3-5 cards for this section
       num_cards = rand(3..5)
 
@@ -415,7 +419,8 @@ users.each do |user|
           content: generate_card_content(card_type),
           url: (card_type == "link" ? RANDOM_LINKS.sample : nil),
           position: card_index + 1,  # simple ascending positions
-          size: size  # Use the determined size instead of random selection
+          size: size,  # Use the determined size instead of random selection
+          user: user
         )
 
         # If this is an image card, attach a random image

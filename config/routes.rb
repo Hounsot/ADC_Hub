@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       member do
         patch :move_up
         patch :move_down
+        patch :batch_update
       end
       resources :cards do
         member do
