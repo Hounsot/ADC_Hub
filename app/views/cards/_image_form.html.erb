@@ -1,0 +1,42 @@
+<turbo-frame id="new_image_card_form_<%= section.id %>" class="A_UserCard U_Square U_ImageForm">
+  <%= form_with model: card, 
+                url: user_section_cards_path(section.user, section),
+                local: false,
+                multipart: true,
+                class: "W_ImageCardForm",
+                data: { controller: "image-form" } do |f| %>
+    <%= f.hidden_field :card_type, value: 'image' %>
+    <% if card.persisted? %>
+      <%= f.hidden_field :id %>
+    <% end %>
+    <div class="W_ImagePreviewContainer">
+      <% if card.image.attached? %>
+        <%= image_tag card.image.variant(resize_to_limit: [600, 600]), class: 'Q_ImagePreview' %>
+        <% if card.position == -1 %>
+          <div class="A_DraftIndicator">
+            Draft - Save to publish
+          </div>
+        <% end %>
+      <% else %>
+        <div class="A_NoImagePlaceholder">
+          <p>Image Preview</p>
+        </div>
+      <% end %>
+    </div>
+    <div class="W_CardButtons">
+      <% if current_user == section.user %>
+        <div class="A_CardButton U_Color" data-action="click->image-form#submit" title="Save this image card">
+          <img src="../images/Q_CardMarkIcon.svg" alt="">
+        </div>
+        <div class="A_CardButton" data-action="click->cards#cancelImageForm" title="Cancel">
+          <img src="../images/Q_CardDeleteIcon.svg" alt="">
+        </div>
+        <% if card.image.attached? %>
+          <div class="A_CardInstructions">
+            Click checkmark to save this card or use "Save All" button in section header
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</turbo-frame> 

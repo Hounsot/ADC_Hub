@@ -15,7 +15,12 @@ export default class extends Controller {
       const cardId = elementId ? elementId.replace('card_', '') : null;
       if (cardId) {
         this.cardIdValue = cardId;
+        console.log(`Text card: set ID from element to ${cardId}`);
+      } else {
+        console.warn('Text card: Could not extract card ID from element', this.element);
       }
+    } else {
+      console.log(`Text card: using provided ID ${this.cardIdValue}`);
     }
 
     // Track original content to detect changes
@@ -27,10 +32,34 @@ export default class extends Controller {
     if (this.hasContentTarget) {
       this.contentTarget.addEventListener('focusout', this.checkForChanges.bind(this));
     }
+    
+    // Also add keyup events to detect changes as they type
+    this.titleTarget.addEventListener('keyup', this.debounce(() => this.checkForChanges(), 500).bind(this));
+    if (this.hasContentTarget) {
+      this.contentTarget.addEventListener('keyup', this.debounce(() => this.checkForChanges(), 500).bind(this));
+    }
+  }
+  
+  // Helper method to debounce function calls
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   }
 
   // Check if content has changed and register the change if so
   checkForChanges() {
+    if (!this.titleTarget) {
+      console.warn("Title target not found");
+      return;
+    }
+    
     const newTitle = this.titleTarget.textContent.trim();
     const newContent = this.hasContentTarget ? this.contentTarget.textContent.trim() : '';
     
@@ -40,31 +69,52 @@ export default class extends Controller {
     if (newTitle !== this.originalTitle) {
       changes.title = newTitle;
       hasChanges = true;
+      console.log(`Text card ${this.cardIdValue}: title changed from "${this.originalTitle}" to "${newTitle}"`);
     }
     
     if (this.hasContentTarget && newContent !== this.originalContent) {
       changes.content = newContent;
       hasChanges = true;
+      console.log(`Text card ${this.cardIdValue}: content changed`);
     }
     
     if (hasChanges) {
+      // Make sure cardId is a string
+      const cardId = String(this.cardIdValue);
+      
+      if (!cardId) {
+        console.warn("No card ID available for change event");
+        return;
+      }
+      
       // Dispatch an event to the portfolio controller to track this change
       const event = new CustomEvent('card:change', {
         bubbles: true,
         detail: {
-          cardId: this.cardIdValue,
+          cardId: cardId,
           changes: changes
         }
       });
       
+      console.log(`Text card ${this.cardIdValue}: dispatching change event`, event);
+      
       this.element.dispatchEvent(event);
       
-      // Update originals
-      this.originalTitle = newTitle;
-      if (this.hasContentTarget) {
-        this.originalContent = newContent;
-      }
+      // Don't update originals yet - we'll update them when saved
+      // this.originalTitle = newTitle;
+      // if (this.hasContentTarget) {
+      //   this.originalContent = newContent;
+      // }
     }
+  }
+
+  // Method to update the original values after a successful save
+  updateOriginals() {
+    this.originalTitle = this.titleTarget.textContent.trim();
+    if (this.hasContentTarget) {
+      this.originalContent = this.contentTarget.textContent.trim();
+    }
+    console.log(`Text card ${this.cardIdValue}: updated original values`);
   }
 
   // This method is still available for immediate saves if needed
@@ -100,10 +150,7 @@ export default class extends Controller {
       .then(data => {
         console.log("Card updated successfully:", data);
         // Update the originals after a successful save
-        this.originalTitle = newTitle;
-        if (this.hasContentTarget) {
-          this.originalContent = newContent;
-        }
+        this.updateOriginals();
       })
       .catch(error => {
         console.error("Error updating card:", error);

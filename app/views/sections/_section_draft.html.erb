@@ -1,0 +1,34 @@
+<%= form_with model: section, url: user_section_path(section.user, section), method: :patch, html: { class: "M_UserCards" } do |form| %>
+  <div class="A_UserCard U_Divider">
+    <%= form.text_field :title, class: "section-title" %>
+    <%= form.text_field :position, class: "section-position" %>
+  </div>
+  <%= form.fields_for :cards do |card_fields| %>
+    <% card = card_fields.object %>
+    <!-- это объект Card, который редактируем -->
+    <% case card.card_type %>
+    <% when "text" %>
+      <div class="A_UserCard U_Square <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+        <%= render "cards/forms/form_text_card", f: card_fields %>
+      </div>
+    <% when "image" %>
+      <div class="A_UserCard U_Square <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+        <%= render "cards/forms/form_image_card", f: card_fields %>
+      </div>
+    <% when "job" %>
+      <%= render "cards/forms/form_job_card", f: card_fields %>
+    <% when "link" %>
+      <div class="A_UserCard U_Square <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+        <div class="W_LinkCardForm">
+          <div class="W_LinkFormInputs">
+            <%= render "cards/forms/form_link_card", f: card_fields %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <!-- fallback -->
+      <%= render "cards/forms/form_unknown_card", f: card_fields %>
+    <% end %>
+  <% end %>
+  <%= form.submit "Save", class: "section-save" %>
+<% end %>

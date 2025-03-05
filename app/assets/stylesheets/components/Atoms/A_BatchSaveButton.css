@@ -39,6 +39,29 @@
   background-color: var(--surface-button-brand-hover);
 }
 
+/* Style for loading state while saving */
+.A_CardButton.U_BatchSave.U_Loading {
+  background-color: var(--surface-button-brand);
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.A_CardButton.U_BatchSave.U_Loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Style for success indication after saving */
 .A_CardButton.U_BatchSave.U_Success {
   background-color: #28a745;
@@ -48,13 +71,20 @@
   display: inline;
 }
 
+/* Style for error indication after failed save */
+.A_CardButton.U_BatchSave.U_Error {
+  background-color: #dc3545;
+}
+
+.A_CardButton.U_BatchSave.U_Error .A_BatchSaveText {
+  display: inline;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
-  .A_CardButton.U_BatchSave:hover .A_BatchSaveText {
-    display: none;
-  }
-  
-  .A_CardButton.U_BatchSave.U_Success .A_BatchSaveText {
+  .A_CardButton.U_BatchSave:hover .A_BatchSaveText,
+  .A_CardButton.U_BatchSave.U_Success .A_BatchSaveText,
+  .A_CardButton.U_BatchSave.U_Error .A_BatchSaveText {
     display: none;
   }
 } 

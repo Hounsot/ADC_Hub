@@ -25,6 +25,9 @@ Rails.application.routes.draw do
         member do
           patch :update_size
         end
+        collection do
+          post :prepare_image
+        end
       end
     end
     member do

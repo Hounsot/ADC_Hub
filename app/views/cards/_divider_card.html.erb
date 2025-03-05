@@ -1,4 +1,4 @@
-<turbo-frame id="card_<%= card.id %>" class="A_UserCard U_Divider" style="color: white;" data-controller="inline-divider-card" data-inline-divider-card-url-value="<%= user_section_card_path(card.section.user, card.section, card) %>">
+<turbo-frame id="card_<%= card.id %>" class="A_UserCard U_Divider" style="color: white;" data-controller="inline-divider-card" data-inline-divider-card-url-value="<%= user_section_card_path(card.section.user, card.section, card) %>" data-inline-divider-card-card-id-value="<%= card.id %>">
   <h3 class="A_CardsSectionTitle" contenteditable="<%= current_user == card.section.user %>" data-inline-divider-card-target="title">
     <%= card.title.presence || "Название секции" %>
   </h3>

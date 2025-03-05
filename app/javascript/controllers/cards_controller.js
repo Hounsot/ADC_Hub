@@ -26,15 +26,23 @@ export default class extends Controller {
 
     // Get the section element
     const section = this.element.closest('[data-section-id]')
+    const sectionId = section.dataset.sectionId
 
     // Prepare a multipart/form-data request with the chosen file
     const formData = new FormData()
-    formData.append("card[card_type]", "image") // so the controller uses _image_card partial
-    formData.append("card[image]", file)        // attach the file
+    formData.append("card_type", "image") // so the controller uses _image_card partial
+    formData.append("image", file)        // attach the file
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content
 
-    fetch(`${this.urlValue}.json`, {
+    // Show loading indicator
+    const addCardDiv = section.querySelector('.W_AddCard')
+    if (addCardDiv) {
+      addCardDiv.classList.add('U_Loading')
+    }
+
+    // Use the prepare_image endpoint instead of new
+    fetch(`${this.urlValue.replace(/\/cards$/, '/cards/prepare_image')}.json`, {
       method: "POST",
       headers: {
         "X-CSRF-Token": csrfToken
@@ -49,14 +57,25 @@ export default class extends Controller {
         return response.json()
       })
       .then(data => {
-        // data.html is the partial from CardsController#create
-        this.appendCard(data.html, section)
+        // Remove loading indicator
+        if (addCardDiv) {
+          addCardDiv.classList.remove('U_Loading')
+        }
+
+        // Insert the image form before the add card button
+        if (addCardDiv) {
+          addCardDiv.insertAdjacentHTML('beforebegin', data.html)
+        }
 
         // Optional: reset the file input if you want
         this.imageFileInputTarget.value = null
       })
       .catch(error => {
-        console.error("Error creating image card:", error)
+        console.error("Error creating image form:", error)
+        // Remove loading indicator on error
+        if (addCardDiv) {
+          addCardDiv.classList.remove('U_Loading')
+        }
       })
   }
   create(event) {
@@ -128,5 +147,37 @@ export default class extends Controller {
     if (form) {
       form.remove()
     }
+  }
+
+  cancelImageForm(event) {
+    event.preventDefault()
+    
+    // Find the image form
+    const imageForm = event.target.closest('.U_ImageForm')
+    if (!imageForm) return
+    
+    // Get the blob ID if it exists
+    const blobIdInput = imageForm.querySelector('input[name="card[temp_blob_id]"]')
+    const blobId = blobIdInput ? blobIdInput.value : null
+    
+    // If we have a blob ID, we should clean it up on the server
+    if (blobId) {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+      
+      // Send a request to clean up the blob
+      fetch('/cleanup_blob', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
+        },
+        body: JSON.stringify({ blob_id: blobId })
+      }).catch(error => {
+        console.error('Error cleaning up blob:', error)
+      })
+    }
+    
+    // Remove the form from the DOM
+    imageForm.remove()
   }
 }

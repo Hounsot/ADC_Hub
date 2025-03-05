@@ -1,4 +1,4 @@
-<turbo-frame id="card_<%= card.id %>" class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" data-controller="inline-text-card" data-inline-text-card-url-value="<%= user_section_card_path(card.section.user, card.section, card) %>">
+<turbo-frame id="card_<%= card.id %>" class="A_UserCard <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" style="color: white;" data-controller="inline-text-card" data-inline-text-card-url-value="<%= user_section_card_path(card.section.user, card.section, card) %>" data-inline-text-card-card-id-value="<%= card.id %>">
   <% if current_user == card.section.user %>
     <div class="W_CardSizeButtons">
       <%= link_to "S", update_size_user_section_card_path(card.section.user, card.section, card, size: "square"), 

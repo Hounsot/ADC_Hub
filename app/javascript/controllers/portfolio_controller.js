@@ -11,6 +11,9 @@ export default class extends Controller {
   connect() {
     console.log("Portfolio controller connected");
     this.pendingCardChanges = {}; // Store changes for cards that need to be saved
+    
+    // Make sure we're listening for card:change events
+    this.element.addEventListener('card:change', this.registerCardChange.bind(this));
   }
 
   toggleActionBar(event) {
@@ -37,8 +40,15 @@ export default class extends Controller {
 
   // New method to track changes to cards for batch saving
   registerCardChange(event) {
+    console.log("Card change detected:", event.detail);
+    
     const cardId = event.detail.cardId;
     const changes = event.detail.changes;
+    
+    if (!cardId) {
+      console.error("Card change event missing cardId:", event.detail);
+      return;
+    }
     
     // Store these changes to submit later
     if (!this.pendingCardChanges[cardId]) {
@@ -53,6 +63,8 @@ export default class extends Controller {
     if (batchSaveBtn) {
       batchSaveBtn.classList.add('U_HasChanges');
     }
+    
+    console.log("Updated pending changes:", this.pendingCardChanges);
   }
   
   // New method to batch save all cards in the section
@@ -63,7 +75,7 @@ export default class extends Controller {
     const sectionElement = this.element;
     const sectionId = this.sectionIdValue || sectionElement.dataset.sectionId;
     const titleInput = sectionElement.querySelector('.A_CardsSectionTitle');
-    const sectionTitle = titleInput ? titleInput.value : null;
+    const sectionTitle = titleInput ? titleInput.value.trim() : null;
     
     // If we don't have any pending changes and no section title change, no need to save
     if (Object.keys(this.pendingCardChanges).length === 0 && !sectionTitle) {
@@ -71,32 +83,85 @@ export default class extends Controller {
       return;
     }
     
+    console.log("Saving changes for section:", sectionId, "with cards:", this.pendingCardChanges);
+    
+    // Make sure the card IDs are strings (not numbers) to match Ruby hash keys
+    // Also ensure only valid attributes are included
+    const cardChanges = {};
+    Object.keys(this.pendingCardChanges).forEach(cardId => {
+      const stringCardId = String(cardId);
+      const changes = this.pendingCardChanges[cardId];
+      
+      // Only include permitted attributes
+      const cleanChanges = {};
+      if (changes.title !== undefined) cleanChanges.title = changes.title;
+      if (changes.content !== undefined) cleanChanges.content = changes.content;
+      if (changes.url !== undefined) cleanChanges.url = changes.url;
+      
+      // Only add to changes if there's something to update
+      if (Object.keys(cleanChanges).length > 0) {
+        cardChanges[stringCardId] = cleanChanges;
+      }
+    });
+    
     // Prepare the data for the batch update
-    const sectionData = {
-      section: { title: sectionTitle },
-      cards: this.pendingCardChanges
-    };
+    const sectionData = {};
+    
+    // Only include section data if title is present
+    if (sectionTitle) {
+      sectionData.section = { title: sectionTitle };
+    }
+    
+    // Only include cards if there are changes
+    if (Object.keys(cardChanges).length > 0) {
+      sectionData.cards = cardChanges;
+    }
+    
+    console.log("Sending batch update with data:", JSON.stringify(sectionData));
     
     // Get the CSRF token
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     
     // Determine the URL for the batch update
-    const userId = window.location.pathname.split('/')[2]; // Assumes URL pattern /users/:id
+    const path = window.location.pathname;
+    const userIdMatch = path.match(/\/users\/(\d+)/);
+    const userId = userIdMatch ? userIdMatch[1] : null;
+    
+    if (!userId || !sectionId) {
+      console.error("Missing userId or sectionId for batch update");
+      return;
+    }
+    
     const batchUpdateUrl = `/users/${userId}/sections/${sectionId}/batch_update`;
+    
+    // Show a loading state on the button
+    const batchSaveBtn = this.element.querySelector('.A_CardButton.U_BatchSave');
+    if (batchSaveBtn) {
+      batchSaveBtn.classList.add('U_Loading');
+    }
     
     // Send the batch update request
     fetch(batchUpdateUrl, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "text/vnd.turbo-stream.html",
+        "Accept": "text/vnd.turbo-stream.html, application/json",
         "X-CSRF-Token": csrfToken
       },
       body: JSON.stringify(sectionData)
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+        return response.json().then(errorData => {
+          console.error("Error response:", errorData);
+          throw new Error(`Error ${response.status}: ${errorData.error || 'Unknown error'}`);
+        }).catch(err => {
+          // If we can't parse the error as JSON, just throw the status
+          if (err.message && err.message.includes('JSON')) {
+            throw new Error(`Error: ${response.status}`);
+          }
+          throw err;
+        });
       }
       return response.text();
     })
@@ -105,8 +170,8 @@ export default class extends Controller {
       this.pendingCardChanges = {};
       
       // Update the UI to show changes were saved
-      const batchSaveBtn = this.element.querySelector('.A_CardButton.U_BatchSave');
       if (batchSaveBtn) {
+        batchSaveBtn.classList.remove('U_Loading');
         batchSaveBtn.classList.remove('U_HasChanges');
         
         // Show a temporary success indicator
@@ -116,12 +181,71 @@ export default class extends Controller {
         }, 2000);
       }
       
-      // If there was a turbo stream response, Turbo will handle it
-      // Otherwise, we can manually update elements if needed
+      // Update the original values in all the cards that were changed
+      // Find all card controllers in this section
+      this.updateOriginalCardValues();
+      
+      console.log("Batch save successful!");
     })
     .catch(error => {
-      console.error("Error saving section:", error);
-      // Handle error (show error message)
+      console.error("Error during batch save:", error);
+      
+      // Update UI to show error state
+      if (batchSaveBtn) {
+        batchSaveBtn.classList.remove('U_Loading');
+        batchSaveBtn.classList.add('U_Error');
+        
+        // Show the error message in a tooltip
+        const errorTooltip = document.createElement('div');
+        errorTooltip.className = 'A_ErrorTooltip';
+        errorTooltip.textContent = error.message || 'Failed to save changes';
+        batchSaveBtn.appendChild(errorTooltip);
+        
+        // Remove error state after a delay
+        setTimeout(() => {
+          batchSaveBtn.classList.remove('U_Error');
+          if (errorTooltip && errorTooltip.parentNode) {
+            errorTooltip.parentNode.removeChild(errorTooltip);
+          }
+        }, 5000);
+      }
+    });
+  }
+  
+  // Helper method to update the original values in all card controllers after a successful save
+  updateOriginalCardValues() {
+    // Find all text cards in this section
+    const textCards = this.element.querySelectorAll('[data-controller="inline-text-card"]');
+    textCards.forEach(card => {
+      // Check if the card has the controller
+      if (card.getAttribute('data-controller').includes('inline-text-card')) {
+        // Get the controller from the Stimulus application
+        try {
+          const controller = this.application.getControllerForElementAndIdentifier(card, 'inline-text-card');
+          if (controller && typeof controller.updateOriginals === 'function') {
+            controller.updateOriginals();
+          }
+        } catch (e) {
+          console.error('Error updating text card original values:', e);
+        }
+      }
+    });
+    
+    // Find all divider cards in this section
+    const dividerCards = this.element.querySelectorAll('[data-controller="inline-divider-card"]');
+    dividerCards.forEach(card => {
+      // Check if the card has the controller
+      if (card.getAttribute('data-controller').includes('inline-divider-card')) {
+        // Get the controller from the Stimulus application  
+        try {
+          const controller = this.application.getControllerForElementAndIdentifier(card, 'inline-divider-card');
+          if (controller && typeof controller.updateOriginals === 'function') {
+            controller.updateOriginals();
+          }
+        } catch (e) {
+          console.error('Error updating divider card original values:', e);
+        }
+      }
     });
   }
 }
