@@ -13,7 +13,4 @@
   <% if current_user == section.user %>
     <%= render "sections/add_card_button", section: section %>
   <% end %>
-  <%= link_to "Edit Section",
-                edit_user_section_path(section.user, section),
-                data: { turbo_frame: dom_id(section) } %>
 <% end %> 

@@ -1,9 +1,13 @@
-<%= form_with model: section, url: user_section_path(section.user, section), method: :patch, html: { class: "M_UserCards" } do |form| %>
+<%= form_with model: section, url: user_section_path(section.user, section), method: :patch, data: { controller: "section-create-card", "section-create-card-target": "cardsContainer"  }, html: { class: "M_UserCards" } do |form| %>
   <div class="A_UserCard U_Divider">
-    <%= form.text_field :title, class: "section-title" %>
-    <%= form.text_field :position, class: "section-position" %>
+    <%= form.text_field :title, class: "A_CardsSectionTitle U_Input " %>
+    <div class="W_CardButtons">
+      <%= button_tag type: 'submit', class: "A_CardButton U_Color" do %>
+        <img src="../images/Q_CardMarkIcon.svg" alt="">
+      <% end %>
+    </div>
   </div>
-  <%= form.fields_for :cards do |card_fields| %>
+  <%= form.fields_for :cards, section.cards.order(:position) do |card_fields| %>
     <% card = card_fields.object %>
     <!-- это объект Card, который редактируем -->
     <% case card.card_type %>
@@ -30,5 +34,13 @@
       <%= render "cards/forms/form_unknown_card", f: card_fields %>
     <% end %>
   <% end %>
-  <%= form.submit "Save", class: "section-save" %>
+  <div class="buttons">
+    <button data-action="click->section-create-card#addTextCard">Add Text Card</button>
+    <button data-action="click->section-create-card#addImageCard">Add Image Card</button>
+    <button data-action="click->section-create-card#addLinkCard">Add Link Card</button>
+  </div>
+  <!-- Hidden partials for new cards (templates) -->
+  <%= render "cards/forms/new_text_card_fields",  section: @section, form: form %>
+  <%= render "cards/forms/new_image_card_fields", section: @section, form: form %>
+  <%= render "cards/forms/new_link_card_fields",  section: @section, form: form %>
 <% end %>

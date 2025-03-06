@@ -1,0 +1,14 @@
+<template data-section-create-card-target="linkCardTemplate">
+  <% new_card = section.cards.build(card_type: 'link') %>
+  <%= form.fields_for :cards, new_card, child_index: "NEW_RECORD" do |cf| %>
+    <div class="A_UserCard U_Square <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+      <%= cf.hidden_field :card_type, value: 'link' %>
+      <%= cf.text_field :url, 
+                       placeholder: "Ссылка",
+                       class: "A_LinkFormInput" %>
+      <%= cf.text_field :title, 
+                       placeholder: "Название",
+                       class: "A_LinkFormInput" %>
+    </div>
+  <% end %>
+</template>

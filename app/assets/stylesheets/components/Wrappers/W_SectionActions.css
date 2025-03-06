@@ -1,0 +1,16 @@
+.W_SectionActions{
+    display: none;
+    flex-direction: column;
+    background-color: var(--surface-secondary);
+    border-radius: 12px;
+    width: 280px;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    overflow: hidden;
+    &.U_Active{
+        z-index: 1000;
+        display: flex;
+    }
+}

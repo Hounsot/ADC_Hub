@@ -31,6 +31,7 @@
         transition: var(--button-transitions);
         padding: 16px 0;
         margin-bottom: -12px;
+        overflow: visible;
         form{ 
             display: flex;
             flex-direction: row;

@@ -154,7 +154,7 @@ class SectionsController < ApplicationController
   end
 
   def section_params
-    params.require(:section).permit(:title, :position, cards_attributes: [ :id, :title, :content, :url, :size, :position, :_destroy ])
+    params.require(:section).permit(:title, :position, cards_attributes: [ :id, :card_type, :title, :content, :url, :size, :position, :image, :_destroy ])
   end
 
   def authorize_user!

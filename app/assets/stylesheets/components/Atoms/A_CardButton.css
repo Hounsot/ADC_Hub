@@ -10,6 +10,7 @@
     background-color: var(--dark-alpha);
     backdrop-filter: blur(7px);
     cursor: pointer;
+    border: 0;
     transition: var(--button-transitions);
     &:hover{
         background-color: var(--surface-secondary);

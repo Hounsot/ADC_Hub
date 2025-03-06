@@ -106,13 +106,6 @@ class CardsController < ApplicationController
     end
 
     if @card.save
-      # Create activity for this card
-      Activity.create!(
-        action: "card_created",
-        actor: current_user,
-        subject: @card
-      )
-
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
@@ -211,24 +204,5 @@ class CardsController < ApplicationController
 
   def card_params
     params.require(:card).permit(:id, :card_type, :image, :size, :title, :content, :url)
-  end
-
-  # Clean up temporary cards
-  def cleanup_temp_cards
-    # Clean up temporary cards that are older than 24 hours
-    # This prevents accumulation of abandoned temp cards
-    section_id = @section.id if @section
-
-    if section_id
-      # Only clean up old temporary cards
-      cutoff_time = 24.hours.ago
-      temp_cards = Card.where(section_id: section_id, position: -1)
-                       .where("created_at < ?", cutoff_time)
-
-      if temp_cards.any?
-        Rails.logger.info("Cleaning up #{temp_cards.count} old temporary cards")
-        temp_cards.destroy_all
-      end
-    end
   end
 end

@@ -1,6 +1,10 @@
 <%= f.file_field :image, class: "A_ImageFormInput" %>
 <div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
-  <img src="" alt="" id="image-preview">
+  <% if f.object.image.attached? %>
+    <%= image_tag f.object.image.variant(resize_to_limit: [900, 900]), id: "image-preview" %>
+  <% else %>
+    <img src="" alt="" id="image-preview">
+  <% end %>
 </div>
 <script>
   document.querySelector('.A_ImageFormInput').addEventListener('change', function(e) {
