@@ -35,12 +35,6 @@ export default class extends Controller {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content
 
-    // Show loading indicator
-    const addCardDiv = section.querySelector('.W_AddCard')
-    if (addCardDiv) {
-      addCardDiv.classList.add('U_Loading')
-    }
-
     // Use the prepare_image endpoint instead of new
     fetch(`${this.urlValue.replace(/\/cards$/, '/cards/prepare_image')}.json`, {
       method: "POST",
@@ -57,12 +51,8 @@ export default class extends Controller {
         return response.json()
       })
       .then(data => {
-        // Remove loading indicator
-        if (addCardDiv) {
-          addCardDiv.classList.remove('U_Loading')
-        }
-
-        // Insert the image form before the add card button
+        // data.html is now the form partial from CardsController#new
+        const addCardDiv = section.querySelector('.W_AddCard')
         if (addCardDiv) {
           addCardDiv.insertAdjacentHTML('beforebegin', data.html)
         }
@@ -72,10 +62,6 @@ export default class extends Controller {
       })
       .catch(error => {
         console.error("Error creating image form:", error)
-        // Remove loading indicator on error
-        if (addCardDiv) {
-          addCardDiv.classList.remove('U_Loading')
-        }
       })
   }
   create(event) {
@@ -151,33 +137,31 @@ export default class extends Controller {
 
   cancelImageForm(event) {
     event.preventDefault()
+    const form = event.target.closest('turbo-frame')
     
-    // Find the image form
-    const imageForm = event.target.closest('.U_ImageForm')
-    if (!imageForm) return
+    // Check if we have a card ID (for temporary cards that need deletion)
+    const cardIdField = form.querySelector('input[name="card[id]"]')
     
-    // Get the blob ID if it exists
-    const blobIdInput = imageForm.querySelector('input[name="card[temp_blob_id]"]')
-    const blobId = blobIdInput ? blobIdInput.value : null
-    
-    // If we have a blob ID, we should clean it up on the server
-    if (blobId) {
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+    if (cardIdField) {
+      const cardId = cardIdField.value
+      const sectionId = form.closest('[data-section-id]').dataset.sectionId
+      const userId = window.location.pathname.split('/')[2] // Assuming format /users/:id/...
       
-      // Send a request to clean up the blob
-      fetch('/cleanup_blob', {
-        method: 'POST',
+      // Delete the temporary card
+      fetch(`/users/${userId}/sections/${sectionId}/cards/${cardId}`, {
+        method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken
-        },
-        body: JSON.stringify({ blob_id: blobId })
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+          'Accept': 'application/json'
+        }
       }).catch(error => {
-        console.error('Error cleaning up blob:', error)
+        console.error('Error deleting temporary card:', error)
       })
     }
     
     // Remove the form from the DOM
-    imageForm.remove()
+    if (form) {
+      form.remove()
+    }
   }
 }

@@ -12,7 +12,7 @@
         <%= render "cards/forms/form_text_card", f: card_fields %>
       </div>
     <% when "image" %>
-      <div class="A_UserCard U_Square <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+      <div class="A_UserCard U_Square U_Image <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
         <%= render "cards/forms/form_image_card", f: card_fields %>
       </div>
     <% when "job" %>

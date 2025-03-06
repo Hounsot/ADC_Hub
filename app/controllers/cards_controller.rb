@@ -210,7 +210,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:id, :card_type, :image, :size, :title, :content, :url, :temp_blob_id)
+    params.require(:card).permit(:id, :card_type, :image, :size, :title, :content, :url)
   end
 
   # Clean up temporary cards

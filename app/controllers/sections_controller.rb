@@ -1,91 +1,32 @@
 class SectionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_section, only: [ :update, :batch_update ]
-  before_action :authorize_user!, only: [ :update, :batch_update ]
-  include ActionView::RecordIdentifier
+  before_action :set_section, only: [ :update ]
+  before_action :authorize_user!, only: [ :update ]
 
   def update
-  end
+    @section = Section.find(params[:id])
+    @section.update(section_params)
 
-  # Batch update all cards in a section along with the section itself
-  def batch_update
-    # First update the section attributes if any are provided
-    section_updated = true
-    if section_params.present?
-      section_updated = @section.update(section_params)
-      Rails.logger.info("Section update result: #{section_updated}")
-    end
-
-    # Then batch update all the cards
-    cards_updated = true
-    if params[:cards].present?
-      begin
-        Rails.logger.info("Card params format: #{params[:cards].class.name}, Contains keys: #{params[:cards].keys}")
-        cards_updated = @section.batch_save_cards(params[:cards])
-        Rails.logger.info("Batch saved cards result: #{cards_updated}")
-      rescue => e
-        cards_updated = false
-        Rails.logger.error("Error in batch_update: #{e.message}")
-        Rails.logger.error(e.backtrace.join("\n"))
-      end
-    end
-
-    # Process any temporary image blobs for this section
-    if session[:temp_image_blobs] && session[:temp_image_blobs][@section.id.to_s].present?
-      begin
-        Rails.logger.info("Processing #{session[:temp_image_blobs][@section.id.to_s].count} temporary image blobs")
-
-        # Create a new card for each temporary blob
-        session[:temp_image_blobs][@section.id.to_s].each do |blob_id|
-          begin
-            # Find the blob
-            blob = ActiveStorage::Blob.find_signed(blob_id)
-
-            if blob
-              # Create a new card with this image
-              card = @section.cards.build(
-                card_type: "image",
-                user: current_user,
-                position: (@section.cards.maximum(:position) || 0) + 1
-              )
-
-              # Attach the image
-              card.image.attach(blob)
-
-              # Save the card
-              if card.save
-                Rails.logger.info("Created new card from temporary blob: #{card.id}")
-              else
-                Rails.logger.error("Failed to save card from blob: #{card.errors.full_messages}")
-              end
-            else
-              Rails.logger.error("Could not find blob with ID: #{blob_id}")
-            end
-          rescue => e
-            Rails.logger.error("Error processing blob #{blob_id}: #{e.message}")
-          end
-        end
-
-        # Clear the temporary blobs for this section
-        session[:temp_image_blobs][@section.id.to_s] = []
-      rescue => e
-        Rails.logger.error("Error processing temporary blobs: #{e.message}")
-      end
-    end
-
-    # Return appropriate response
-    if section_updated && cards_updated
-      render turbo_stream: turbo_stream.replace("section_#{@section.id}",
-        partial: "sections/section",
-        locals: { section: @section, user: @section.user })
-    else
-      error_message = []
-      error_message << "Failed to update section" unless section_updated
-      error_message << "Failed to update cards" unless cards_updated
-
-      render json: { error: error_message.join(". ") }, status: :unprocessable_entity
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.replace(
+          "section_#{@section.id}",
+          partial: "sections/section",
+          locals: { section: @section }
+        )
+      }
     end
   end
+
+  def edit
+    @section = Section.find(params[:id])
+    # Можно через обычное рендер:
+    respond_to do |format|
+      format.html # отрендерит app/views/sections/edit.html.erb
+      format.turbo_stream # отрендерит app/views/sections/edit.turbo_stream.erb (если есть)
+    end
+  end
+
 
   def destroy
     @section = Section.find(params[:id])
@@ -213,7 +154,7 @@ class SectionsController < ApplicationController
   end
 
   def section_params
-    params.require(:section).permit(:title, :position)
+    params.require(:section).permit(:title, :position, cards_attributes: [ :id, :title, :content, :url, :size, :position, :_destroy ])
   end
 
   def authorize_user!

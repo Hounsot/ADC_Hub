@@ -1,1 +1,15 @@
-<%= f.file_field :image, class: "A_LinkFormInput" %>
+<%= f.file_field :image, class: "A_ImageFormInput" %>
+<div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
+  <img src="" alt="" id="image-preview">
+</div>
+<script>
+  document.querySelector('.A_ImageFormInput').addEventListener('change', function(e) {
+      if (this.files && this.files[0]) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('image-preview').src = e.target.result;
+  };
+  reader.readAsDataURL(this.files[0]);
+      }
+    });
+</script>
