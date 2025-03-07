@@ -1,5 +1,5 @@
 <div id="section_create_button_<%= position %>" class="A_CreateSectionButton">
-  <%= form_with url: user_sections_path(user), method: :post do |f| %>
+  <%= form_with url: new_user_section_path(user, format: :turbo_stream), method: :get do |f| %>
     <%= f.hidden_field :position, value: position %>
     <button type="submit" class="W_CreateButtonIcon">
       <img src="../images/Q_Plus.svg" alt="">

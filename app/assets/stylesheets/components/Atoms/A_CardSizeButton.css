@@ -8,7 +8,9 @@
     color: var(--font-default-color);
     cursor: pointer;
     border: 0;
+    background-color: var(--dark-alpha);
+    transition: var(--button-transitions);
     &:hover{
-        background-color: var(--surface-secondary);
+        background-color: var(--surface-secondary-hover);
     }
 }

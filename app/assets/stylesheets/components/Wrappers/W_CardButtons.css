@@ -9,4 +9,5 @@
     right: 16px;
     transition: var(--button-transitions);
     overflow: visible;
+    z-index: 10000;
 }

@@ -4,7 +4,7 @@ class Section < ApplicationRecord
   accepts_nested_attributes_for :cards, allow_destroy: true
 
   validates :title, presence: true
-
+  after_create :create_section_activity
   before_destroy :cleanup_activities
 
   def create_section_activity

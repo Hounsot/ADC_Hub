@@ -1,4 +1,5 @@
-<%= f.hidden_field :size, value: 'square', data: { card_size_target: "input" } %>
+<%= f.hidden_field :size, value: f.object.size, data: { card_size_target: "input" } %>
 <%= f.hidden_field :_destroy, value: 0, data: { card_removal_target: "destroyInput" } %>
+<%= f.hidden_field :position, value: f.object.position %>
 <%= f.text_field :title, class: "A_LinkFormInput" %>
 <%= f.text_field :content, class: "A_LinkFormInput" %>

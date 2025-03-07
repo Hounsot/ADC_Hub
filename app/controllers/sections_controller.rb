@@ -3,6 +3,22 @@ class SectionsController < ApplicationController
   before_action :set_section, only: [ :update ]
   before_action :authorize_user!, only: [ :update ]
 
+  def new
+    @section = Section.new(title: "Новая секция")
+    @section.user = current_user
+    @section.position = current_user.sections.count + 1
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream {
+        render turbo_stream: [
+          turbo_stream.append("sections-container", partial: "sections/section_draft", locals: { section: @section }),
+          turbo_stream.append("sections-container", partial: "sections/section_create_button", locals: { user: current_user, position: @section.position + 1 })
+        ]
+      }
+    end
+  end
+
   def update
     @section = Section.find(params[:id])
     # Debug: Print the parameters received
@@ -50,7 +66,7 @@ class SectionsController < ApplicationController
   end
 
   def create
-    @section = Section.new(title: "Новая секция")
+    @section = Section.new(section_params)
     @section.user = current_user
     @section.position = current_user.sections.count + 1
 
