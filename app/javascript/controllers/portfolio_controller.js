@@ -10,10 +10,6 @@ export default class extends Controller {
 
   connect() {
     console.log("Portfolio controller connected");
-    this.pendingCardChanges = {}; // Store changes for cards that need to be saved
-    
-    // Make sure we're listening for card:change events
-    this.element.addEventListener('card:change', this.registerCardChange.bind(this));
   }
 
   toggleActionBar(event) {

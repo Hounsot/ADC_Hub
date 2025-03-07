@@ -4,6 +4,7 @@
     <div class="A_UserCard U_Square <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
       <%= cf.hidden_field :card_type, value: 'text' %>
       <%= cf.hidden_field :user_id, value: @section.user_id %>
+      <%= cf.hidden_field :_destroy, value: 0, data: { card_removal_target: "destroyInput" } %>
       <%= cf.text_field :title, class: "A_LinkFormInput" %>
       <%= cf.text_field :content, class: "A_LinkFormInput" %>
     </div>

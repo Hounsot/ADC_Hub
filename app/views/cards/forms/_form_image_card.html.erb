@@ -1,3 +1,4 @@
+<%= f.hidden_field :size, value: 'square', data: { card_size_target: "input" } %>
 <%= f.file_field :image, class: "A_ImageFormInput" %>
 <div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
   <% if f.object.image.attached? %>

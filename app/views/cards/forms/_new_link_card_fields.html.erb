@@ -1,15 +1,27 @@
 <template data-section-create-card-target="linkCardTemplate">
   <% new_card = @section.cards.build(card_type: 'link', user_id: @section.user_id) %>
   <%= form.fields_for :cards, new_card, child_index: "NEW_RECORD" do |cf| %>
-    <div class="A_UserCard U_Square <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
-      <%= cf.hidden_field :card_type, value: 'link' %>
-      <%= cf.hidden_field :user_id, value: @section.user_id %>
-      <%= cf.text_field :url, 
-                       placeholder: "Ссылка",
-                       class: "A_LinkFormInput" %>
-      <%= cf.text_field :title, 
+    <div class="A_UserCard U_Square <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" data-controller="card-size" data-card-size-target="container">
+      <div class="W_CardSizeButtons">
+        <button type="button" class="A_CardSizeButton" data-action="click->card-size#setSquare">S</button>
+        <button type="button" class="A_CardSizeButton" data-action="click->card-size#setMedium">M</button>
+      </div>
+      <div class="A_LinkCardUrl">
+        <div class="W_LinkCardContent">
+          <img src="../images/Q_<%= website_type(new_card.url).capitalize %>Icon.svg" alt="<%= website_type(new_card.url) %> icon" class="A_LinkCardIcon">
+          <%= cf.hidden_field :card_type, value: 'link' %>
+          <%= cf.hidden_field :user_id, value: @section.user_id %>
+          <%= cf.hidden_field :size, value: 'square', data: { card_size_target: "input" } %>
+          <div class="W_LinkCardText">
+            <%= cf.text_field :title, 
                        placeholder: "Название",
-                       class: "A_LinkFormInput" %>
+                       class: "A_LinkCardTitle U_Form" %>
+            <%= cf.text_field :url, 
+                       placeholder: "Ссылка",
+                       class: "A_LinkCardUrlPreview U_Form" %>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
 </template>

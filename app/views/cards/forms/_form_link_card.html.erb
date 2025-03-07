@@ -1,7 +1,8 @@
 <%= f.hidden_field :card_type, value: 'link' %>
-<%= f.text_field :url, 
-                       placeholder: "Ссылка",
-                       class: "A_LinkFormInput" %>
+<%= f.hidden_field :size, value: 'square', data: { card_size_target: "input" } %>
 <%= f.text_field :title, 
                        placeholder: "Название",
-                       class: "A_LinkFormInput" %>
+                       class: "A_LinkCardTitle U_Form" %>
+<%= f.text_field :url, 
+                       placeholder: "Ссылка",
+                       class: "A_LinkCardUrlPreview U_Form" %>

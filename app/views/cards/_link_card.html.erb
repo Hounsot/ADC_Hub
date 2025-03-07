@@ -1,16 +1,4 @@
 <turbo-frame id="card_<%= card.id %>" class="A_UserCard U_Link <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>" data-controller="inline-text-card" data-inline-text-card-url-value="<%= user_section_card_path(card.section.user, card.section, card) %>">
-  <% if current_user == card.section.user %>
-    <div class="W_CardSizeButtons">
-      <%= link_to "S", update_size_user_section_card_path(card.section.user, card.section, card, size: "square"),
-            method: :patch,
-            data: { turbo_method: :patch },
-            class: "A_CardSizeButton" %>
-      <%= link_to "M", update_size_user_section_card_path(card.section.user, card.section, card, size: "medium"),
-            method: :patch,
-            data: { turbo_method: :patch },
-            class: "A_CardSizeButton" %>
-    </div>
-  <% end %>
   <div class="W_CardButtons">
     <div class="C_CardControls">
       <% if current_user == card.section.user %>

@@ -1,0 +1,11 @@
+.A_LinkCardUrlPreview{
+    font-size: var(--text-feed-link-description-size);
+    color: var(--font-second-color);
+    width: 100%;
+    height: fit-content;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: var(--surface-third);
+    border: none;
+    outline: none;
+}

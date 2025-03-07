@@ -10,7 +10,7 @@
     right: 40px;
     overflow: hidden;
     &.U_Active{
-        z-index: 1000;
+        z-index: 100000000;
         display: flex;
     }
 }

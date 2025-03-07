@@ -5,6 +5,7 @@
     padding: 16px;
     overflow: hidden;
     transition: var(--button-transitions);
+    transition: width 0s ease-in-out;
     &:hover{
         background-color: var(--surface-secondary-hover);
         .W_CardButtons, .W_CardSizeButtons{
@@ -32,6 +33,7 @@
         padding: 16px 0;
         margin-bottom: -12px;
         overflow: visible;
+        z-index: 1000;
         form{ 
             display: flex;
             flex-direction: row;
@@ -124,6 +126,7 @@
     }
     @media all and (max-width: 800px) {
         &:is(.U_Square){
+            flex-grow: 1;
             width: calc(50% - var(--grid-gap, 0px) / 2);
         }
         &:is(.U_Medium){

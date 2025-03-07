@@ -4,4 +4,14 @@
     color: var(--font-default-color);
     text-align: center;
     text-decoration: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    &:is(.U_Form){
+        background-color: var(--surface-third);
+        border-radius: 12px;
+        padding: 12px;
+        width: 100%;
+        text-align: left;
+    }
 }
