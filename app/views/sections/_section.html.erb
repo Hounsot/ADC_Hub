@@ -10,7 +10,4 @@
       <%= render "cards/#{card.card_type}_card", card: card %>
     <% end %>
   <% end %>
-  <% if current_user == section.user %>
-    <%= render "sections/add_card_button", section: section %>
-  <% end %>
 <% end %> 

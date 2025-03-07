@@ -5,7 +5,14 @@ class SectionsController < ApplicationController
 
   def update
     @section = Section.find(params[:id])
-    @section.update(section_params)
+    # Debug: Print the parameters received
+    Rails.logger.debug("Cards attributes received: #{params[:section][:cards_attributes].inspect}")
+
+    if @section.update(section_params)
+      Rails.logger.debug("Section updated successfully with cards")
+    else
+      Rails.logger.debug("Section update failed: #{@section.errors.full_messages.join(', ')}")
+    end
 
     respond_to do |format|
       format.turbo_stream {
@@ -154,7 +161,7 @@ class SectionsController < ApplicationController
   end
 
   def section_params
-    params.require(:section).permit(:title, :position, cards_attributes: [ :id, :card_type, :title, :content, :url, :size, :position, :image, :_destroy ])
+    params.require(:section).permit(:title, :position, cards_attributes: [ :id, :card_type, :title, :content, :url, :size, :position, :image, :_destroy, :user_id ])
   end
 
   def authorize_user!

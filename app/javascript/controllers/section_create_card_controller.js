@@ -38,6 +38,12 @@ export default class extends Controller {
     const newFields = clone.replace(/NEW_RECORD/g, uniqueIndex)
 
     // Insert into the .cardsContainerTarget
-    this.cardsContainerTarget.insertAdjacentHTML("beforeend", newFields)
-  }
+    if (this.cardsContainerTarget.lastElementChild) {
+      // Insert newFields before the last element (making it the penultimate)
+      this.cardsContainerTarget.lastElementChild.insertAdjacentHTML("beforebegin", newFields);
+    } else {
+      // Fallback if the container is empty
+      this.cardsContainerTarget.insertAdjacentHTML("beforeend", newFields);
+    }
+    }
 }

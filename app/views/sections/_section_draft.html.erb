@@ -9,7 +9,6 @@
   </div>
   <%= form.fields_for :cards, section.cards.order(:position) do |card_fields| %>
     <% card = card_fields.object %>
-    <!-- это объект Card, который редактируем -->
     <% case card.card_type %>
     <% when "text" %>
       <div class="A_UserCard U_Square <%= card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
@@ -30,17 +29,47 @@
         </div>
       </div>
     <% else %>
-      <!-- fallback -->
       <%= render "cards/forms/form_unknown_card", f: card_fields %>
     <% end %>
   <% end %>
-  <div class="buttons">
-    <button data-action="click->section-create-card#addTextCard">Add Text Card</button>
-    <button data-action="click->section-create-card#addImageCard">Add Image Card</button>
-    <button data-action="click->section-create-card#addLinkCard">Add Link Card</button>
-  </div>
-  <!-- Hidden partials for new cards (templates) -->
   <%= render "cards/forms/new_text_card_fields",  section: @section, form: form %>
   <%= render "cards/forms/new_image_card_fields", section: @section, form: form %>
   <%= render "cards/forms/new_link_card_fields",  section: @section, form: form %>
+  <div class="W_AddCard">
+    <div class="W_AddCardOptions">
+      <button class="M_ActionBarOption" data-action="click->section-create-card#addTextCard">
+        <div class="A_ActionIcon">
+          <img src="../images/Q_ActionCardIcon.svg" alt="">
+        </div>
+        <div class="W_ActionBarText">
+          <p class="A_ActionTitle">Текст</p>
+          <p class="A_ActionDescription">Блок с текстом</p>
+        </div>
+      </button>
+      <button class="M_ActionBarOption" data-action="click->section-create-card#addImageCard">
+        <div class="A_ActionIcon">
+          <img src="../images/Q_ActionCardIcon.svg" alt="">
+        </div>
+        <div class="W_ActionBarText">
+          <p class="A_ActionTitle">Изображение</p>
+          <p class="A_ActionDescription">Jpeg, png, gif, webp</p>
+        </div>
+      </button>
+      <button class="M_ActionBarOption" data-action="click->section-create-card#addLinkCard">
+        <div class="A_ActionIcon">
+          <img src="../images/Q_ActionCardIcon.svg" alt="">
+        </div>
+        <div class="W_ActionBarText">
+          <p class="A_ActionTitle">Ссылка</p>
+          <p class="A_ActionDescription">На внешний ресурс</p>
+        </div>
+      </button>
+    </div>
+    <div class="A_AddCardButton" data-portfolio-target="addButton" data-action="click->portfolio#toggleActionBar">
+      <div class="W_AddCardButtonIcon">
+        <img src="../images/Q_Plus.svg" alt="">
+      </div>
+      <p class="A_VacancyCardBodyText">Добавить карточку</p>
+    </div>
+  </div>
 <% end %>

@@ -1,7 +1,8 @@
 <template data-section-create-card-target="imageCardTemplate">
-  <% new_card = @section.cards.build(card_type: 'image') %>
+  <% new_card = @section.cards.build(card_type: 'image', user_id: @section.user_id) %>
   <%= form.fields_for :cards, new_card, child_index: "NEW_RECORD" do |cf| %>
     <%= cf.hidden_field :card_type, value: 'image' %>
+    <%= cf.hidden_field :user_id, value: @section.user_id %>
     <div class="A_UserCard U_Square U_Image <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
       <%= cf.file_field :image, class: "A_ImageFormInput" %>
       <div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
