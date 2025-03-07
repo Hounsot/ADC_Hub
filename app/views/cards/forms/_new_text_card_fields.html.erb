@@ -1,7 +1,8 @@
 <template data-section-create-card-target="textCardTemplate">
-  <% new_card = section.cards.build(card_type: 'text') %>
+  <% new_card = @section.cards.build(card_type: 'text') %>
   <%= form.fields_for :cards, new_card, child_index: "NEW_RECORD" do |cf| %>
     <div class="A_UserCard U_Square <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+      <%= cf.hidden_field :card_type, value: 'text' %>
       <%= cf.text_field :title, class: "A_LinkFormInput" %>
       <%= cf.text_field :content, class: "A_LinkFormInput" %>
     </div>

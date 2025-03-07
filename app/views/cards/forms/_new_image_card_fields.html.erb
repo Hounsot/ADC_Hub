@@ -1,13 +1,19 @@
 <template data-section-create-card-target="imageCardTemplate">
-  <% new_card = section.cards.build(card_type: 'image') %>
+  <% new_card = @section.cards.build(card_type: 'image') %>
   <%= form.fields_for :cards, new_card, child_index: "NEW_RECORD" do |cf| %>
-    <%= cf.file_field :image, class: "A_ImageFormInput" %>
-    <div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
-      <% if cf.object.image.attached? %>
-        <%= image_tag cf.object.image.variant(resize_to_limit: [900, 900]), id: "image-preview" %>
-      <% else %>
-        <img src="" alt="" id="image-preview">
-      <% end %>
+    <%= cf.hidden_field :card_type, value: 'image' %>
+    <div class="A_UserCard U_Square U_Image <%= new_card.size == 'medium' ? 'U_Medium' : 'U_Square' %>">
+      <%= cf.file_field :image, class: "A_ImageFormInput" %>
+      <div class="A_ImageFormInputPreview" onclick="document.querySelector('.A_ImageFormInput').click()">
+        <% if cf.object.image.attached? %>
+          <%= image_tag cf.object.image.variant(resize_to_limit: [900, 900]), id: "image-preview" %>
+        <% else %>
+          <div class="W_AddCardButtonIcon">
+            <img src="../images/Q_Plus.svg" alt="">
+          </div>
+          <p class="A_VacancyCardBodyText">Выбрать изображение</p>
+        <% end %>
+      </div>
     </div>
     <script>
       document.querySelector('.A_ImageFormInput').addEventListener('change', function(e) {

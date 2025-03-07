@@ -6,4 +6,8 @@
     height: 48px;
     background-color: var(--surface-third);
     border-radius: 100%;
+    img{
+        width: 18px;
+        height: 18px;
+    }
 }
