@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_04_224427) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_07_181053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_224427) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reactions", force: :cascade do |t|
+    t.bigint "activity_id", null: false
+    t.bigint "user_id", null: false
+    t.string "emoji_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_reactions_on_activity_id"
+    t.index ["user_id", "activity_id"], name: "index_reactions_on_user_id_and_activity_id", unique: true
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
   create_table "sections", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title"
@@ -126,6 +137,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_224427) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cards", "sections"
   add_foreign_key "cards", "users"
+  add_foreign_key "reactions", "activities"
+  add_foreign_key "reactions", "users"
   add_foreign_key "sections", "users"
   add_foreign_key "users", "companies"
   add_foreign_key "vacancies", "companies"

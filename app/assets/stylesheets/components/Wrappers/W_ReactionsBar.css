@@ -1,0 +1,7 @@
+/* app/assets/stylesheets/components/Wrappers/W_ReactionsBar.css */
+.W_ReactionsBar {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+} 

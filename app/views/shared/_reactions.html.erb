@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(activity, :reactions) do %>
+  <div class="W_ReactionsBar">
+    <% Reaction::EMOJI_TYPES.each do |emoji_type| %>
+      <% user_reaction = activity.user_reaction(current_user) %>
+      <% is_selected = user_reaction&.emoji_type == emoji_type %>
+      <%= button_to activity_reactions_path(activity), 
+            method: :post,
+            class: "A_ReactionButton #{is_selected ? 'U_Active' : ''}", 
+            params: { reaction: { emoji_type: emoji_type } },
+            form: { data: { turbo: true } } do %>
+        <span class="A_ReactionEmoji"><%= emoji_type %></span>
+        <span class="A_ReactionCount">
+          <%= activity.reactions.where(emoji_type: emoji_type).count %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %> 

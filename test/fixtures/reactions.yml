@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity: one
+  user: one
+  emoji_type: MyString
+
+two:
+  activity: two
+  user: two
+  emoji_type: MyString

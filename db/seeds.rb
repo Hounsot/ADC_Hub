@@ -194,6 +194,8 @@ Card.destroy_all
 User.destroy_all
 Company.destroy_all
 Section.destroy_all
+Reaction.destroy_all
+Activity.destroy_all
 
 # Helper methods
 def random_avatar
@@ -262,7 +264,7 @@ def create_image_section(user, folder_path, section_name)
     position: user.sections.count + 1,  # Place it after existing sections
     published: true
   )
-  section.create_section_activity
+  # section.create_section_activity
 
   # Find all image files in the specified folder
   images = Dir[File.join(folder_path, '*')].select { |f|
@@ -396,7 +398,7 @@ users.each do |user|
         position: user.sections.count + 1,
         published: true
       )
-      section.create_section_activity
+      # section.create_section_activity
       # Create 3-5 cards for this section
       num_cards = rand(3..5)
 
@@ -477,3 +479,31 @@ end
 
 puts "Seed data created successfully!"
 puts "Created #{Vacancy.count} Vacancies, #{Section.count} Sections with #{Card.count} Cards"
+
+# 8. STEP 6: Add random reactions to activities
+puts "Adding random reactions to activities..."
+
+# Get all activities
+activities = Activity.all
+total_reactions = 0
+
+# For each user, add a random reaction to each activity
+users.each do |user|
+  activities.each do |activity|
+    # Skip if the user already reacted to this activity or is the activity creator (more realistic)
+    next if activity.user_reaction(user) || (activity.actor == user)
+
+    # Choose a random emoji type
+    random_emoji = Reaction::EMOJI_TYPES.sample
+
+    # Create the reaction
+    activity.reactions.create!(
+      user: user,
+      emoji_type: random_emoji
+    )
+    puts "Added reaction #{random_emoji} to activity #{activity.id} by user #{user.id}"
+    total_reactions += 1
+  end
+end
+
+puts "Added #{total_reactions} reactions to activities (#{Reaction.count} total reactions)."

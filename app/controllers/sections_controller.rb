@@ -4,16 +4,20 @@ class SectionsController < ApplicationController
   before_action :authorize_user!, only: [ :update ]
 
   def new
-    @section = Section.new(title: "Новая секция")
+    @section = Section.new(title: "Новая секция", position: params[:position].to_i)
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
     @section.user = current_user
-    @section.position = current_user.sections.count + 1
 
     respond_to do |format|
       format.html
       format.turbo_stream {
         render turbo_stream: [
-          turbo_stream.append("sections-container", partial: "sections/section_draft", locals: { section: @section }),
-          turbo_stream.append("sections-container", partial: "sections/section_create_button", locals: { user: current_user, position: @section.position + 1 })
+          turbo_stream.after("section_create_button_#{@section.position}", partial: "sections/section_draft", locals: { section: @section })
         ]
       }
     end
@@ -68,12 +72,19 @@ class SectionsController < ApplicationController
   def create
     @section = Section.new(section_params)
     @section.user = current_user
-    @section.position = current_user.sections.count + 1
+    correct_sections_positions(current_user, @section.position)
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
+    puts "New section position: #{@section.position}"
 
     respond_to do |format|
       if @section.save
         format.turbo_stream {
           render turbo_stream: [
+            turbo_stream.remove("section_draft"),
             turbo_stream.append("sections-container", partial: "sections/section", locals: { section: @section }),
             turbo_stream.append("sections-container", partial: "sections/section_create_button", locals: { user: current_user, position: @section.position + 1 })
           ]
@@ -171,6 +182,13 @@ class SectionsController < ApplicationController
   end
 
   private
+
+  def correct_sections_positions(user, position)
+    user.sections.where("position >= ?", position).each do |section|
+      puts "Correcting position for section #{section.id} from #{section.position} to #{section.position + 1}"
+      section.update_column(:position, section.position + 1)
+    end
+  end
 
   def set_section
     @section = Section.find(params[:id])

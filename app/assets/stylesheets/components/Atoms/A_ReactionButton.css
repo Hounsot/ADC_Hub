@@ -1,0 +1,31 @@
+/* app/assets/stylesheets/components/Atoms/A_ReactionButton.css */
+.A_ReactionButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--surface-third);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  &:is(.U_Active) {
+    background-color: var(--green);
+    &:hover {
+      background-color: var(--green-hover);
+    }  
+  }
+  &:hover {
+    background-color: var(--surface-third-hover);
+  }
+}
+
+.A_ReactionEmoji {
+  font-size: var(--text-emoji-count-size);
+}
+
+.A_ReactionCount {
+  font-size: var(--text-emoji-count-size);
+  color: var(--font-default-color);
+} 

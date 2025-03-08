@@ -2,9 +2,11 @@
                 url: section.persisted? ? user_section_path(section.user, section) : user_sections_path(section.user), 
                 method: section.persisted? ? :patch : :post, 
                 data: { controller: "section-create-card", "section-create-card-target": "cardsContainer"  }, 
-                html: { class: "M_UserCards" } do |form| %>
+                html: { class: "M_UserCards", id: "section_draft"} do |form| %>
   <div class="A_UserCard U_Divider">
     <%= form.text_field :title, class: "A_CardsSectionTitle U_Input " %>
+    <p><%= section.position %></p>
+    <%= form.hidden_field :position, value: section.position %>
     <div class="W_CardButtons">
       <%= button_tag type: 'submit', class: "A_CardButton U_Color" do %>
         <img src="../images/Q_CardMarkIcon.svg" alt="">

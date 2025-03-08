@@ -15,4 +15,7 @@
       <div class="A_FeedTimestamp"><%= time_ago_in_words(activity.created_at) %></div>
     </div>
   </div>
+  <div class="W_FeedItemFooter">
+    <%= render "shared/reactions", activity: activity %>
+  </div>
 </div>

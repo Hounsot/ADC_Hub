@@ -60,6 +60,7 @@
   --text-feed-link-description-size: var(--sm);
   --text-profile-button-size: var(--sm);
   --text-action-title-size: var(--sm);
+  --text-emoji-count-size: var(--sm);
   /* colors */
   --text-secondary: var(--200);
   /* surfaces */

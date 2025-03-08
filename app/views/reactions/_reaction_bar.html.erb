@@ -1,0 +1,19 @@
+<div class="reaction-bar" 
+     data-controller="reaction"
+     data-reaction-activity-id-value="<%= activity.id %>"
+     data-reaction-current-user-id-value="<%= current_user.id if current_user %>"
+     id="reaction-bar-<%= activity.id %>">
+  <% Reaction::EMOJI_TYPES.each do |emoji| %>
+    <% user_reacted = activity.user_reacted_with?(current_user, emoji) if current_user %>
+    <button class="reaction-button <%= 'active' if user_reacted %>"
+            data-action="click->reaction#toggleReaction"
+      data-reaction-emoji-param="<%= emoji %>"
+      data-reaction-target="button">
+      <span class="emoji"><%= emoji %></span>
+      <span class="count" data-reaction-target="count<%= emoji.codepoints.map(&:to_s).join %>">
+        <%= activity.reactions.where(emoji_type: emoji).count %>
+      </span>
+    </button>
+  <% end %>
+</div>
+ 

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :vacancies
   has_many :sections, dependent: :destroy
   has_many :cards
+  has_many :reactions, dependent: :destroy
   belongs_to :company, optional: true
   has_one_attached :avatar
 
@@ -26,7 +27,7 @@ class User < ApplicationRecord
   def create_default_section
     sections.create!(
       title: "Место работы",
-      position: 1
+      position: 0
     ).tap do |section|
       section.cards.create!(
         card_type: "job",

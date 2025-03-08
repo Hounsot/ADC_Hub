@@ -1,0 +1,4 @@
+<%# app/views/reactions/create.turbo_stream.erb %>
+<%= turbo_stream.replace dom_id(@activity, :reactions) do %>
+  <%= render "shared/reactions", activity: @activity %>
+<% end %> 
